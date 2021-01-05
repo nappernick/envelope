@@ -40,9 +40,9 @@
      - New user
  - Data sets:
      - Route for specific reports
-          - Box-plot 1 (/user/<userId>/data/<datasetId>/boxplot/<id=1>)
-          - Box-plot 2 (/user/<userId>/data/<datasetId>/boxplot/<id=2>)
-          - Box-plot 3 (/user/<userId>/data/<datasetId>/boxplot/<id=3>)
+          - Box-plot 1 (/user/<<userId>>/data/<<datasetId>>/boxplot/<id=1>)
+          - Box-plot 2 (/user/<<userId>>/data/<<datasetId>>/boxplot/<id=2>)
+          - Menage (/user/<<userId>>/data/<<datasetId>>/menageplot/<id=3>)
           - Bar chart (/user/<userId>/data/<datasetId>/barchart/<id=1>)
      - Post route for new data upload (/user/<userId>/data)
      - Put route for LB user data updates (/user/<userId>
@@ -61,4 +61,4 @@
 - SQLAlchmey
 - ChartJS (https://github.com/datavisyn/chartjs-chart-box-and-violin-plot or https://github.com/sgratzl/chartjs-chart-boxplot)
 - React Modals
-- Google Maps API
+- Mapbox GL JS API
