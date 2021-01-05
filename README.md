@@ -1,9 +1,9 @@
 # envelope - non-profit dashboard & reporting
 ## MVP
 ### Three types of users: 
- - Admin user with access to all data sets & reports (less direct data access, than the data necessary to render reports)
+ - Admin user with access to all data sets & reports (not direct data access, but the data necessary to render reports)
  - Client users with access to their specific data sets & reports
- - Low bandwidth (LB) users who need very small functionality
+ - Low bandwidth (LB) users who need very limited data / functionality
 ### Admin Tools:
 - Users view: 
   - A view allowing admin to see all current clients & LB users
@@ -21,17 +21,14 @@
   - Report by surveyor showing their trend, since they began surveying, for number of don't knows/outlier data points, y axis showing the number of "issue" data points, and a point on the graph for every survey they've taken
 ## CRUD
   - A data review form to mark data points that fall 2 standard deviations outside the mean as either plausible or implausible
-    * once completed, alow admin to add that data to a LB user, so they can update the data
-  - A low bandwidth form to allow LB users to login & view sets of data that 
-  - 
+    * once completed, alow admin to add that data to a LB user, so they can update the data with field reps
+  - A low bandwidth form to allow LB users to login & view sets of data that need to be updated, then update those values (could also generate a csv & allowing the user to download it, edit, and upload it once complete - offline is huge in Sudan)
+  - Once completed by LB user, update the admin user -> for those fields where correct data was retrieved, update the data set automatically (alt. could have admin user view & approve those updates) with new data.  Where data could not be found, add a note to the survey compilation/summary with surveyor number, respondent name, and field where data could not be gotten.
+  - Once performed, update the client user with a notification (email or in app) that their reports have been updated
   
 
 ## Extended Feature Ideas
-- Mapping of each area cluster visited by a reports set of field surveyors (possibly showing the route traveled & where/when reports were taken, with different surveys shown with different colors - need to check Google Maps API for applicability)
-- Detailed reporting on problem surveys & surveyors - automatically generate two reports for each survey, one detailing the list of problem surveyors, where they pass a specific threshold for a number of surveys that fall outside 2 standard deviations fromt he mean, and a report detailing the issue surveys, where you can see the report and specific values that fall 2 standard deviations outside the mean
-- Detailed viewing of individual surveys, with a question by question view, highlighting those responses that were 1 standard deviation from the mean, with the ability to create notes on survey questions/responses so a QA specialist could reach out to the specific surveyor & 
-- Two types of users, an admin user that can provision accounts for clients/view all reports/assign reports to specific clients, and a client user, who can view their specific reports, with maps data, box plots, bar graphs
-- Ability to provide a dataset to the reporting engine, and choose the graphical visualizations that the user wants to see given that data set
+### 
 
 
 ## Technologies
