@@ -25,8 +25,43 @@
     * once completed, alow admin to add that data to a LB user, so they can update the data with field reps
   - Upload Stata data & generate a set of reports automatically
 
+## Routes
+ - User auth
+     - Login Post (/auth/login)
+     - New user Post (/auth/new-user)
+ - Users
+     - Users get (/api/user/<< userId >>/users)
+ - Data sets:
+     - Route to get all datasets (/api/data)
+     - Route for specific reports
+          - Violin-plot (/api/user/<< userId >>/data/<< datasetId >>/violinplot/<<  >>)
+          - Menage (/api/user/<< userId >>/data/<< datasetId >>/menageplot/<id=3>) (**V2**)
+          - Bar chart (/api/user/<< userId >>/data/<< datasetId >>/barchart/<id=1>) (**V2**)
+     - Post route for new data upload (/api/user/<< userId >>/data)
+         - Very complicated, needs to parse data input into datasets (easy), enumerators table, surveys table, problem_survey_responses table (**V2**)
+     - Put route for LB user data updates (/api/user/<< userId >>)
+     - Put route for admin data approval (maybe)
+  - Mapbox:
+      - Route to get specific surveyor's data from a specific survey (api/data/<< datasetId >>/enumerator/<< enumeratorId >>/map)
+ 
+## Schema
+![](https://github.com/nappernick/envelope/blob/master/wiki_readme_resources/envelop_db_schema.png?raw=true)
+## Python Analysis
+ - Algo to run on surveys, creating an entry in the 
 
-## V2
+## Technologies
+- Python
+- Pandas
+- React
+- Flask
+- Postgres
+- SQLAlchmey
+- ChartJS (https://github.com/datavisyn/chartjs-chart-box-and-violin-plot or https://github.com/sgratzl/chartjs-chart-boxplot)
+- React Modals
+- Mapbox GL JS API
+
+
+# V2
 ### Admin Tools:
 - Users view: 
   - A left hand column of current projects (which represent datasets & their reports) which can be dragged onto a user, giving that user access
@@ -52,35 +87,3 @@
 
   
 
-## Routes
- - User auth
-     - Login Post (/auth/login)
-     - New user Post (/auth/new-user)
- - Users
-     - Users get (/api/user/<< userId >>/users)
- - Data sets:
-     - Route to get all datasets (/api/data)
-     - Route for specific reports
-          - Violin-plot (/api/user/<< userId >>/data/<< datasetId >>/violinplot/<<  >>)
-          - Menage (/api/user/<< userId >>/data/<< datasetId >>/menageplot/<id=3>) (**V2**)
-          - Bar chart (/api/user/<< userId >>/data/<< datasetId >>/barchart/<id=1>) (**V2**)
-     - Post route for new data upload (/api/user/<< userId >>/data)
-         - Very complicated, needs to parse data input into datasets (easy), enumerators table, surveys table, problem_survey_responses table (**V2**)
-     - Put route for LB user data updates (/api/user/<< userId >>)
-     - Put route for admin data approval (maybe)
-  - Mapbox:
-      - Route to get specific surveyor's data from a specific survey (api/data/<< datasetId >>/enumerator/<< enumeratorId >>/map)
- 
-## Python Analysis
- - Algo to run on surveys, creating an entry in the 
-
-## Technologies
-- Python
-- Pandas
-- React
-- Flask
-- Postgres
-- SQLAlchmey
-- ChartJS (https://github.com/datavisyn/chartjs-chart-box-and-violin-plot or https://github.com/sgratzl/chartjs-chart-boxplot)
-- React Modals
-- Mapbox GL JS API
