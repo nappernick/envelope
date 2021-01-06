@@ -18,7 +18,7 @@ class Survey(db.Model):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
     project = db.relationship("Project", backref="survey")
-    survey_questions = db.relationship("SurveyQuestion", backref="survey")
+    survey_questions = db.relationship("SurveyQuestion")
 
     def to_dict(self):
         return {
