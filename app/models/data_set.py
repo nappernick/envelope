@@ -1,22 +1,22 @@
 from .db import db
 
 class DataSet(db.Model): 
-    __tablename__ = "data-sets"
+    __tablename__ = "data_sets"
     id = db.Column(db.Integer, primary_key = True)
     data_set_name = db.Column(db.String(100), nullable = False, unique = True)
     data_set = db.Column(db.LargeBinary, nullable = False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
-    
-    projects = db.relationship("Project", backref="data-sets", lazy='dynamic')
+
+    projects = db.relationship("Project", backref="data-set", lazy='dynamic')
 
 
 
-      def to_dict(self):
+    def to_dict(self):
         return {
-        "id": self.id,
-        "data_set_name": self.data_set_name,
-        "data_set": self.data_set,
-        "created_at": self.created_at,
-        "updated_at": self.updated_at
+            "id": self.id,
+            "data_set_name": self.data_set_name,
+            "data_set": self.data_set,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
         }

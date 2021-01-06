@@ -11,11 +11,12 @@ class User(db.Model, UserMixin):
   username = db.Column(db.String(40), nullable = False, unique = True)
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
-  type_id = db.Column(db.String(20), db.ForeignKey("type.id") nullable = False)
+  type_id = db.Column(db.Integer, db.ForeignKey("types.id"), nullable = False)
   created_at = db.Column(db.DateTime, server_default=db.func.now())
   updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
-  
-  type = db.relationship("Type", backref="users", lazy="dynamic")
+
+  type = db.relationship("Type")
+  projects = db.relationship("Project")
 
   @property
   def password(self):
@@ -38,6 +39,7 @@ class User(db.Model, UserMixin):
       "last_name": self.last_name,
       "username": self.username,
       "email": self.email,
+      "type_id": self.type_id,
       "created_at": self.created_at,
       "updated_at": self.updated_at
     }
