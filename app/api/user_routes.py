@@ -21,7 +21,7 @@ def user(id):
     return user.to_dict()
 
 
-@user_routes.route("/<int:id>/users")
+@user_routes.route("/<int:id>/clients")
 @login_required
 def admin_fetch_clients(id):
     authenticated = authenticate()
