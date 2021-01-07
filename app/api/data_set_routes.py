@@ -17,23 +17,31 @@ def data():
 @data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')
 @login_required
 def violin_plot(dataSetId, surveyField):
-    authenticated = authenticate()
-    if authenticated["type_id"] != 1:
-        return jsonify({
-            "errors": [
-                "Unauthorized"
-            ]
-        })
+    # authenticated = authenticate()
+    # if authenticated["type_id"] != 1:
+    #     return jsonify({
+    #         "errors": [
+    #             "Unauthorized"
+    #         ]
+    #     })
     
     curr_user = current_user.to_dict()
-    # Approach one:
     surveys = db.session.query(DataSet).get(dataSetId).projects.filter_by(user_id=curr_user["id"]).first().surveys
     data_set_for_graph = []
     surveys_list = list(surveys)
     for survey in surveys_list:
-        data_set_for_graph.append(survey.to_dict()[surveyField])
-    # Approach two:
-    data_set = db.session.query(DataSet).get(dataSetId)
-    # Process binary back into csv:
+        data_set_for_graph.append(survey.to_dict())
 
     return jsonify(data_set_for_graph)
+
+@data_set_routes.route("/<int:dataSetId>/map")
+@login_required
+def map_surveys(dataSetId):
+    curr_user = current_user.to_dict()
+    surveys = db.session.query(DataSet).get(dataSetId).projects.filter_by(user_id=curr_user["id"]).first().surveys
+    map_data = {}
+    for survey in list(surveys):
+        map_data[survey.to_dict()["enumerator_id"]] = {
+            "date_time_administered": survey.to_dict()["date_time_administered"]
+        }
+    return jsonify(map_data)

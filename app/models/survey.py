@@ -3,7 +3,7 @@ from .db import db
 class Survey(db.Model): 
     __tablename__ = "surveys"
     id = db.Column(db.Integer, primary_key = True)
-    health_area = db.Column(db.String(100), nullable = False)
+    health_area_id = db.Column(db.Integer, db.ForeignKey("health_area.id"), nullable = False)
     project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable = False)
     enumerator_id = db.Column(db.String(20), nullable = False)
     date_time_administered = db.Column(db.DateTime, nullable = False)
@@ -19,10 +19,30 @@ class Survey(db.Model):
 
     project = db.relationship("Project", backref="survey")
     survey_questions = db.relationship("SurveyQuestion")
+    health_area = db.relationship("HealthArea")
 
     def to_dict(self):
         return {
             "id": self.id,
+            "health_area_id": self.health_area_id,
+            "project_id": self.project_id,
+            "enumerator_id": self.enumerator_id,
+            "date_time_administered": self.date_time_administered,
+            "duration": self.duration,
+            "respondent": self.respondent,
+            "num_outlier_data_points": self.num_outlier_data_points,
+            "num_dont_know_responses": self.num_dont_know_responses,
+            "outside_health_zone": self.outside_health_zone,
+            "lat": self.lat,
+            "long": self.long,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
+
+    def to_dict_full(self):
+        return {
+            "id": self.id,
+            "health_area_id": self.health_area_id,
             "health_area": self.health_area,
             "project_id": self.project_id,
             "enumerator_id": self.enumerator_id,

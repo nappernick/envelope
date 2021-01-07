@@ -12,7 +12,7 @@ class Project(db.Model):
 
     user = db.relationship("User", backref="project", lazy="select")
     surveys = db.relationship("Survey")
-    # data_sets = db.relationship("")
+    data_set = db.relationship("DataSet")
 
     def to_dict(self):
         return {
@@ -34,5 +34,6 @@ class Project(db.Model):
             "user_id": self.user_id,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "data_set": data_set.to_dict()
+            "user": self.user.to_dict(),
+            "surveys": [survey.to_dict() for survey in self.surveys]
         }

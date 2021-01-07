@@ -31,7 +31,7 @@ def data_processing_for_graphs(csvf):
 
 
 def seed_surveys():
-    surveys = data_processing_for_graphs("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash.csv")
+    surveys = data_processing_for_graphs("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
     # print(surveys)
     # count = 0
     for survey in surveys.values():
