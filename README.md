@@ -10,7 +10,7 @@
     - A view allowing admin to see all current clients & LB users
     - Button to add new user - a modal to create a new user, with type (admin, client, LB), email, password, etc
 - Add Report Access:
-    - Button to open a modal that renders all the reports, allows a multiselect (possibly check boxes), in lower section renders all client users, allow select only 1, on submit this creates a new "project" record in the project table (which is part join between users & datasets, part extra information on that union, i.e. name of project, notes on the project, etc)
+    - Button to open a modal that renders two sections: the top with data sets, and the bottom with client users. The top section will allow multiselect (possibly check boxes), while the lower section renders all client users, allowing the user to select only 1. On submit this creates a new "project" record in the project table (which is part join between users & datasets, part extra information on that union, i.e. name of project, notes on the project, etc)
 ### Reporting:
 - A violin plot able to display data on interview duration, don't know responses, integer outlier data points, and distance outliers
     - Render all four versions of the violin in one page, with navlink titles allowing the user to click a report title and render the plot on it's own page
@@ -30,11 +30,11 @@
      - Login Post (/auth/login)
      - New user Post (/auth/new-user)
  - Users
-     - Users get (/api/user/<< userId >>/users)
+     - Users get (/api/users/<< userId >>/users)
  - Data sets:
      - Route to get all datasets (/api/data)
      - Route for specific reports
-          - Violin-plot (/api/user/<< userId >>/data/<< datasetId >>/violinplot/<<  >>)
+          - Violin-plot (/api/user/<< userId >>/data/<< datasetId >>/violinplot/<< field_string >> - field_string referring to the field on the survey datatable that you want to run the plot on, i.e. length, )
           - Menage (/api/user/<< userId >>/data/<< datasetId >>/menageplot/<id=3>) (**V2**)
           - Bar chart (/api/user/<< userId >>/data/<< datasetId >>/barchart/<id=1>) (**V2**)
      - Post route for new data upload (/api/user/<< userId >>/data)
