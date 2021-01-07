@@ -1,3 +1,3 @@
 import pandas
-data = pandas.io.stata.read_stata('NORC-IGA-Endline-Menage_cleaned.dta')
-data.to_csv('my_stata_file.csv')
+data = pandas.io.stata.read_stata('menage_dash_gps.dta')
+data.to_csv('menage_dash_gps.csv')

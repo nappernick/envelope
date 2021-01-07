@@ -3,11 +3,11 @@ from .db import db
 class Survey(db.Model): 
     __tablename__ = "surveys"
     id = db.Column(db.Integer, primary_key = True)
-    survey_name = db.Column(db.String(100), nullable = False)
+    health_area = db.Column(db.String(100), nullable = False)
     project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable = False)
     enumerator_id = db.Column(db.String(20), nullable = False)
     date_time_administered = db.Column(db.DateTime, nullable = False)
-    length = db.Column(db.Float, nullable = False)
+    duration = db.Column(db.Float, nullable = False)
     respondent = db.Column(db.String(100), nullable = False)
     num_outlier_data_points = db.Column(db.Integer, nullable = False)
     num_dont_know_responses = db.Column(db.Integer, nullable = False)
@@ -23,10 +23,11 @@ class Survey(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
+            "health_area": self.health_area,
             "project_id": self.project_id,
             "enumerator_id": self.enumerator_id,
             "date_time_administered": self.date_time_administered,
-            "length": self.length,
+            "duration": self.duration,
             "respondent": self.respondent,
             "num_outlier_data_points": self.num_outlier_data_points,
             "num_dont_know_responses": self.num_dont_know_responses,

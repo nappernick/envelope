@@ -20,3 +20,13 @@ class DataSet(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
+
+    def to_dict_full(self):
+        return {
+            "id": self.id,
+            "data_set_name": self.data_set_name,
+            "data_set": self.data_set,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "projects": [project.to_dict() for project in self.projects]
+        }
