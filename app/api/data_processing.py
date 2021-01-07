@@ -36,6 +36,8 @@ def data_processing_for_graphs(csvf):
         column_data = {}
         reader = csv.reader(csvfile, delimiter=",")
         for row in reader:
+            if row[0] == '':
+                continue
             column_data[row[0]] = {
                 "date_time_administered": f'{row[target_indices[0]]} {row[target_indices[1]]}',
                 "health_area": row[target_indices[2]],
@@ -50,5 +52,5 @@ def data_processing_for_graphs(csvf):
         return column_data
 
 
-data_processing_for_graphs("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash.csv")
+data_processing_for_surveys("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash.csv")
 # data_processing("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash_gps.csv")
