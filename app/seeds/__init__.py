@@ -16,6 +16,7 @@ def seed():
     seed_users()
     seed_data_sets()
     seed_projects()
+    seed_surveys()
     # Add other seed functions here
 
 # Creates the `flask seed undo` command
@@ -25,4 +26,5 @@ def undo():
     undo_users()
     undo_data_sets()
     undo_projects()
+    undo_surveys()
     # Add other undo functions here

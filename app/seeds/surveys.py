@@ -1,5 +1,5 @@
 from app.models import db, Survey
-from app.api import data_processing_for_graphs
+from app.api.data_processing import data_processing_for_graphs
 import csv
 from faker import Faker
 
@@ -42,12 +42,15 @@ def seed_surveys():
             date_time_administered=survey["date_time_administered"],
             duration=survey["duration"],
             respondent=fake.name(),
-            num_outlier_data_points=survey["num_outlier_data_points"],
-            num_dont_know_responses=survey["num_dont_know_responses"],
+            num_outlier_data_points=int(float(str(survey["num_outlier_data_points"]))),
+            num_dont_know_responses=int(float(str(survey["num_dont_know_responses"]))),
             lat=survey["lat"],
             long=survey["long"],
             outside_health_zone=False
         ) 
+        db.session.add(survey_seed)
+    db.session.commit()
+    
 
 def undo_surveys():
     db.session.execute('TRUNCATE TABLE surveys RESTART IDENTITY CASCADE;')

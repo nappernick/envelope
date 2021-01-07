@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 from app.models import db, DataSet
+from .auth_routes import authenticate
 # from .data_processing import data_processing
 
 data_set_routes = Blueprint('data', __name__)
@@ -26,10 +27,11 @@ def violin_plot(dataSetId, surveyField):
     
     curr_user = current_user.to_dict()
     # Approach one:
-    surveys = db.session.query(DataSet).get(dataSetId).projects.filter_by(user_id == curr_user["id"]).first().surveys.all()
+    surveys = db.session.query(DataSet).get(dataSetId).projects.filter_by(user_id=curr_user["id"]).first().surveys
     data_set_for_graph = []
-    for survey in surveys:
-        data_set_for_graph.append(survey["surveyField"])
+    surveys_list = list(surveys)
+    for survey in surveys_list:
+        data_set_for_graph.append(survey.to_dict()[surveyField])
     # Approach two:
     data_set = db.session.query(DataSet).get(dataSetId)
     # Process binary back into csv:

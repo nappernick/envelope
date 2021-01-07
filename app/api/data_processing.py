@@ -52,5 +52,5 @@ def data_processing_for_graphs(csvf):
         return column_data
 
 
-data_processing_for_surveys("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash.csv")
+# data_processing_for_surveys("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash.csv")
 # data_processing("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash_gps.csv")
