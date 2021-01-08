@@ -1,54 +1,69 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
-import { range } from 'd3-array';
-import { scaleQuantile } from 'd3-scale';
-import { setRTLTextPlugin } from 'react-map-gl';
-import MapGL, { Source, Layer } from 'react-map-gl';
+import MapGL, {
+    Popup,
+    NavigationControl,
+    FullscreenControl,
+    ScaleControl,
+    GeolocateControl
+} from 'react-map-gl';
+import Pins from "./Pins"
 
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 
-// 
+const geolocateStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    padding: '10px'
+};
 
-function Map() {
-    const [viewport, setViewport] = useState({});
-    const [allData, setAllData] = useState(null);
+const fullscreenControlStyle = {
+    position: 'absolute',
+    top: 36,
+    left: 0,
+    padding: '10px'
+};
 
-    
+const navStyle = {
+    position: 'absolute',
+    top: 72,
+    left: 0,
+    padding: '10px'
+};
 
+const scaleControlStyle = {
+    position: 'absolute',
+    bottom: 36,
+    left: 0,
+    padding: '10px'
+};
 
-    useEffect(() => {
-        const fetchMapData = async () => {
-            let surveys = await fetch("/api/data/1/health-areas/1/map")
-            let surveysData = await surveys.json()
-            setAllData(surveysData)
-
-            let center = await fetch("/api/data/1/health-areas/1/center")
-            let centerData = await center.json()
-            setViewport({
-                latitude: centerData[0],
-                longitude: centerData[1],
-                zoom: 9,
-                bearing: 0,
-                pitch: 0
-            })
-        }
-        fetchMapData()
-    }, []);
-
-    console.log(allData)
-
+function Map({ viewport, allData, setViewport }) {
     return (
         <MapGL
             {...viewport}
             width="50vw"
             height="50vw"
-            mapStyle="mapbox://styles/mapbox/light-v9"
+            mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
             onViewportChange={setViewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-            interactiveLayerIds={['data']}
         // onHover={onHover}
         >
-            {/* <Source id="points" type="geojson" data={allData} /> */}
+            <Pins data={allData} />
+
+            <div style={geolocateStyle}>
+                <GeolocateControl />
+            </div>
+            <div style={fullscreenControlStyle}>
+                <FullscreenControl />
+            </div>
+            <div style={navStyle}>
+                <NavigationControl />
+            </div>
+            <div style={scaleControlStyle}>
+                <ScaleControl />
+            </div>
         </MapGL>
     );
 }
