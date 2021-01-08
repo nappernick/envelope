@@ -9,8 +9,8 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.data_set_routes import data_set_routes
-from .api.projects import project_routes
-from .api.surveys import survey_routes
+from .api.project_routes import project_routes
+from .api.survey_routes import survey_routes
 
 from .seeds import seed_commands
 

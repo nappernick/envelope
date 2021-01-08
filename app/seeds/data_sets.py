@@ -8,7 +8,7 @@ def seed_data_sets():
     # df['a23_decimal'] = df['a23'].astype(str).map(decimal.Decimal)
     # bf = df.to_parquet("test.parquet", index=False)
 
-    with open('/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash.csv') as csvfile:
+    with open('/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv') as csvfile:
         reader = csv.reader(csvfile)
         parsed_file = []
         for row in reader:

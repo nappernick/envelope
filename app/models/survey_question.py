@@ -7,8 +7,9 @@ class SurveyQuestion(db.Model):
     question = db.Column(db.String(), nullable = False)
     value = db.Column(db.String(), nullable = False)
     outside_2_sd = db.Column(db.Boolean())
-    standard_deviation = db.Column(db.Boolean())
+    reviewed = db.Column(db.Boolean())
     standard_deviation = db.Column(db.Integer())
+
 
     survey = db.relationship("Survey", backref="survey_question", lazy="select")
 
@@ -20,6 +21,7 @@ class SurveyQuestion(db.Model):
             "question": self.question,
             "value": self.value,
             "outside_2_sd": self.outside_2_sd,
+            "reviewed": self.reviewed,
             "plausible": self.respondent,
             "standard_deviation": self.standard_deviation
         }

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 41a0243a9fd8
+Revision ID: 146195085faa
 Revises: 
-Create Date: 2021-01-07 13:42:20.328271
+Create Date: 2021-01-08 16:21:56.452481
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '41a0243a9fd8'
+revision = '146195085faa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,12 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('data_set_name')
+    )
+    op.create_table('health_areas',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('health_area', sa.String(length=100), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('health_area')
     )
     op.create_table('types',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -63,19 +69,20 @@ def upgrade():
     )
     op.create_table('surveys',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('health_area', sa.String(length=100), nullable=False),
+    sa.Column('health_area_id', sa.Integer(), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=False),
     sa.Column('enumerator_id', sa.String(length=20), nullable=False),
     sa.Column('date_time_administered', sa.DateTime(), nullable=False),
     sa.Column('duration', sa.Float(), nullable=False),
     sa.Column('respondent', sa.String(length=100), nullable=False),
-    sa.Column('num_outlier_data_points', sa.Integer(), nullable=False),
-    sa.Column('num_dont_know_responses', sa.Integer(), nullable=False),
+    sa.Column('num_outlier_data_points', sa.Integer(), nullable=True),
+    sa.Column('num_dont_know_responses', sa.Integer(), nullable=True),
     sa.Column('outside_health_zone', sa.Boolean(), nullable=True),
     sa.Column('lat', sa.Float(), nullable=False),
     sa.Column('long', sa.Float(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.ForeignKeyConstraint(['health_area_id'], ['health_areas.id'], ),
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -85,6 +92,7 @@ def upgrade():
     sa.Column('question', sa.String(), nullable=False),
     sa.Column('value', sa.String(), nullable=False),
     sa.Column('outside_2_sd', sa.Boolean(), nullable=True),
+    sa.Column('reviewed', sa.Boolean(), nullable=True),
     sa.Column('standard_deviation', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['survey_id'], ['surveys.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -99,5 +107,6 @@ def downgrade():
     op.drop_table('projects')
     op.drop_table('users')
     op.drop_table('types')
+    op.drop_table('health_areas')
     op.drop_table('data_sets')
     # ### end Alembic commands ###

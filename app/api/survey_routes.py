@@ -17,4 +17,3 @@ def all_surveys():
         })
     surveys = db.session.query(Survey).all()
     return jsonify([survey.to_dict() for survey in surveys])
-

@@ -1,4 +1,5 @@
 from app.models import db, Survey
+from app.api.data_processing import data_processing_for_graphs
 from faker import Faker
 
 fake = Faker()
@@ -9,7 +10,7 @@ def seed_surveys():
     # count = 0
     for survey in surveys.values():
         survey_seed = Survey(
-            health_area=survey["health_area"],
+            health_area_id=int(survey["health_area"]),
             project_id=1,
             enumerator_id=survey["enumerator_id"],
             date_time_administered=survey["date_time_administered"],
