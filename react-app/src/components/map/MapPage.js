@@ -13,11 +13,11 @@ function MapPage() {
 
     useEffect(() => {
         const fetchMapData = async () => {
-            let surveys = await fetch("/api/data/1/health-areas/1/map")
+            let surveys = await fetch("/api/data/projects/1/health-areas/1/map")
             let surveysData = await surveys.json()
             setAllData(surveysData)
 
-            let center = await fetch("/api/data/1/health-areas/1/center")
+            let center = await fetch("/api/data/projects/1/health-areas/1/center")
             let centerData = await center.json()
             setViewport({
                 latitude: centerData[0],
@@ -33,7 +33,7 @@ function MapPage() {
     return (
         <div className="map__map_and_selector">
             <div className="map__health_area_selector">
-                
+
             </div>
             <div className="map__map">
                 <Map allData={allData} viewport={viewport} setViewport={setViewport} />
