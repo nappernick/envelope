@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-md/button": "^2.5.0",
+    "@react-md/utils": "^2.5.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -22,7 +24,11 @@
     "react-modal": "^3.12.1",
     "react-number-format": "^4.4.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.1"
+    "react-scripts": "^4.0.1",
+    "react-select": "^3.1.1",
+    "react-virtualized-auto-sizer": "^1.0.3",
+    "react-window": "^1.8.6",
+    "styled-components": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

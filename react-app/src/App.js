@@ -46,9 +46,11 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <User />
         </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/projects/:projectsId/map" exact={true} authenticated={authenticated}>
+          <MapPage />
+        </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
           <h1>My Home Page</h1>
-          <MapPage />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react'
+import HealthAreaSelector from './HealthAreaSelector';
 import Map from './Map'
 
 function MapPage() {
@@ -9,34 +10,46 @@ function MapPage() {
         bearing: 0,
         pitch: 0
     });
-    const [allData, setAllData] = useState(null);
+    const [data, setData] = useState(null);
+    const [healthAreas, setHealthAreas] = useState([])
+    const [selectedHA, setSelectedHA] = useState(null)
+
+    useEffect(() => {
+        const fetchHealthArea = async () => {
+            let has = await (fetch("/api/data/1/projects/1/health-areas"))
+            let hasRes = await has.json()
+            setHealthAreas(hasRes)
+        }
+        fetchHealthArea()
+    }, []);
 
     useEffect(() => {
         const fetchMapData = async () => {
-            let surveys = await fetch("/api/data/projects/1/health-areas/1/map")
-            let surveysData = await surveys.json()
-            setAllData(surveysData)
 
-            let center = await fetch("/api/data/projects/1/health-areas/1/center")
+            let surveys = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/map`)
+            let surveysData = await surveys.json()
+            setData(surveysData)
+
+            let center = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/center`)
             let centerData = await center.json()
             setViewport({
                 latitude: centerData[0],
                 longitude: centerData[1],
-                zoom: 15.5,
+                zoom: 15.3,
                 bearing: 0,
                 pitch: 0
             })
         }
         fetchMapData()
-    }, []);
+    }, [selectedHA]);
 
     return (
         <div className="map__map_and_selector">
-            <div className="map__health_area_selector">
-
-            </div>
             <div className="map__map">
-                <Map allData={allData} viewport={viewport} setViewport={setViewport} />
+                <Map allData={data} viewport={viewport} setViewport={setViewport} />
+            </div>
+            <div className="map__health_area_selector">
+                <HealthAreaSelector healthAreas={healthAreas} setSelectedHA={setSelectedHA} />
             </div>
         </div>
     )
