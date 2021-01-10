@@ -16,7 +16,7 @@ class DataSet(db.Model):
         return {
             "id": self.id,
             "data_set_name": self.data_set_name,
-            "data_set": self.data_set,
+            # "data_set": self.data_set,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }

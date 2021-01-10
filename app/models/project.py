@@ -73,6 +73,8 @@ class Project(db.Model):
             "user_id": self.user_id,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "user": self.user.to_dict(),
+            "data_set": self.data_set.to_dict(),
             "survey_count": len(surveys),
             "health_area_count": health_area_count,
             "enumerator_count": enumerator_count,

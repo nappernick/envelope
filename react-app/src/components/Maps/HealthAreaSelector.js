@@ -10,7 +10,6 @@ function HealthAreaSelector({ healthAreas, setSelectedHA }) {
             className="health-area__btncontainer"
             style={style}>
             <HealthAreaButton
-
                 healthArea={healthAreas[index]}
                 setSelectedHA={data} />
         </div>
