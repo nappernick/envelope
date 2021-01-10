@@ -3,23 +3,24 @@ import { NavLink } from 'react-router-dom';
 import Select from "react-select";
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
-import LogoutButton from '../auth/LogoutButton';
-import { logout } from "../../services/auth";
+import LogoutButton from '../Auth/LogoutButton';
+import { logout } from "../../store/session";
 import 'rc-dropdown/assets/index.css';
 import "./NavBar.css"
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const NavBar = ({ setAuthenticated, authenticated, user }) => {
-  console.log(user)
-  console.log("authenticated?", authenticated)
+const NavBar = () => {
+  const dispatch = useDispatch()
   const [projects, setProjects] = useState([])
+  const authenticated = useSelector(state => state.session.user)
 
   const menuCallback = () => (
     <Menu style={{ cursor: "pointer" }}>
       <MenuItem style={{ cursor: "pointer" }} key="1" onClick={() => {
-        logout()
+        dispatch(logout())
       }}>
-        <LogoutButton setAuthenticated={setAuthenticated} />
+        <LogoutButton />
       </MenuItem>
     </Menu>
   );
@@ -71,13 +72,18 @@ const NavBar = ({ setAuthenticated, authenticated, user }) => {
               Users
           </NavLink>
           </li>}
-          {(authenticated && user && user.type_id === 1) && <li className="navbar__link">
+          {(authenticated && authenticated.type_id === 1) && <li className="navbar__link">
+            <NavLink to="/data-sets" exact={true} activeClassName="active">
+              Data Sets
+          </NavLink>
+          </li>}
+          {(authenticated && authenticated.type_id === 1) && <li className="navbar__link">
             <NavLink to="/projects" exact={true} activeClassName="active">
               All Projects
           </NavLink>
           </li>}
-          {(authenticated && user && user.type_id === 2) && <li className="navbar__link">
-            <NavLink to={`/users/${user.id}/projects`} exact={true} activeClassName="active">
+          {(authenticated && authenticated.type_id === 2) && <li className="navbar__link">
+            <NavLink to={`/users/${authenticated.id}/projects`} exact={true} activeClassName="active">
               My Projects
           </NavLink>
           </li>}
@@ -88,7 +94,7 @@ const NavBar = ({ setAuthenticated, authenticated, user }) => {
                 overlay={menuCallback}
                 animation="slide-up"
               >
-                <div>{user.first_name}</div>
+                <div>{authenticated.first_name}</div>
               </Dropdown>
             </div>
           </li>}

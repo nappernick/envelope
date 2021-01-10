@@ -43,3 +43,40 @@ class Project(db.Model):
             "value": self.id,
             "label": self.project_name
         }
+
+    def to_dict_survey_summary(self):
+        surveys = [survey.to_dict() for survey in self.surveys]
+        enumerators = []
+        health_areas = []
+        health_area_count = 0
+        enumerator_count = 0
+        dont_know_count = 0
+        outlier_count = 0
+        sum_duration = float()
+        for survey in surveys:
+            if survey["enumerator_id"] not in enumerators:
+                enumerator_count += 1
+                enumerators.append(survey["enumerator_id"])
+            if survey["health_area_id"] not in health_areas:
+                health_area_count += 1
+                health_areas.append(survey["health_area_id"])
+            dont_know_count += survey["num_dont_know_responses"]
+            outlier_count += survey["num_outlier_data_points"]
+            sum_duration += survey["duration"]
+        avg_duration = float(sum_duration / len(surveys))
+        return {
+            
+            "id": self.id,
+            "project_name": self.project_name,
+            "project_notes": self.project_notes,
+            "data_set_id": self.data_set_id,
+            "user_id": self.user_id,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "survey_count": len(surveys),
+            "health_area_count": health_area_count,
+            "enumerator_count": enumerator_count,
+            "dont_know_count": dont_know_count,
+            "outlier_count": outlier_count,
+            "avg_duration": avg_duration
+        }
