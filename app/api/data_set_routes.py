@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
-from app.models import db, DataSet, HealthArea, Survey
+from app.models import db, DataSet, HealthArea, Survey, Project
 from .auth_routes import authenticate
 # from .data_processing import data_processing
 
@@ -15,17 +15,32 @@ def data():
     return jsonify([data_set.to_dict() for data_set in data])
 
 @data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')
-@login_required
+# @login_required
 def violin_plot(dataSetId, surveyField):
     
     curr_user = current_user.to_dict()
-    surveys = db.session.query(DataSet).get(dataSetId).projects.filter_by(user_id=curr_user["id"]).first().surveys
-    data_set_for_graph = []
-    surveys_list = list(surveys)
-    for survey in surveys_list:
-        data_set_for_graph.append(survey.to_dict())
-
-    return jsonify(data_set_for_graph)
+    surveys_query = db.session.query(DataSet.id,\
+        Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
+            ).filter(DataSet.id==dataSetId, Project.user_id ==current_user.id)\
+            .join(Project, Project.data_set_id==DataSet.id)\
+            .join(Survey, Survey.project_id==Project.id)
+    surveys = db.session.execute(surveys_query)
+    result_dict = {}
+    for survey in surveys:
+        if dict(survey)["surveys_enumerator_id"] in result_dict:
+            result_dict[dict(survey)["surveys_enumerator_id"]].append(dict(survey)[f"surveys_{surveyField}"])
+        else:
+            result_dict[dict(survey)["surveys_enumerator_id"]] = [dict(survey)[f"surveys_{surveyField}"]]
+    # OLD WAY - SLOW:
+    # surveys = db.session.query(DataSet).get(dataSetId).projects.filter_by(user_id=curr_user["id"]).first().surveys
+    # for survey in surveys:
+    #     print(survey)
+    # data_set_for_graph = []
+    # surveys_list = list(surveys)
+    # for survey in surveys_list:
+    #     data_set_for_graph.append(survey.to_dict())
+    # return jsonify({dict(row)["surveys_enumerator_id"]: [dict(row)[f"surveys_{surveyField}"] for row in surveys]})
+    return jsonify(result_dict)
 
 @data_set_routes.route("/projects/<int:projectId>/health-areas/<int:healthAreaId>/map")
 @login_required
@@ -83,5 +98,5 @@ def health_areas():
 def project_health_areas(projectId,dataSetId):
     health_area_ids = Survey.get_health_area_ids(projectId)
     health_areas = HealthArea.class_to_dict()
-    ha_names = [health_areas[ha_id] for ha_id in health_area_ids]
+    ha_names = [{"name": health_areas[ha_id], "id": ha_id} for ha_id in health_area_ids]
     return jsonify(ha_names)

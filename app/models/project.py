@@ -37,3 +37,9 @@ class Project(db.Model):
             "user": self.user.to_dict(),
             "surveys": [survey.to_dict() for survey in self.surveys]
         }
+
+    def search(self):
+        return {
+            "value": self.id,
+            "label": self.project_name
+        }

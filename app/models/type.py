@@ -12,3 +12,9 @@ class Type(db.Model):
             "id": self.id,
             "type": self.type
         }
+    
+    def name_to_id(self):
+        return {
+            "value": self.id,
+            "label": self.type
+        }

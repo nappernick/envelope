@@ -1,15 +1,20 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required
-from app.models import db, User
+from app.models import db, User, Type
 from .auth_routes import authenticate
 
 user_routes = Blueprint('users', __name__)
 
 
+@user_routes.route("/types")
+def types():
+    types = db.session.query(Type).all()
+    return jsonify([type.name_to_id() for type in types])
+
 @user_routes.route('/')
 @login_required
 def users():
-    users = User.query.all()
+    users = db.session.query(User).all()
     return jsonify([user.to_dict() for user in users])
 
 

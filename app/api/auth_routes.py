@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
 
 auth_routes = Blueprint('auth', __name__)
@@ -34,7 +35,7 @@ def login():
     Logs a user in
     """
     form = LoginForm()
-    print(request.get_json())
+    print("____________REQUEST JSON____________", request.get_json())
     # Get the csrf_token from the request cookie and put it into the
     # form manually to validate_on_submit can be used
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -62,6 +63,7 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print(form.data)
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],
@@ -69,7 +71,9 @@ def sign_up():
             password=form.data['password'],
             first_name=form.data['first_name'],
             last_name=form.data['last_name'],
-            type_id=form.data['type_id']
+            type_id=form.data['type_id'],
+            created_at=datetime.now(),
+            updated_at=datetime.now()
         )
         db.session.add(user)
         db.session.commit()
