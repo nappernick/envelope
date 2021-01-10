@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import HealthAreaSelector from './HealthAreaSelector';
 import Map from './Map'
 

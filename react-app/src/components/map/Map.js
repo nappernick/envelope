@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import MapGL, {
     Popup,
     NavigationControl,

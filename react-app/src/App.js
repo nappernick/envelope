@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import * as sessionActions from '../../store/session';
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
@@ -11,14 +13,13 @@ import MapPage from "./components/map/MapPage";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const user = useSelector(state => state.session.user)
+  // const [user, setUser] = useState()
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const user = await authenticate();
-      if (!user.errors) {
-        setAuthenticated(true);
-      }
+      dispatchEvent(sessionActions.restore())
       setLoaded(true);
     })();
   }, []);
@@ -26,15 +27,14 @@ function App() {
   if (!loaded) {
     return null;
   }
+  console.log("APP LEVEL:", authenticated)
 
   return (
     <BrowserRouter>
-      <NavBar setAuthenticated={setAuthenticated} />
+      <NavBar />
       <Switch>
         <Route path="/login" exact={true}>
           <LoginForm
-            authenticated={authenticated}
-            setAuthenticated={setAuthenticated}
           />
         </Route>
         <Route path="/sign-up" exact={true}>
@@ -45,6 +45,18 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
           <User />
+        </ProtectedRoute>
+        <ProtectedRoute path="/projects" exact={true} authenticated={authenticated}>
+          {/* Component that shows this all projects, only available to admin users */}
+        </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/projects" exact={true} authenticated={authenticated}>
+          {/* Component that shows this user's projects */}
+        </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/projects/:projectsId/stats" exact={true} authenticated={authenticated}>
+          {/* Component that renders all statistics */}
+        </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/projects/:projectsId/stats/:statsString" exact={true} authenticated={authenticated}>
+          {/* Component that renders specific, selected graph/plot */}
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/projects/:projectsId/map" exact={true} authenticated={authenticated}>
           <MapPage />

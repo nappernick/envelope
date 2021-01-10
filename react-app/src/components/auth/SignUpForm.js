@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from 'react-router-dom';
 import Select from "react-select";
-import { signUp } from '../../services/auth';
+import { signup } from '../../store/session';
 
-const SignUpForm = ({ authenticated, setAuthenticated }) => {
+const SignUpForm = () => {
+  const dispatch = useDispatch()
+  const sessionUser = useSelector(state => state.session.user)
+  const [errors, setErrors] = useState([]);
   const [types, setTypes] = useState([])
-  const [typesObj, setTypesObj] = useState({})
-  const [selectedType, setSelectedType] = useState("")
   const [typeId, setTypeId] = useState(0)
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -18,11 +19,15 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      console.log(typeId)
-      const user = await signUp(username, email, password, firstName, lastName, typeId);
-      if (!user.errors) {
-        setAuthenticated(true);
-      }
+      user = await dispatch(signup({
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        typeId
+      })).catch((res) => { if (res.data && res.data.errors) setErrors(res.data.errors) })
+
     }
   };
 
@@ -54,24 +59,22 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
     (async () => {
       const fetchedTypes = await fetch("/api/users/types")
       const typesListObjs = await fetchedTypes.json()
-      let typesObj = {}
-      let types = typesListObjs.map(type => {
-        typesObj[Object.keys(type)[0]] = Object.values(type)[0]
-        return Object.keys(type)[0]
-      })
-      setTypesObj(typesObj)
-      setTypes(types)
+      setTypes(typesListObjs)
     })()
   }, [])
 
 
-  if (authenticated) {
+  if (sessionUser) {
     return <Redirect to="/" />;
   }
-  console.log(typesObj[selectedType])
 
   return (
     <form onSubmit={onSignUp}>
+      <div>
+        {errors.map((error) => (
+          <div>{error}</div>
+        ))}
+      </div>
       <div>
         <label>User Name</label>
         <input
@@ -102,9 +105,7 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
       <div>
         <label>Type</label>
         <Select options={types} onChange={(values) => {
-          let type_id = typesObj[values]
-          setTypeId(type_id)
-          setSelectedType(values)
+          setTypeId(values.value)
         }} />
       </div>
       <div>
