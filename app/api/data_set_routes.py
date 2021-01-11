@@ -18,7 +18,9 @@ def data():
 @data_set_routes.route("/", methods=["POST"])
 @login_required
 def data_file_upload():
+    return
     
+
 
 @data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')
 @login_required

@@ -10,6 +10,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import MapPage from "./components/Maps/MapPage";
 import AllProjects from "./components/Projects/AllProjects";
+import FileUpload from "./components/Data/FileUpload";
 
 function App() {
   const dispatch = useDispatch()
@@ -50,19 +51,25 @@ function App() {
         <ProtectedRoute path="/data-sets" exact={true} authenticated={user}>
           {/* Component that shows this all projects, only available to admin users */}
         </ProtectedRoute>
+        <ProtectedRoute path="/data-sets/upload" exact={true} authenticated={user}>
+          <FileUpload />
+        </ProtectedRoute>
         <ProtectedRoute path="/projects" exact={true} authenticated={user}>
           <AllProjects />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/projects" exact={true} authenticated={user}>
           {/* Component that shows this user's projects */}
         </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectsId/stats" exact={true} authenticated={user}>
+        <ProtectedRoute path="/users/:userId/projects/:projectId" exact={true} authenticated={user}>
+          {/* Component that shows a specific project in detail */}
+        </ProtectedRoute>
+        <ProtectedRoute path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
           {/* Component that renders all statistics */}
         </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectsId/stats/:statsString" exact={true} authenticated={user}>
+        <ProtectedRoute path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
           {/* Component that renders specific, selected graph/plot */}
         </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectsId/map" exact={true} authenticated={user}>
+        <ProtectedRoute path="/users/:userId/projects/:projectId/map" exact={true} authenticated={user}>
           <MapPage />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={user}>

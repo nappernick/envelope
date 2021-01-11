@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import Select from "react-select";
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const NavBar = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const [projects, setProjects] = useState([])
   const authenticated = useSelector(state => state.session.user)
 
@@ -55,7 +56,7 @@ const NavBar = () => {
             })}
             placeholder="Search Projects... "
             onChange={(values) => {
-              return <Redirect to={`/users/${authenticated.id}/projects/${values.id}`} />
+              return history.push(`/users/${authenticated.id}/projects/${values.value}`)
             }} />
         </div>
         <div className="navbar__links">
@@ -75,7 +76,7 @@ const NavBar = () => {
           </NavLink>
           </li>}
           {(authenticated && authenticated.type_id === 1) && <li className="navbar__link">
-            <NavLink to="/data-sets" exact={true} activeClassName="active">
+            <NavLink to="/data-sets/upload" exact={true} activeClassName="active">
               Data Sets
           </NavLink>
           </li>}
