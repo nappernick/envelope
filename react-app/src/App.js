@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from './store/session';
 import LoginForm from "./components/Auth/LoginForm";
@@ -66,7 +66,7 @@ function App() {
           <MapPage />
         </ProtectedRoute>
         <ProtectedRoute path="/" exact={true} authenticated={user}>
-          <h1>My Home Page</h1>
+          <Redirect to="/projects" />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

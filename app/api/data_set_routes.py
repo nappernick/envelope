@@ -15,9 +15,31 @@ def data():
     return jsonify([data_set.to_dict() for data_set in data])
 
 @data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')
-# @login_required
+@login_required
 def violin_plot(dataSetId, surveyField):
-    
+    curr_user = current_user.to_dict()
+    surveys_query = db.session.query(DataSet.id,\
+        Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
+            ).filter(DataSet.id==dataSetId, Project.user_id ==current_user.id)\
+            .join(Project, Project.data_set_id==DataSet.id)\
+            .join(Survey, Survey.project_id==Project.id)
+    surveys = db.session.execute(surveys_query)
+    result_list = {}
+    for value in [dict(survey)[f"surveys_{surveyField}"] for survey in surveys]:
+        if int(value) in result_list:
+            result_list[int(value)] += 1
+        else:
+            result_list[int(value)] = 1
+    final_obj = {}
+    final_obj["value_count_pairs"] = result_list
+    final_obj["data_for_box_plot"] = [{"value": key, "count": value} for key, value in result_list.items()]
+    # return jsonify([{"value": key, "count": value} for key, value in result_list.items()])
+    return jsonify(final_obj)
+        
+
+@data_set_routes.route('/<dataSetId>/violinplot/<surveyField>/by-enumerator')
+@login_required
+def violin_plot_by_enumerator(dataSetId, surveyField):
     curr_user = current_user.to_dict()
     surveys_query = db.session.query(DataSet.id,\
         Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\

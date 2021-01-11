@@ -47,9 +47,9 @@ const NavBar = () => {
               borderRadius: 5,
               colors: {
                 ...theme.colors,
-                primary: "#ecceda",
-                primary25: "B8BBC3",
-                primary50: "636F84"
+                primary: "#e89313",
+                primary25: "#e8e07b",
+                primary50: "#636F84"
               }
             })}
             placeholder="Search Projects... "

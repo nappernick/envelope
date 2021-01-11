@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FixedSizeList as List } from 'react-window';
+import { trackPromise } from "react-promise-tracker";
+import { areas } from "../../common/areas";
 import Project from './Project'
+import Spinner from '../Spinner';
 
 function AllProjects() {
     const user = useSelector(store => store.session.user)
@@ -23,11 +26,12 @@ function AllProjects() {
             const p = await pf.json()
             setProjects(p)
         }
-        projectsFetch()
+        trackPromise(projectsFetch(), areas.projects)
 
     }, [])
     return (
         <>
+            <Spinner areas={areas.projects} />
             <List
                 className="health_areas__container"
                 height={500}
