@@ -15,11 +15,11 @@ def data():
     # return jsonify(str(curr_user["id"]))
     return jsonify([data_set.to_dict() for data_set in data])
 
-@data_set_routes.route("/", methods=["POST"])
+@data_set_routes.route("/upload", methods=['POST'])
 @login_required
 def data_file_upload():
-    return
-    
+    print(request.method)
+
 
 
 @data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')

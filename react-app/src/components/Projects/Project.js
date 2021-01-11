@@ -23,7 +23,7 @@ function Project({ project, user }) {
                 <div className="project__info header">
                     Project Info
                 </div>
-                {user.type_id == 1 && <div className="project__owner container">
+                {user.type_id === 1 && <div className="project__owner container">
                     <div className="project__owner title">
                         Project Owner:
                     </div>
