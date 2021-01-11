@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import Select from "react-select";
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
@@ -42,6 +42,7 @@ const NavBar = () => {
         <div className="navbar__search">
           <Select
             options={projects}
+            isSearchable={true}
             theme={theme => ({
               ...theme,
               borderRadius: 5,
@@ -54,6 +55,7 @@ const NavBar = () => {
             })}
             placeholder="Search Projects... "
             onChange={(values) => {
+              return <Redirect to={`/users/${authenticated.id}/projects/${values.id}`} />
             }} />
         </div>
         <div className="navbar__links">

@@ -8,12 +8,17 @@ from .auth_routes import authenticate
 data_set_routes = Blueprint('data', __name__)
 
 @data_set_routes.route('/')
-# @login_required
+@login_required
 def data():
     data = db.session.query(DataSet).all()
     # curr_user = current_user.to_dict()
     # return jsonify(str(curr_user["id"]))
     return jsonify([data_set.to_dict() for data_set in data])
+
+@data_set_routes.route("/", methods=["POST"])
+@login_required
+def data_file_upload():
+    
 
 @data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')
 @login_required
