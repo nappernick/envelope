@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+import numpy as np 
 from flask_login import login_required, current_user
 from app.models import db, DataSet, HealthArea, Survey, Project
 from .auth_routes import authenticate
@@ -24,15 +25,37 @@ def violin_plot(dataSetId, surveyField):
             .join(Project, Project.data_set_id==DataSet.id)\
             .join(Survey, Survey.project_id==Project.id)
     surveys = db.session.execute(surveys_query)
-    result_list = {}
-    for value in [dict(survey)[f"surveys_{surveyField}"] for survey in surveys]:
-        if int(value) in result_list:
-            result_list[int(value)] += 1
+    result_obj = {}
+    values_list = []
+    outliers = []
+    list_of_dict_survey_values = [dict(survey)[f"surveys_{surveyField}"] for survey in surveys]
+    for value in list_of_dict_survey_values:
+        values_list.append(int(value))
+        if int(value) in result_obj:
+            result_obj[int(value)] += 1
         else:
-            result_list[int(value)] = 1
+            result_obj[int(value)] = 1
+    q1, q3= np.percentile(values_list,[25,75])
+    iqr = q3 - q1
+    lower_bound = q1 -(1.5 * iqr) 
+    upper_bound = q3 +(1.5 * iqr) 
+    for value in list_of_dict_survey_values:
+        if int(value) < lower_bound:
+            outliers.append(int(value))
+        if int(value) > upper_bound:
+            outliers.append(int(value))
     final_obj = {}
-    final_obj["value_count_pairs"] = result_list
-    final_obj["data_for_box_plot"] = [{"value": key, "count": value} for key, value in result_list.items()]
+    final_obj["value_count_pairs"] = result_obj
+    final_obj["data_for_box_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
+    # final_obj['values'] = values_list
+    final_obj["min"] = min(values_list)
+    final_obj["max"] = max(values_list)
+    final_obj["median"] = np.median(values_list)
+    final_obj["lower_bound"] = lower_bound
+    final_obj["upper_bound"] = upper_bound
+    final_obj["first_quartile"] = q1
+    final_obj["third_quartile"] = q3
+    final_obj["outliers"] = outliers
     # return jsonify([{"value": key, "count": value} for key, value in result_list.items()])
     return jsonify(final_obj)
         
