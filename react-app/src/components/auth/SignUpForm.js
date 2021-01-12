@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Select from "react-select";
 import { signup } from '../../store/session';
 
-const SignUpForm = () => {
+const SignUpForm = ({ closeModal }) => {
   const dispatch = useDispatch()
   const sessionUser = useSelector(state => state.session.user)
   const [errors, setErrors] = useState([]);
@@ -28,8 +28,8 @@ const SignUpForm = () => {
         lastName,
         typeId
       })).catch((res) => { if (res.data && res.data.errors) setErrors(res.data.errors) })
-
     }
+    closeModal()
   };
 
   const updateUsername = (e) => {
@@ -63,11 +63,6 @@ const SignUpForm = () => {
       setTypes(typesListObjs)
     })()
   }, [])
-
-
-  if (sessionUser) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <form onSubmit={onSignUp}>

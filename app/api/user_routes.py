@@ -15,7 +15,7 @@ def types():
 @login_required
 def users():
     users = db.session.query(User).all()
-    return jsonify([user.to_dict() for user in users])
+    return jsonify([user.to_dict_full() for user in users])
 
 
 

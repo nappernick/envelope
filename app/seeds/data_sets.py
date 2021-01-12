@@ -19,7 +19,7 @@ def seed_data_sets():
 
 
     data_set1 = DataSet(
-        data_set_name="test_set",
+        data_set_name="test_set.csv",
         data_set=pickledfile,
     )
 

@@ -1,4 +1,22 @@
 import csv
+import os
+import pandas as pd
+
+def dta_to_pickle(dta):
+    data = pd.io.stata.read_stata(dta)
+    csv_file = data.to_csv()
+    file_final = pickle.dumps(csv_file)
+    return file_final
+
+def zip_to_pickle(zip):
+    zipfile_ob = zipfile.ZipFile(file_like_object)
+    file_names = zipfile_ob.namelist()
+    file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
+    files = [zipfile_ob.open(name).read() for name in file_names]
+    file_final = files[0]
+    file_final = pickle.dumps(file_final)
+    return file_final
+
 
 def data_processing_creating_survey_records(csvf):
     dict = {}
@@ -25,9 +43,9 @@ def data_processing_creating_survey_records(csvf):
             column_data[target_columns[8]].append(row[target_indices[8]])
             column_data[target_columns[9]].append(row[target_indices[9]])
         # print(column_data["row_index"])
-        return column_data
+        return column_data 
 
-def data_processing_for_graphs(csvf):
+def data_processing_for_survey_records(csvf):
     dict = {}
     with open(csvf) as csvfile:
         # original column headings: ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
@@ -66,6 +84,6 @@ def data_processing_for_health_areas(csvf):
         return health_areas
 
 
-# data_processing_for_graphs("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
+# data_processing_for_survey_records("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
 # data_processing("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash_gps.csv")
 # data_processing_for_health_areas("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")

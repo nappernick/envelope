@@ -1,9 +1,9 @@
 from app.models import db, Type
 
 def seed_types():
-    admin = Type(type="admin")
-    client = Type(type="client")
-    lb = Type(type="low_bandwidth")
+    admin = Type(type="Admin")
+    client = Type(type="Client")
+    lb = Type(type="Low Bandwidth")
 
     db.session.add(admin)
     db.session.add(client)

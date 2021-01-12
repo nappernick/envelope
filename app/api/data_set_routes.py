@@ -1,5 +1,9 @@
-from flask import Blueprint, jsonify
+import os
+import zipfile
+import pickle
+import pandas as pd
 import numpy as np 
+from flask import Flask, Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, DataSet, HealthArea, Survey, Project
 from .auth_routes import authenticate
@@ -11,14 +15,54 @@ data_set_routes = Blueprint('data', __name__)
 @login_required
 def data():
     data = db.session.query(DataSet).all()
-    # curr_user = current_user.to_dict()
-    # return jsonify(str(curr_user["id"]))
     return jsonify([data_set.to_dict() for data_set in data])
 
 @data_set_routes.route("/upload", methods=['POST'])
 @login_required
 def data_file_upload():
-    print(request.method)
+    file = request.files['myFile']
+    file_name = file.filename
+    print(file_name)
+    file_name_list = file.filename.split(".")
+    file_like_object = file.stream._file
+    if file_name_list[len(file_name_list)-1] == "dta":
+        print("__________AT DTA")
+        data = pd.io.stata.read_stata(file)
+        csv_file = data.to_csv()
+        file_final = pickle.dumps(csv_file)
+        data_set = DataSet(
+            data_set_name=file_name,
+            data_set=file_final
+        )
+        db.session.add(data_set)
+        db.session.commit() 
+
+    if file_name_list[len(file_name_list)-1] == "zip":
+        zipfile_ob = zipfile.ZipFile(file_like_object)
+        file_names = zipfile_ob.namelist()
+        file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
+        files = [zipfile_ob.open(name).read() for name in file_names]
+        file_final = files[0]
+        file_final = pickle.dumps(file_final)
+        data_set = DataSet(
+            data_set_name=file_name,
+            data_set=file_final
+        )
+        db.session.add(data_set)
+        db.session.commit() 
+
+    if file_name_list[len(file_name_list)-1] == "csv":
+        print("_____AT CSV")
+        file_final=file.read()
+        data_set = DataSet(
+            data_set_name=file_name,
+            data_set=file_final
+        )
+        db.session.add(data_set)
+        db.session.commit()
+    else :
+        return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
+    return jsonify("file")
 
 
 
