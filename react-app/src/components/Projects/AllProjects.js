@@ -16,7 +16,7 @@ const customStyles = {
         left: '70%',
         right: '40%',
         bottom: 'auto',
-        height: "45%",
+        height: "65%",
         marginRight: '-50%',
         paddingTop: "0px",
         transform: 'translate(-100%, -50%)',
@@ -60,7 +60,7 @@ function AllProjects() {
             <List
                 className="projects__list container"
                 height={500}
-                itemSize={50}
+                itemSize={320}
                 width={500}
                 itemCount={projects.length}
             >
@@ -80,7 +80,7 @@ function AllProjects() {
                         style={customStyles}
                         contentLabel="New Project Upload Modal"
                     >
-                        <NewProjectModal />
+                        <NewProjectModal closeModal={closeModal} />
                     </Modal>
                 </div>
             </div>

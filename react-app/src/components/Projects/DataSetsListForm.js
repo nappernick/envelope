@@ -29,6 +29,7 @@ function DataSetsListForm({ dataSetsObj }) {
                             "selected": selected,
                         }
                         return (<SingleDataSet
+                            key={index}
                             dataSetObj={dataSetObj}
                             className={`data-set-${index}`}
                         />)

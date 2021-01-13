@@ -34,6 +34,7 @@ def data_file_upload():
         print("__________AT DTA")
         data = pd.io.stata.read_stata(file)
         csv_file = data.to_csv()
+        csv_file = csv_file.decode("utf-8")
         file_final = pickle.dumps(csv_file)
 
     elif file_name_list[len(file_name_list)-1] == "zip":
@@ -42,12 +43,13 @@ def data_file_upload():
         file_names = zipfile_ob.namelist()
         file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
         files = [zipfile_ob.open(name).read() for name in file_names]
-        file_final = files[0]
+        file_final = files[0].decode("utf-8")
         file_final = pickle.dumps(file_final)
 
     elif file_name_list[len(file_name_list)-1] == "csv":
         print("_____AT CSV")
-        file_final=file.read()
+        csv_file=file.read()
+        file_final = pickle.dumps(csv_file)
     else :
         return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
     data_set = DataSet(

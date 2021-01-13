@@ -63,7 +63,7 @@ class Project(db.Model):
             dont_know_count += survey["num_dont_know_responses"]
             outlier_count += survey["num_outlier_data_points"]
             sum_duration += survey["duration"]
-        avg_duration = float(sum_duration / len(surveys))
+        avg_duration = float(sum_duration / len(surveys)) if len(surveys) else 0.00
         return {
             
             "id": self.id,

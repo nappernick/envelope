@@ -7,9 +7,17 @@ function SingleDataSet({ dataSetObj }) {
 
     const handleSwitch = () => {
         setSwitched(!switched)
-        if (switched) setSelected(null)
-        else setSelected(index)
+        if (switched) {
+            setSelected(null)
+            setSelectedDataSetId(null)
+        }
+        else {
+            setSelected(index)
+            const id = dataSet.id
+            setSelectedDataSetId(id)
+        }
     }
+
     return (
         <>
             <tr className="projects_modal__user_list row">

@@ -27,7 +27,7 @@ const SignUpForm = ({ closeModal }) => {
         firstName,
         lastName,
         typeId
-      })).catch((res) => { if (res.data && res.data.errors) setErrors(res.data.errors) })
+      })).catch((res) => { if (res.data && res.data.errors) return setErrors(res.data.errors) })
     }
     closeModal()
   };
@@ -66,9 +66,9 @@ const SignUpForm = ({ closeModal }) => {
 
   return (
     <form onSubmit={onSignUp}>
-      <div>
+      <div className={"sign_up__errors container"}>
         {errors.map((error) => (
-          <div>{error}</div>
+          <div className={"sign_up__errors error"}>{error}</div>
         ))}
       </div>
       <div>
