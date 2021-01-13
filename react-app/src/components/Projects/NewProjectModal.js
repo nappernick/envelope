@@ -4,6 +4,7 @@ import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import UserListForm from './UserListForm';
 import { useSelector } from 'react-redux';
+import DataSetsListForm from './DataSetsListForm';
 
 function NewProjectModal() {
     const [users, setUsers] = useState([]);
@@ -14,6 +15,10 @@ function NewProjectModal() {
     const selectedObj = {
         "selectedUsers": selectedUsers,
         "setSelectedUsers": setSelectedUsers
+    }
+    const dataSetsObj = {
+        "dataSets": dataSets,
+        "setSelectedDataSetId": setSelectedDataSetId
     }
 
     useEffect(() => {
@@ -48,7 +53,8 @@ function NewProjectModal() {
                     </div>
                     <hr />
                     <div className="projects_modal__data_sets table">
-
+                        <Spinner areas={areas.dataSetList} />
+                        {dataSets && <DataSetsListForm dataSetsObj={dataSetsObj} />}
                     </div>
                 </div>
             </div>

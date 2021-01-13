@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import SingleDataSet from './SingleDataSet'
 
-function DataSetsListForm({ dataSets }) {
+function DataSetsListForm({ dataSetsObj }) {
+    const { dataSets, setSelectedDataSetId } = dataSetsObj
+    const [isSelected, setIsSelcted] = useState(null)
+    const [selected, setSelected] = useState(null)
+
     return (
         <>
             <table className="projects_modal__user_list">
@@ -15,7 +20,19 @@ function DataSetsListForm({ dataSets }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataSets.map((dataSet) => <SingleUserForm dataSet={dataSet} setSelectedDataSetId={setSelectedDataSetId} />)}
+                    {dataSets.map((dataSet, index) => {
+                        const dataSetObj = {
+                            "dataSet": dataSet,
+                            "setSelectedDataSetId": setSelectedDataSetId,
+                            "index": index,
+                            "setSelected": setSelected,
+                            "selected": selected,
+                        }
+                        return (<SingleDataSet
+                            dataSetObj={dataSetObj}
+                            className={`data-set-${index}`}
+                        />)
+                    })}
                 </tbody>
             </table>
         </ >

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Switch from "react-switch";
 
-function SingleDataSet() {
+function SingleDataSet({ dataSetObj }) {
+    const { dataSet, setSelectedDataSetId, index, setSelected, selected } = dataSetObj
     const [switched, setSwitched] = useState(false)
 
     const handleSwitch = () => {
         setSwitched(!switched)
+        if (switched) setSelected(null)
+        else setSelected(index)
     }
     return (
         <>
@@ -16,7 +20,8 @@ function SingleDataSet() {
                     {dataSet.created_at}
                 </td>
                 <td className="projects_modal__user_list row">
-                    <Switch onChange={handleSwitch} checked={switched} />
+                    <Switch onChange={handleSwitch} checked={switched}
+                        disabled={selected == index || selected == null ? false : true} />
                     {/* <input type="checkbox" /> */}
                 </td>
             </tr>
