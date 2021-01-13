@@ -10,6 +10,10 @@ from .surveys import seed_surveys, undo_surveys
 # So we can type `flask seed --help`
 seed_commands = AppGroup('seed')
 
+@seed_commands.command('file')
+def seed_file():
+    seed_surveys()
+
 # Creates the `flask seed all` command
 @seed_commands.command('all')
 def seed():

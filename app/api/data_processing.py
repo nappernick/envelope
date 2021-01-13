@@ -18,54 +18,67 @@ def zip_to_pickle(zip):
     return file_final
 
 
-def data_processing_creating_survey_records_from_file(csvf):
-    print(csvf)
-    # csv_test = ("test.csv", csvf)
-    with open(csvf) as csvfile:
-        data_processing_creating_survey_records(csvfile)
+# def data_processing_creating_survey_records_from_file(csvf):
+#     print(csvf)
+#     # csv_test = ("test.csv", csvf)
+#     with open(csvf) as csvfile:
+#         data_processing_creating_survey_records(csvfile)
 
-def data_processing_creating_survey_records(csvfile):
-    # original column headings: ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
-    target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
-    target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
-    column_data = {}
-    for column in target_columns:
-        column_data[column] = []
-    reader = csv.reader(csvfile, delimiter=",")
-    for row in reader:
-        # print(row[0])
-        if row[0] == '':
-            continue
+# def data_processing_creating_survey_records(csvfile):
+#     # original column headings: ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
+#     target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
+#     target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
+#     column_data = {}
+#     for column in target_columns:
+#         column_data[column] = []
+#     reader = csv.reader(csvfile, delimiter=",")
+#     for row in reader:
+#         # print(row[0])
+#         if row[0] == '':
+#             continue
 
-        column_data[target_columns[0]].append(f'{row[target_indices[0]]} {row[target_indices[1]]}')
-        column_data[target_columns[2]].append(row[target_indices[2]])
-        column_data[target_columns[3]].append(row[target_indices[3]])
-        column_data[target_columns[4]].append(row[target_indices[4]])
-        column_data[target_columns[5]].append(row[target_indices[5]])
-        column_data[target_columns[6]].append(row[target_indices[6]])
-        column_data[target_columns[7]].append(row[target_indices[7]])
-        column_data[target_columns[8]].append(row[target_indices[8]])
-        column_data[target_columns[9]].append(row[target_indices[9]])
-    # print(column_data["row_index"])
-    return column_data 
+#         column_data[target_columns[0]].append(f'{row[target_indices[0]]} {row[target_indices[1]]}')
+#         column_data[target_columns[2]].append(row[target_indices[2]])
+#         column_data[target_columns[3]].append(row[target_indices[3]])
+#         column_data[target_columns[4]].append(row[target_indices[4]])
+#         column_data[target_columns[5]].append(row[target_indices[5]])
+#         column_data[target_columns[6]].append(row[target_indices[6]])
+#         column_data[target_columns[7]].append(row[target_indices[7]])
+#         column_data[target_columns[8]].append(row[target_indices[8]])
+#         column_data[target_columns[9]].append(row[target_indices[9]])
+#     # print(column_data["row_index"])
+#     return column_data 
 
 def data_processing_for_survey_records_from_file(csvf):
     # csv_test = ("test.csv", csvf)
-    with open(csvf) as csvfile:
-        data_processing_creating_survey_records(csvfile)
+    with open(csvf, newline="", mode='r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=",")
+        for row in reader:
+            print("______ IN A ROW",row)
+            break
+        # return data_processing_for_survey_records(csvfile)
 
 def data_processing_for_survey_records(csv_file):
-    # print(csv_file)
-    file_it = csv_file.split("\n")
+    if "\n" in csv_file:
+        print("______if HERE")
+        file_it = csv_file.split("\n")
+        reader = csv.reader(file_it, delimiter=",")
+    else: 
+        print("______ELSE HERE")
+        reader = csv.reader(csv_file, delimiter=",")
+        for row in reader:
+            print("______ IN A ROW",row)
+            break
     # print(csv_file)
     # print(file_it)
     # original column headings: ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
-    target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
-    target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
-    column_data = {}
-    health_areas = []
-    reader = csv.reader(file_it, delimiter=",")
+    # target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
+    # target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
+    # column_data = {}
+    # health_areas = []
+    print(reader)
     for row in reader:
+        print("_________ ROW",row)
         if len(row) == 0:
             continue
         if row[0] == '':
@@ -82,6 +95,7 @@ def data_processing_for_survey_records(csv_file):
             "num_dont_know_responses": row[target_indices[7]],
             "num_outlier_data_points": row[target_indices[8]]
         }
+    print(column_data)
     return column_data
 
 def data_processing_for_health_areas(csvf):

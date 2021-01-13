@@ -8,7 +8,8 @@ def seed_surveys():
     surveys = data_processing_for_survey_records_from_file("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
     # print(surveys)
     # count = 0
-    for survey in surveys.values():
+    # print(surveys)
+    for survey in surveys:
         survey_seed = Survey(
             health_area_id=int(survey["health_area"]),
             project_id=1,
