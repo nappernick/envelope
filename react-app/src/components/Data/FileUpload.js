@@ -70,7 +70,7 @@ function FileUpload() {
                 />
             </div>
             <div className="file_upload__button">
-                <button onClick={openModal}>
+                <button onClick={openModal} disabled={file ? false : true}>
                     Confirm & Upload
             </button>
             </div>

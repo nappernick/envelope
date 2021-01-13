@@ -3,7 +3,13 @@ import { FixedSizeList as List } from 'react-window';
 import HealthAreaButton from './HealthAreaButton';
 
 
-function HealthAreaSelector({ healthAreas, setSelectedHA }) {
+function HealthAreaSelector({ healthAreas, setSelectedHA, spinAreaObj }) {
+    const { spinArea, setSpinArea } = spinAreaObj
+    const ha_obj = {
+        "setSelectedHA": setSelectedHA,
+        "spinArea": spinArea,
+        "setSpinArea": setSpinArea
+    }
 
     const Row = ({ data, index, style }) => (
         <div key={`m_${index}`}
@@ -11,7 +17,9 @@ function HealthAreaSelector({ healthAreas, setSelectedHA }) {
             style={style}>
             <HealthAreaButton
                 healthArea={healthAreas[index]}
-                setSelectedHA={data} />
+                ha_obj={ha_obj}
+                index={index}
+            />
         </div>
     );
 

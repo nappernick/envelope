@@ -1,23 +1,23 @@
 import React from "react";
 import { usePromiseTracker } from "react-promise-tracker";
-import { Circle } from "better-react-spinkit"
+import { DoubleBounce } from "better-react-spinkit"
 
-export const Spinner = (props) => {
+
+function SmallCubeGrid(props) {
     const { promiseInProgress } = usePromiseTracker({
         area: props.areas,
         delay: 0,
     });
-
-    console.log("PROMISE IN PROGRESS: ", promiseInProgress)
+    console.log("SML CUBE PROMISE IN PROGRESS: ", promiseInProgress)
     return (
         <>
             {promiseInProgress && (
                 <div className="spinner">
-                    <Circle size={100} />
+                    <DoubleBounce size={16} />
                 </div>
             )}
         </>
-    );
-};
+    )
+}
 
-export default Spinner;
+export default SmallCubeGrid

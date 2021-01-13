@@ -18,7 +18,6 @@ def users():
     return jsonify([user.to_dict_full() for user in users])
 
 
-
 @user_routes.route('/<int:id>')
 @login_required
 def user(id):
@@ -38,4 +37,4 @@ def admin_fetch_clients(id):
                 "Unauthorized"
             ]
         })
-    return jsonify([user.to_dict() for user in clientUsers])
+    return jsonify([user.to_dict_full() for user in clientUsers])

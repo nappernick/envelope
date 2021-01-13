@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 function FileUploadModal({ file_tools, origFileName }) {
     const { file, fileName, onFileUpload, setFileName, closeModal } = file_tools
@@ -14,7 +14,7 @@ function FileUploadModal({ file_tools, origFileName }) {
 
     useEffect(() => {
         setFileName(origFileName[0])
-    }, [])
+    }, [origFileName, setFileName])
 
     return (
         <div className="upload_modal__container">

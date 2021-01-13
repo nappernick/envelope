@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import Spinner from "../Spinner"
+import Spinner from "../Loaders/Spinner"
 import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import Modal from "react-modal"

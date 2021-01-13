@@ -5,7 +5,7 @@ import configureStore from './store';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import Spinner from './components/Spinner';
+import Spinner from './components/Loaders/Spinner';
 
 const store = configureStore()
 

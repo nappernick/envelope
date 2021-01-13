@@ -25,7 +25,7 @@ function App() {
       dispatch(sessionActions.restore())
       setLoaded(true);
     })();
-  }, []);
+  }, [dispatch]);
 
   if (!loaded) {
     return null;

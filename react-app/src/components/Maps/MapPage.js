@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { trackPromise } from "react-promise-tracker";
+import { areas } from "../../common/areas";
 import HealthAreaSelector from './HealthAreaSelector';
 import Map from './Map'
 
@@ -13,6 +15,11 @@ function MapPage() {
     const [data, setData] = useState(null);
     const [healthAreas, setHealthAreas] = useState([])
     const [selectedHA, setSelectedHA] = useState(null)
+    const [spinArea, setSpinArea] = useState(areas.mapButtons)
+    const spinAreaObj = {
+        "spinArea": spinArea,
+        "setSpinArea": setSpinArea
+    }
 
     useEffect(() => {
         const fetchHealthArea = async () => {
@@ -40,7 +47,8 @@ function MapPage() {
                 pitch: 0
             })
         }
-        fetchMapData()
+        console.log("AT FETCH", spinArea)
+        trackPromise(fetchMapData(), spinArea)
     }, [selectedHA]);
 
     return (
@@ -49,7 +57,7 @@ function MapPage() {
                 <Map allData={data} viewport={viewport} setViewport={setViewport} />
             </div>
             <div className="map__health_area_selector">
-                <HealthAreaSelector healthAreas={healthAreas} setSelectedHA={setSelectedHA} />
+                <HealthAreaSelector healthAreas={healthAreas} setSelectedHA={setSelectedHA} spinAreaObj={spinAreaObj} />
             </div>
         </div>
     )
