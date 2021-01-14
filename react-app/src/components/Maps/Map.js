@@ -43,7 +43,6 @@ function Map({ viewport, allData, setViewport }) {
     const [popUpInfo, setPopUpInfo] = useState(null)
 
     const handleMarkerClick = (info) => setPopUpInfo(info)
-    console.log(popUpInfo)
 
     return (
         <MapGL

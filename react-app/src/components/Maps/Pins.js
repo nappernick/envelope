@@ -18,9 +18,10 @@ function Pins({ data, onClick }) {
             })
             setEnumerators(enums)
         }
-        if (data.length) {
+        if (data && data["features"].length) {
             setEnums()
         }
+
     }, [data])
 
     return (

@@ -47,7 +47,7 @@ function MapPage() {
                 pitch: 0
             })
         }
-        console.log("AT FETCH", spinArea)
+        // console.log("AT FETCH", spinArea)
         trackPromise(fetchMapData(), spinArea)
     }, [selectedHA]);
 

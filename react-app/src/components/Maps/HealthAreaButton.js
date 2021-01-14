@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from "@react-md/button";
 import styled from 'styled-components'
 import SmallCubeGrid from '../Loaders/SmallCubeGrid';
@@ -18,8 +18,9 @@ function HealthAreaButton({ healthArea, ha_obj, index }) {
         setSpinArea(`${spinArea}-${index}`)
         setSelectedHA(healthArea.id)
     }
-    console.log("AT BUTTON - LOCAL", btnSpinArea)
-    console.log("AT BUTTON - STATE", spinArea)
+    
+    // console.log("AT BUTTON - LOCAL", btnSpinArea)
+    // console.log("AT BUTTON - STATE", spinArea)
 
     return (
         <>
