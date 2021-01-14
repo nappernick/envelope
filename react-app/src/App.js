@@ -11,6 +11,7 @@ import User from "./components/Users/User";
 import MapPage from "./components/Maps/MapPage";
 import AllProjects from "./components/Projects/AllProjects";
 import FileUpload from "./components/Data/FileUpload";
+import Violinplot from "./components/Stats/ViolinPlot";
 
 function App() {
   const dispatch = useDispatch()
@@ -64,10 +65,10 @@ function App() {
           {/* Component that shows a specific project in detail */}
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
-          {/* Component that renders all statistics */}
+          <Violinplot />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
-          {/* Component that renders specific, selected graph/plot */}
+          <Violinplot />
         </ProtectedRoute>
         <ProtectedRoute path="/users/:userId/projects/:projectId/map" exact={true} authenticated={user}>
           <MapPage />

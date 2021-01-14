@@ -14,7 +14,8 @@ function Violinplot() {
     return (
         <div style={{ position: 'relative' }}>
             <svg width={width} height={height}>
-                <rect x={0} y={0} width={width} height={height} fill={<LinearGradient id="statsplot" to="#8b6ce7" from="#87f2d4" />} rx={14} />
+                <LinearGradient id="statsplot" to="#8b6ce7" from="#87f2d4" />
+                <rect x={0} y={0} width={width} height={height} fill="url(#statsplot)" rx={14} />
             </svg>
 
         </div>
