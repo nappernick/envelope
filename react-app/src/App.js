@@ -43,39 +43,39 @@ function App() {
         <Route path="/sign-up" exact={true}>
           <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
         </Route>
-        <ProtectedRoute path="/users" exact={true} authenticated={user}>
+        <Route path="/users" exact={true} authenticated={user}>
           <UsersList />
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/users/:userId" exact={true} authenticated={user}>
           <User />
-        </ProtectedRoute>
-        <ProtectedRoute path="/data-sets" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/data-sets" exact={true} authenticated={user}>
           {/* Component that shows this all projects, only available to admin users */}
-        </ProtectedRoute>
-        <ProtectedRoute path="/data-sets/upload" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/data-sets/upload" exact={true} authenticated={user}>
           <FileUpload />
-        </ProtectedRoute>
-        <ProtectedRoute path="/projects" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/projects" exact={true} authenticated={user}>
           <AllProjects />
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/users/:userId/projects" exact={true} authenticated={user}>
           {/* Component that shows this user's projects */}
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectId" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/users/:userId/projects/:projectId" exact={true} authenticated={user}>
           {/* Component that shows a specific project in detail */}
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
           <Violinplot />
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
           <Violinplot />
-        </ProtectedRoute>
-        <ProtectedRoute path="/users/:userId/projects/:projectId/map" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/users/:userId/projects/:projectId/map" exact={true} authenticated={user}>
           <MapPage />
-        </ProtectedRoute>
-        <ProtectedRoute path="/" exact={true} authenticated={user}>
+        </Route>
+        <Route path="/" exact={true} authenticated={user}>
           <Redirect to="/projects" />
-        </ProtectedRoute>
+        </Route>
       </Switch>
     </BrowserRouter>
   );

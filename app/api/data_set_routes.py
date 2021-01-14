@@ -62,7 +62,7 @@ def data_file_upload():
 
 
 
-@data_set_routes.route('/<dataSetId>/violinplot/<surveyField>')
+@data_set_routes.route('/<int:dataSetId>/violinplot/<surveyField>')
 @login_required
 def violin_plot(dataSetId, surveyField):
     curr_user = current_user.to_dict()
@@ -92,22 +92,23 @@ def violin_plot(dataSetId, surveyField):
         if int(value) > upper_bound:
             outliers.append(int(value))
     final_obj = {}
-    final_obj["value_count_pairs"] = result_obj
+    final_obj["data_for_violin_plot"] = {}
+    final_obj["data_for_violin_plot"]["value_count_pairs"] = result_obj
     final_obj["data_for_box_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
     # final_obj['values'] = values_list
-    final_obj["min"] = min(values_list)
-    final_obj["max"] = max(values_list)
-    final_obj["median"] = np.median(values_list)
-    final_obj["lower_bound"] = lower_bound
-    final_obj["upper_bound"] = upper_bound
-    final_obj["first_quartile"] = q1
-    final_obj["third_quartile"] = q3
-    final_obj["outliers"] = outliers
+    final_obj["data_for_violin_plot"]["min"] = min(values_list)
+    final_obj["data_for_violin_plot"]["max"] = max(values_list)
+    final_obj["data_for_violin_plot"]["median"] = np.median(values_list)
+    final_obj["data_for_violin_plot"]["lower_bound"] = lower_bound
+    final_obj["data_for_violin_plot"]["upper_bound"] = upper_bound
+    final_obj["data_for_violin_plot"]["first_quartile"] = q1
+    final_obj["data_for_violin_plot"]["third_quartile"] = q3
+    final_obj["data_for_violin_plot"]["outliers"] = outliers
     # return jsonify([{"value": key, "count": value} for key, value in result_list.items()])
     return jsonify(final_obj)
         
 
-@data_set_routes.route('/<dataSetId>/violinplot/<surveyField>/by-enumerator')
+@data_set_routes.route('/<int:dataSetId>/violinplot/<int:surveyField>/by-enumerator')
 @login_required
 def violin_plot_by_enumerator(dataSetId, surveyField):
     curr_user = current_user.to_dict()

@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
 const ProtectedRoute = props => {
+  console.log(props.children)
   const sessionUser = useSelector(store => store.session.user)
   return (
     <Route >
-      {sessionUser ? props.children : <Redirect to="/login" />}
+      {/* {sessionUser ? props.children : <Redirect to="/login" />} */}
+      {props.children}
     </Route>
   )
 };
