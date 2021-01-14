@@ -21,21 +21,21 @@ function Violinplot() {
     const yMax = height - 30;
     const minYValue = boxPlotData ? boxPlotData.min : null
     const maxYValue = boxPlotData ? boxPlotData.max : null
-
+    console.log(yMax)
     const yScale = scaleLinear({
-        range: [yMax, 40],
+        range: [yMax, 10],
         round: true,
         domain: [minYValue, maxYValue],
     });
 
     const xScale = scaleBand({
-        range: [0, xMax],
+        range: [0, xMax - 110],
         round: true,
         domain: ["Test 1"],
         padding: 0.4,
     });
 
-    const boxWidth = xScale.bandwidth();
+    const boxWidth = xScale.bandwidth() + 100;
     const constrainedWidth = Math.max(40, boxWidth);
 
     useEffect(() => {
