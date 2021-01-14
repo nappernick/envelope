@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import MapGL, {
-    Popup,
     NavigationControl,
     FullscreenControl,
     ScaleControl,
     GeolocateControl
 } from 'react-map-gl';
 import Pins from "./Pins"
+import PopUp from "./Popup"
 
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
@@ -40,6 +40,11 @@ const scaleControlStyle = {
 };
 
 function Map({ viewport, allData, setViewport }) {
+    const [popUpInfo, setPopUpInfo] = useState(null)
+
+    const handleMarkerClick = (info) => setPopUpInfo(info)
+    console.log(popUpInfo)
+
     return (
         <MapGL
             {...viewport}
@@ -50,7 +55,9 @@ function Map({ viewport, allData, setViewport }) {
             mapboxApiAccessToken={MAPBOX_TOKEN}
         // onHover={onHover}
         >
-            <Pins data={allData} />
+            <Pins data={allData} onClick={handleMarkerClick} />
+
+            {popUpInfo && <PopUp popUpInfo={popUpInfo} setPopUpInfo={setPopUpInfo} />}
 
             <div style={geolocateStyle}>
                 <GeolocateControl />
