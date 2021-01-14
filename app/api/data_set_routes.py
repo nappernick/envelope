@@ -76,6 +76,7 @@ def violin_plot(dataSetId, surveyField):
     values_list = []
     outliers = []
     list_of_dict_survey_values = [dict(survey)[f"surveys_{surveyField}"] for survey in surveys]
+    print("_________ NUM OF VALUES", len(list_of_dict_survey_values))
     for value in list_of_dict_survey_values:
         values_list.append(int(value))
         if int(value) in result_obj:
@@ -87,23 +88,23 @@ def violin_plot(dataSetId, surveyField):
     lower_bound = q1 -(1.5 * iqr) 
     upper_bound = q3 +(1.5 * iqr) 
     for value in list_of_dict_survey_values:
-        if int(value) < lower_bound:
+        if int(value) < lower_bound and int(value) not in outliers:
             outliers.append(int(value))
-        if int(value) > upper_bound:
+        if int(value) > upper_bound and int(value) not in outliers:
             outliers.append(int(value))
     final_obj = {}
-    final_obj["data_for_violin_plot"] = {}
-    final_obj["data_for_violin_plot"]["value_count_pairs"] = result_obj
-    final_obj["data_for_box_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
+    final_obj["data_for_box_plot"] = {}
+    final_obj["data_for_box_plot"]["value_count_pairs"] = result_obj
+    final_obj["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
     # final_obj['values'] = values_list
-    final_obj["data_for_violin_plot"]["min"] = min(values_list)
-    final_obj["data_for_violin_plot"]["max"] = max(values_list)
-    final_obj["data_for_violin_plot"]["median"] = np.median(values_list)
-    final_obj["data_for_violin_plot"]["lower_bound"] = lower_bound
-    final_obj["data_for_violin_plot"]["upper_bound"] = upper_bound
-    final_obj["data_for_violin_plot"]["first_quartile"] = q1
-    final_obj["data_for_violin_plot"]["third_quartile"] = q3
-    final_obj["data_for_violin_plot"]["outliers"] = outliers
+    final_obj["data_for_box_plot"]["min"] = min(values_list)
+    final_obj["data_for_box_plot"]["max"] = max(values_list)
+    final_obj["data_for_box_plot"]["median"] = np.median(values_list)
+    final_obj["data_for_box_plot"]["lower_bound"] = lower_bound
+    final_obj["data_for_box_plot"]["upper_bound"] = upper_bound
+    final_obj["data_for_box_plot"]["first_quartile"] = q1
+    final_obj["data_for_box_plot"]["third_quartile"] = q3
+    final_obj["data_for_box_plot"]["outliers"] = outliers
     # return jsonify([{"value": key, "count": value} for key, value in result_list.items()])
     return jsonify(final_obj)
         
