@@ -23,7 +23,6 @@ def seed():
     seed_projects()
     seed_health_areas()
     seed_surveys()
-    # Add other seed functions here
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
@@ -34,4 +33,16 @@ def undo():
     undo_projects()
     undo_health_areas()
     undo_surveys()
-    # Add other undo functions here
+
+
+# Specifically undo projects
+@seed_commands.command('projects_undo')
+def undo_projects():
+    undo_projects()
+
+
+
+# Specifically undo projects
+@seed_commands.command('surveys_undo')
+def undo_surveys():
+    undo_surveys()
