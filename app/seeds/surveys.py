@@ -1,15 +1,13 @@
 from app.models import db, Survey
-from app.api.data_processing import data_processing_for_survey_records_from_file
+from app.api.data_processing import data_processing_for_survey_records
 from faker import Faker
 
 fake = Faker()
 
 def seed_surveys():
-    surveys = data_processing_for_survey_records_from_file("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
-    # print(surveys)
-    # count = 0
-    # print(surveys)
-    for survey in surveys:
+    surveys = data_processing_for_survey_records("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
+    print(surveys)
+    for survey in surveys.values():
         survey_seed = Survey(
             health_area_id=int(survey["health_area"]),
             project_id=1,

@@ -49,24 +49,36 @@ def zip_to_pickle(zip):
 #     # print(column_data["row_index"])
 #     return column_data 
 
+def data_processing_for_survey_records_from_file(csvf):
+    # csv_test = ("test.csv", csvf)
+    with open(csvf, newline="", mode='r') as csvfile:
+        reader = csv.reader(csv_file, delimiter=",")
+        for row in reader:
+            print("______ IN A ROW",row)
+            break
+        return data_processing_for_survey_records(csvfile)
+
 def data_processing_for_survey_records(csv_file):
     if "\n" in csv_file:
-        print("______HERE IN IF")
+        print("______if HERE")
         file_it = csv_file.split("\n")
         reader = csv.reader(file_it, delimiter=",")
-        return process_data_for_reader(reader)
     else: 
-        with open(csv_file, newline="", mode='r') as f:
-            reader = csv.reader(f, delimiter=",")
-            return process_data_for_reader(reader)
-
-def process_data_for_reader(reader):
+        print("______ELSE HERE")
+        reader = csv.reader(csv_file, delimiter=",")
+        for row in reader:
+            print("______ IN A ROW",row)
+            break
+    # print(csv_file)
+    # print(file_it)
     # original column headings: ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
-    target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
-    target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
-    column_data = {}
-    health_areas = []
+    # target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
+    # target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
+    # column_data = {}
+    # health_areas = []
+    print(reader)
     for row in reader:
+        print("_________ ROW",row)
         if len(row) == 0:
             continue
         if row[0] == '':
@@ -83,6 +95,7 @@ def process_data_for_reader(reader):
             "num_dont_know_responses": row[target_indices[7]],
             "num_outlier_data_points": row[target_indices[8]]
         }
+    print(column_data)
     return column_data
 
 def data_processing_for_health_areas(csvf):
@@ -94,9 +107,11 @@ def data_processing_for_health_areas(csvf):
                 continue
             if row[11] not in health_areas:
                 health_areas.append(row[11])
+        print(health_areas)
         return health_areas
 
 
 # data_processing_for_survey_records("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
 # data_processing("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/api/menage_dash_gps.csv")
 # data_processing_for_health_areas("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
+

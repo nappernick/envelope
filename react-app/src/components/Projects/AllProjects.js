@@ -63,6 +63,7 @@ function AllProjects() {
                 itemSize={320}
                 width={500}
                 itemCount={projects.length}
+            // layout="horizontal"
             >
                 {projects.length && Row}
 
