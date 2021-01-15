@@ -8,10 +8,10 @@ import DataSetsListForm from './DataSetsListForm';
 import { singleProjectPost, multiProjectPost } from "./ProjectUtils"
 
 function NewProjectModal({ closeModal }) {
+    const dataSets = useSelector(store => store.dataSets)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([])
-    const [dataSets, setDataSets] = useState([]);
     const [selectedDataSetId, setSelectedDataSetId] = useState(null)
     const [projectName, setProjectName] = useState("")
     const sessUser = useSelector(store => store.session.user)
@@ -35,7 +35,7 @@ function NewProjectModal({ closeModal }) {
             })
 
         }
-        // closeModal()
+        closeModal()
     }
 
     useEffect(() => {
@@ -45,14 +45,7 @@ function NewProjectModal({ closeModal }) {
             // if (!responseData["errors"]) setUsers(responseData);
             setUsers(responseData);
         }
-        trackPromise(fetchUsers(), areas.userList);
-        const fetchDataSets = async () => {
-            const response = await fetch("/api/data/data-sets")
-            const responseData = await response.json()
-            // if (!responseData["errors"]) setDataSets(responseData)
-            setDataSets(responseData)
-        }
-        trackPromise(fetchDataSets(), areas.dataSetList)
+        trackPromise(fetchUsers(), areas.userList)
     }, []);
 
     useEffect(() => {

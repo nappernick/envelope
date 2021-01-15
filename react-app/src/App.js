@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from './store/session';
+import { setAllProjects } from './store/projects'
+import { setAllDataSets } from "./store/data_sets"
+import { areas } from "./common/areas"
+import { trackPromise } from "react-promise-tracker";
 import LoginForm from "./components/Auth/LoginForm";
 import SignUpForm from "./components/Auth/SignUpForm";
 import NavBar from "./components/Navbar/NavBar";
@@ -25,7 +29,11 @@ function App() {
     (async () => {
       dispatch(sessionActions.restore())
       setLoaded(true);
+      dispatch(setAllDataSets())
     })();
+    (async () => {
+      trackPromise(dispatch(setAllProjects()), areas.projects)
+    })()
   }, [dispatch]);
 
   if (!loaded) {

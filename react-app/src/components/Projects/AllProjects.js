@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FixedSizeList as List } from 'react-window';
 import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
+import { setAllProjects } from "../../store/projects"
 import Project from './Project'
 import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
@@ -28,8 +29,10 @@ const customStyles = {
 };
 
 function AllProjects() {
+    const dispatch = useDispatch()
     const user = useSelector(store => store.session.user)
-    const [projects, setProjects] = useState([])
+    const projects = useSelector(store => store.projects)
+    // const [projects, setProjects] = useState([])
     const [showModal, setShowModal] = useState(false);
 
     const openModal = () => setShowModal(true)
@@ -44,16 +47,6 @@ function AllProjects() {
             <Project user={user} project={projects[index]} />
         </div>
     )
-
-    useEffect(() => {
-        const projectsFetch = async () => {
-            const pf = await fetch("/api/projects/")
-            const p = await pf.json()
-            setProjects(p)
-        }
-        trackPromise(projectsFetch(), areas.projects)
-
-    }, [])
     return (
         <div className="projects__page container">
             <Spinner areas={areas.projects} />
@@ -62,7 +55,7 @@ function AllProjects() {
                 height={500}
                 itemSize={320}
                 width={500}
-                itemCount={projects.length}
+                itemCount={projects ? projects.length : 0}
             // layout="horizontal"
             >
                 {projects.length && Row}

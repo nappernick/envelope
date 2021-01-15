@@ -71,6 +71,7 @@ export const restore = () => async (dispatch) => {
         }
     });
     const user = await res.json()
+    console.log("_____IN HERE______")
     if (!user["errors"]) dispatch(setUser(user))
     return user
 }
