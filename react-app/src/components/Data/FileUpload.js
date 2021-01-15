@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from "react-redux"
 import { DropzoneArea } from 'material-ui-dropzone'
 import Modal from "react-modal"
 import axios from "axios"
+import { addDataSet } from "../../store/data_sets"
 import FileUploadModal from './FileUploadModal'
 
 Modal.setAppElement('#root')
@@ -24,6 +26,7 @@ const customStyles = {
 };
 
 function FileUpload() {
+    const dispatch = useDispatch()
     const [showModal, setShowModal] = useState(false);
     const [file, setFile] = useState(null)
     const [fileName, setFileName] = useState('')
@@ -45,7 +48,9 @@ function FileUpload() {
             file,
             new_file_name
         );
-        axios.post("/api/data/upload", formData);
+        let dsJSON = await axios.post("/api/data/upload", formData);
+        let dataSet = dsJSON.data
+        dispatch(addDataSet(dataSet))
     }
 
     const file_tools = {

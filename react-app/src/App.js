@@ -16,6 +16,7 @@ import MapPage from "./components/Maps/MapPage";
 import AllProjects from "./components/Projects/AllProjects";
 import FileUpload from "./components/Data/FileUpload";
 import Violinplot from "./components/Stats/ViolinPlot";
+import AllDataSets from "./components/Data/AllDataSets";
 
 function App() {
   const dispatch = useDispatch()
@@ -58,7 +59,7 @@ function App() {
           <User />
         </Route>
         <Route path="/data-sets" exact={true} authenticated={user}>
-          {/* Component that shows this all projects, only available to admin users */}
+          <AllDataSets />
         </Route>
         <Route path="/data-sets/upload" exact={true} authenticated={user}>
           <FileUpload />

@@ -76,7 +76,7 @@ const NavBar = () => {
           </NavLink>
           </li>}
           {(authenticated && authenticated.type_id === 1) && <li className="navbar__link">
-            <NavLink to="/data-sets/upload" exact={true} activeClassName="active">
+            <NavLink to="/data-sets" exact={true} activeClassName="active">
               Data Sets
           </NavLink>
           </li>}

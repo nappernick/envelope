@@ -44,44 +44,50 @@ function UsersList() {
 
   const userComponents = users ? (
     <table className="users_list__user">
-      <tr className="users_list__user header">
-        <th className="users_list__user header">
-          Username
+      <thead className="users_list__titles">
+        <tr className="users_list__user row">
+          <th className="users_list__user header">
+            Username
           </th>
-        <th className="users_list__user header">
-          First Name
+          <th className="users_list__user header">
+            First Name
           </th>
-        <th className="users_list__user header">
-          Last Name
+          <th className="users_list__user header">
+            Last Name
           </th>
-        <th className="users_list__user header">
-          Email
+          <th className="users_list__user header">
+            Email
           </th>
-        <th className="users_list__user header">
-          Type
+          <th className="users_list__user header">
+            Type
           </th>
-      </tr>
-      {users.map((user) => {
-        return (
-          <tr className="users_list__user row">
-            <td className="users_list__user row">
-              <NavLink to={`/users/${user.id}`}>{user.username}</NavLink>
-            </td>
-            <td className="users_list__user row">
-              {user.first_name}
-            </td>
-            <td className="users_list__user row">
-              {user.last_name}
-            </td>
-            <td className="users_list__user row">
-              {user.email}
-            </td>
-            <td className="users_list__user row">
-              {user.type}
-            </td>
-          </tr>
-        )
-      })}
+        </tr>
+      </thead>
+      <tbody className="users_list__rows">
+        {users.map((user) => {
+          return (
+
+            <tr className="users_list__user row">
+              <td className="users_list__user data">
+                <NavLink to={`/users/${user.id}`}>{user.username}</NavLink>
+              </td>
+              <td className="users_list__user data">
+                {user.first_name}
+              </td>
+              <td className="users_list__user data">
+                {user.last_name}
+              </td>
+              <td className="users_list__user data">
+                {user.email}
+              </td>
+              <td className="users_list__user data">
+                {user.type}
+              </td>
+            </tr>
+          )
+        }
+        )}
+      </tbody>
     </table>
   ) : ""
 

@@ -15,10 +15,16 @@ const _setDataSet = (dataSet) => {
     }
 }
 
+export const addDataSet = (dataSet) => async (dispatch) => {
+    dispatch(_setDataSet(dataSet))
+    return
+}
+
 export const setAllDataSets = () => async (dispatch) => {
     const dataSetFetch = await fetch("/api/data/data-sets")
     const dataSets = await dataSetFetch.json()
     if (!dataSets.errors) dispatch(_setDataSets(dataSets))
+    return
 }
 
 const dataSetsReducer = (state = [], action) => {
