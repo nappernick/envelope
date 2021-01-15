@@ -11,7 +11,7 @@ class Project(db.Model):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
     user = db.relationship("User", backref="project", lazy="select")
-    surveys = db.relationship("Survey")
+    surveys = db.relationship("Survey", cascade="all,delete")
     data_set = db.relationship("DataSet")
 
     def to_dict(self):

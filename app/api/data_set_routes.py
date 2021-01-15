@@ -3,6 +3,7 @@ import zipfile
 import pickle
 import pandas as pd
 import numpy as np 
+from datetime import datetime
 from flask import Flask, Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, DataSet, HealthArea, Survey, Project
@@ -16,7 +17,7 @@ data_set_routes = Blueprint('data', __name__)
 def data():
     curr_user = current_user.to_dict()
     if curr_user["type_id"] == 1: 
-        print("_____HERE")
+        print("_____IN DATA SET FETCH")
         data = db.session.query(DataSet).all()
         return jsonify([data_set.to_dict() for data_set in data])
     else:
@@ -58,7 +59,27 @@ def data_file_upload():
     )
     db.session.add(data_set)
     db.session.commit()
-    return jsonify("file")
+    return jsonify(data_set.to_dict())
+
+
+@data_set_routes.route("/<int:dataSetId>", methods=["POST"])
+@login_required
+def update_data_set(dataSetId):
+    data_set = db.session.query(DataSet).get(dataSetId)
+    req = dict(request.json)
+    data_set.data_set_name = req['data_set_name']
+    data_set.updated_at = datetime.now()
+    db.session.commit()
+    return data_set.to_dict()
+
+@data_set_routes.route("/<int:dataSetId>", methods=["DELETE"])
+@login_required
+def delete_data_set(dataSetId):
+    data_set = db.session.query(DataSet).get(dataSetId)
+    db.session.delete(data_set)
+    db.session.commit()
+    return { dataSetId: "Successfully deleted" }
+
 
 
 

@@ -1,5 +1,6 @@
 import pickle
 from faker import Faker
+from datetime import datetime
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -20,6 +21,7 @@ def all_projects():
         projects = db.session.query(Project).all()
     if user["type_id"] == 2:
         projects = db.session.query(Project).filter_by(user_id = user["id"]).all()
+    print([project.to_dict_survey_summary() for project in projects])
     return jsonify([project.to_dict_survey_summary() for project in projects])
 
 @project_routes.route("/", methods=["POST"])
@@ -75,6 +77,23 @@ def project(id):
     project = db.session.query(Project).get(id)
     return jsonify(project.to_dict())
 
+@project_routes.route("/<int:id>", methods=["POST"])
+@login_required
+def update_project(id):
+    project = db.session.query(Project).get(id)
+    req = dict(request.json)
+    project.project_name = req['project_name']
+    project.updated_at = datetime.now()
+    db.session.commit()
+    return jsonify(project.to_dict())
+
+@project_routes.route("/<int:projectId>", methods=["DELETE"])
+@login_required
+def delete_project(projectId):
+    project = db.session.query(Project).get(projectId)
+    db.session.delete(project)
+    db.session.commit()
+    return { projectId: "Successfully deleted" }
 
 @project_routes.route("/<int:id>/surveys")
 @login_required

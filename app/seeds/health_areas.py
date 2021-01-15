@@ -2,7 +2,7 @@ from app.models import db, HealthArea
 from app.api.data_processing import data_processing_for_health_areas
 
 def seed_health_areas():
-    health_areas = data_processing_for_health_areas("/app/seeds/seed_survey.csv")
+    health_areas = data_processing_for_health_areas("/var/www/app/seeds/seed_survey.csv")
 
     for health_area1 in health_areas:
         health_area_seed = HealthArea(

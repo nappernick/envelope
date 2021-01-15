@@ -61,7 +61,7 @@ function AllDataSets() {
         }
         trackPromise(deleteFetch(), areas.deleteDS)
     }
-    const handleUpdateClick = async (e, dataSet) => {
+    const handleUpdateClick = (e, dataSet) => {
         e.preventDefault()
         closeModal()
         const postFetch = async () => {

@@ -32,21 +32,30 @@ function AllProjects() {
     const dispatch = useDispatch()
     const user = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
-    // const [projects, setProjects] = useState([])
+    const [project, setProject] = useState({})
     const [showModal, setShowModal] = useState(false);
 
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
-    const Row = ({ index, style }) => (
-        <div
-            key={`m_${index}`}
-            className="project__card_container"
-            style={style}
-        >
-            <Project user={user} project={projects[index]} />
-        </div>
-    )
+    const Row = ({ index, style, data }) => {
+        let { project, setProject } = data
+        const projectObj = {
+            "stateProject": project,
+            "setStateProject": setProject,
+            "project": projects[index],
+            "user": user,
+        }
+        return (
+            <div
+                key={`m_${index}`}
+                className="project__card_container"
+                style={style}
+            >
+                <Project projectObj={projectObj} />
+            </div>
+        )
+    }
     return (
         <div className="projects__page container">
             <Spinner areas={areas.projects} />
@@ -56,6 +65,10 @@ function AllProjects() {
                 itemSize={320}
                 width={500}
                 itemCount={projects ? projects.length : 0}
+                itemData={{
+                    "project": project,
+                    "setProject": setProject
+                }}
             // layout="horizontal"
             >
                 {projects.length && Row}

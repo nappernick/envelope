@@ -8,7 +8,7 @@ def seed_data_sets():
     # df['a23_decimal'] = df['a23'].astype(str).map(decimal.Decimal)
     # bf = df.to_parquet("test.parquet", index=False)
 
-    with open('/app/seeds/seed_survey.csv') as csvfile:
+    with open('/var/www/app/seeds/seed_survey.csv') as csvfile:
         reader = csv.reader(csvfile)
         parsed_file = []
         for row in reader:

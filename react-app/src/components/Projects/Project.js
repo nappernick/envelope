@@ -1,9 +1,31 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import Dropdown from 'rc-dropdown';
+import Menu, { Divider, Item as MenuItem } from 'rc-menu';
 
 
-function Project({ project, user }) {
+function Project({ projectObj }) {
+    const { project, user, stateProject, setStateProject } = projectObj
+
     const history = useHistory()
+
+    function onSelect({ key }) {
+        console.log(key)
+    }
+
+    
+
+    const menuCallback = () => (
+        <Menu onSelect={onSelect}>
+            <MenuItem style={{ cursor: "pointer" }} key="1">Edit Project</MenuItem>
+            <Divider />
+            <MenuItem style={{ cursor: "pointer" }} key="2">Delete Project</MenuItem>
+        </Menu>
+    );
+
+    const handleUpdateProject = async (e, project) => {
+
+    }
 
     const handleMapClick = (e) => {
         e.preventDefault()
@@ -16,9 +38,15 @@ function Project({ project, user }) {
     }
     return (
         <>
-            <div className="project__card_heading">
-                {project.project_name}
-            </div>
+            <Dropdown
+                trigger={['hover']}
+                overlay={menuCallback}
+                animation="slide-up"
+            >
+                <div className="project__card_heading">
+                    {project.project_name}
+                </div>
+            </Dropdown>
             <div className="project__info">
                 <div className="project__info header">
                     Project Info
