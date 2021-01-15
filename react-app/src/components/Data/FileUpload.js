@@ -50,6 +50,7 @@ function FileUpload() {
         );
         let dsJSON = await axios.post("/api/data/upload", formData);
         let dataSet = dsJSON.data
+        console.log(dataSet)
         dispatch(addDataSet(dataSet))
     }
 

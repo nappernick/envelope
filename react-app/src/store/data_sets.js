@@ -1,5 +1,6 @@
 const SET_DATA_SETS = 'dataSet/setDataSets'
 const SET_DATA_SET = 'dataSet/setDataSet'
+const REMOVE_DATA_SET = 'dataSet/removeDataSet'
 
 const _setDataSets = (dataSets) => {
     return {
@@ -13,6 +14,18 @@ const _setDataSet = (dataSet) => {
         type: SET_DATA_SET,
         dataSet
     }
+}
+
+const _removeDataSet = (id) => {
+    return {
+        type: REMOVE_DATA_SET,
+        id
+    }
+}
+
+export const removeDataSet = (id) => async (dispatch) => {
+    dispatch(_removeDataSet(id))
+    return
 }
 
 export const addDataSet = (dataSet) => async (dispatch) => {
@@ -32,15 +45,22 @@ const dataSetsReducer = (state = [], action) => {
         case SET_DATA_SETS:
             return [...action.dataSets]
         case SET_DATA_SET:
-            let setIndex = state.findIndex(el => el.data_set_name === action.dataSet.data_set_name);
-            console.log(setIndex)
-            if (setIndex === -1) {
+            let newDataSets = state.filter(el => {
+                return el.id !== action.dataSet.id
+            });
+            newDataSets.push(action.dataSet)
+            if (state.length <= newDataSets.length) {
                 return [
-                    ...state.slice(0, setIndex),
-                    action.dataSet,
-                    ...state.slice(setIndex + 1)
+                    ...newDataSets
                 ];
             }
+            return state
+        case REMOVE_DATA_SET:
+            let removedDataSet = state.filter(el => {
+                return el.id !== action.id
+            });
+            console.log(removedDataSet)
+            if (state.length > removedDataSet.length) return [...removedDataSet]
             return state
         default:
             return state

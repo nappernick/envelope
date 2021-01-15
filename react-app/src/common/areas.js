@@ -4,4 +4,5 @@ export const areas = {
     mapButtons: "map-button-area",
     newProject: "new-projects-area",
     dataSetList: "data-set-list-area",
+    deleteDS: "delete-data-set",
 }

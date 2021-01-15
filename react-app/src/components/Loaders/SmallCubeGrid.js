@@ -13,7 +13,7 @@ function SmallCubeGrid(props) {
         <>
             {promiseInProgress && (
                 <div className="spinner">
-                    <DoubleBounce size={16} />
+                    <DoubleBounce size={5} />
                 </div>
             )}
         </>

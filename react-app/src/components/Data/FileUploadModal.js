@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { addDataSet } from "../../store/data_sets"
 
 function FileUploadModal({ file_tools, origFileName }) {
+    const dispatch = useDispatch()
     const { file, fileName, onFileUpload, setFileName, closeModal } = file_tools
 
 
