@@ -32,9 +32,14 @@ const dataSetsReducer = (state = [], action) => {
         case SET_DATA_SETS:
             return [...action.dataSets]
         case SET_DATA_SET:
-            let setIndex = state.findIndex(el => Object.values(el) === Object.values(action.dataSet));
+            let setIndex = state.findIndex(el => el.data_set_name === action.dataSet.data_set_name);
+            console.log(setIndex)
             if (setIndex === -1) {
-                return [...state, action.dataSet];
+                return [
+                    ...state.slice(0, setIndex),
+                    action.dataSet,
+                    ...state.slice(setIndex + 1)
+                ];
             }
             return state
         default:

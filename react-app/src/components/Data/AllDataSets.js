@@ -1,15 +1,17 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from "react-modal"
 import { Redirect, useHistory } from 'react-router-dom';
+import UpdateDataSetModal from './UpdateDataSetModal';
+import { addDataSet } from "../../store/data_sets"
 
 Modal.setAppElement('#root')
 
 const customStyles = {
     content: {
         top: '40%',
-        left: '70%',
-        right: '40%',
+        left: '65%',
+        right: '55%',
         bottom: 'auto',
         height: "45%",
         marginRight: '-50%',
@@ -24,9 +26,36 @@ const customStyles = {
 
 function AllDataSets() {
     const history = useHistory()
+    const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
+    const [dataSet, setDataSet] = useState({})
+    const [showModal, setShowModal] = useState(false);
 
-    const handleClick = () => history.push("/data-sets/upload")
+    const openModal = (e, dataSet) => {
+        e.preventDefault()
+        setShowModal(true)
+        setDataSet(dataSet)
+    }
+    const closeModal = () => setShowModal(false)
+
+    const handleUploadClick = () => history.push("/data-sets/upload")
+    const handleUpdateClick = async (e, dataSet) => {
+        e.preventDefault()
+        closeModal()
+        const postFetch = async () => {
+            let post = await fetch(`/api/data/${dataSet.id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...dataSet })
+            })
+            const ds = await post.json()
+            // console.log(ds)
+            if (Object.keys(ds).length) dispatch(addDataSet(ds))
+        }
+        postFetch()
+    }
 
     return (
         <>
@@ -41,6 +70,9 @@ function AllDataSets() {
                 </th>
                         <th className="data_set__data_set header">
                             Updated At
+                </th>
+                        <th className="data_set__data_set header">
+                            Update Name
                 </th>
                     </tr>
                 </thead>
@@ -57,15 +89,28 @@ function AllDataSets() {
                                 <td className="data_set__data_set data">
                                     {dataSet.updated_at}
                                 </td>
+                                <td className="data_set__data_set data">
+                                    <button className="data_set__data_set button" onClick={(e) => openModal(e, dataSet)} >Click Here</button>
+                                </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </table>
             <div className="data_set__upload_button">
-                <div className="data_set__upload_button button" onClick={handleClick} >
+                <div className="data_set__upload_button button" onClick={handleUploadClick} >
                     Upload Data Set
                 </div>
+            </div>
+            <div className="data_set__update modal">
+                <Modal
+                    isOpen={showModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Update Data Set Modal"
+                >
+                    <UpdateDataSetModal dataSet={dataSet} setDataSet={setDataSet} handleUpdateClick={handleUpdateClick} />
+                </Modal>
             </div>
         </>
     )
