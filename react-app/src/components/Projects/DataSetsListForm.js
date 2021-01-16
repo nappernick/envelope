@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import SingleDataSet from './SingleDataSet'
 
 function DataSetsListForm({ dataSetsObj }) {
-    const { dataSets, setSelectedDataSetId } = dataSetsObj
+    const { dataSets, setSelectedDataSetId, projectDataSetId } = dataSetsObj
     const [isSelected, setIsSelcted] = useState(null)
     const [selected, setSelected] = useState(null)
 
@@ -27,6 +27,7 @@ function DataSetsListForm({ dataSetsObj }) {
                             "index": index,
                             "setSelected": setSelected,
                             "selected": selected,
+                            projectDataSetId
                         }
                         return (<SingleDataSet
                             key={index}

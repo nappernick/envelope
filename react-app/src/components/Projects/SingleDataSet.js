@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Switch from "react-switch";
 
 function SingleDataSet({ dataSetObj }) {
-    const { dataSet, setSelectedDataSetId, index, setSelected, selected } = dataSetObj
+    const { dataSet, setSelectedDataSetId, index, setSelected, selected, projectDataSetId } = dataSetObj
     const [switched, setSwitched] = useState(false)
 
     const handleSwitch = () => {
@@ -17,6 +17,16 @@ function SingleDataSet({ dataSetObj }) {
             setSelectedDataSetId(id)
         }
     }
+
+    useEffect(() => {
+        if (!dataSet) return
+        if (dataSet.id === projectDataSetId) {
+            setSwitched(true)
+            setSelected(index)
+            const id = dataSet.id
+            setSelectedDataSetId(id)
+        }
+    }, [])
 
     return (
         <>
