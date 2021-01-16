@@ -50,7 +50,7 @@ const NavBar = () => {
               colors: {
                 ...theme.colors,
                 primary: "#edbb43",
-                primary25: "#e98641",
+                primary25: "#ffac54",
                 // primary50: "#e98641"
               }
             })}

@@ -114,6 +114,7 @@ function UsersList() {
               isOpen={showModal}
               onRequestClose={closeModal}
               style={customStyles}
+              closeTimeoutMS={300}
               contentLabel="New User Upload Modal"
             >
               <SignUpForm closeModal={closeModal} />

@@ -1,0 +1,40 @@
+.projects__page.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.projects__scroll.container {
+    height: 49vh;
+    width: 85vw;
+    display: flex;
+}
+
+.projects__page .spinner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.projects__page .spinner span {
+    margin: auto;
+}
+
+.projects__page .spinner span {
+    color: green;
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}

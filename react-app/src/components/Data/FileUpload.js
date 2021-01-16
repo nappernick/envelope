@@ -84,6 +84,7 @@ function FileUpload() {
                 isOpen={showModal}
                 onRequestClose={closeModal}
                 style={customStyles}
+                closeTimeoutMS={300}
                 contentLabel="Data Set Upload Modal"
             >
                 <div className="file_upload__modal">

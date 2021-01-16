@@ -175,6 +175,7 @@ function ProjectCard({ projectObj }) {
                     isOpen={showModal}
                     onRequestClose={closeUpdateProjectModal}
                     style={customStyles}
+                    closeTimeoutMS={300}
                     contentLabel="Update Project Modal"
                 >
                     <UpdateProjectModal modalObj={modalObj} />

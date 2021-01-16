@@ -140,6 +140,7 @@ function AllDataSets() {
                     isOpen={showModal}
                     onRequestClose={closeModal}
                     style={customStyles}
+                    closeTimeoutMS={300}
                     contentLabel="Update Data Set Modal"
                 >
                     <UpdateDataSetModal dataSet={dataSet} setDataSet={setDataSet} handleUpdateClick={handleUpdateClick} />

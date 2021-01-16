@@ -9,6 +9,7 @@ import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
 import NewProjectModal from './NewProjectModal';
 import AutoSizer from "react-virtualized-auto-sizer";
+import "./Projects.css"
 
 Modal.setAppElement('#root')
 
@@ -59,7 +60,7 @@ function AllProjects() {
     }
     return (
         <div className="projects__page container">
-            <div className="projects__scroll container" style={{ height: "700px", minWidth: "20vw", paddingTop: "20px" }}>
+            <div className="projects__scroll container" >
                 <Spinner areas={areas.projects} />
                 <AutoSizer>
                     {({ height, width }) => (
@@ -92,6 +93,7 @@ function AllProjects() {
                         isOpen={showModal}
                         onRequestClose={closeModal}
                         style={customStyles}
+                        closeTimeoutMS={300}
                         contentLabel="New Project Upload Modal"
                     >
                         <NewProjectModal closeModal={closeModal} />
