@@ -69,7 +69,7 @@ function Violinplot({ statsField, h, w }) {
                 return (
                     <div style={{ position: 'relative' }}>
                         <svg width={width} height={height}>
-                            <LinearGradient id="statsplot" to="#8b6ce7" from="#87f2d4" />
+                            <LinearGradient id="statsplot" to="#19babe" from="#edbb43" />
                             <rect x={0} y={0} width={width} height={height} fill="url(#statsplot)" rx={14} />
                             <PatternLines
                                 id="hViolinLines"

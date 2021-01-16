@@ -22,17 +22,19 @@ function UpdateDataSetModal({ dataSet, setDataSet, handleUpdateClick }) {
                 <div className="data_set__modal header">
                     Update Data Set Name
             </div>
-                <div className="data_set__modal input">
-                    <input
-                        type="text"
-                        className="data_set__modal"
-                        onChange={handleChange}
-                        value={fileName}
-                    />
+                <div className="data_set__modal body">
+                    <div className="data_set__modal input">
+                        <input
+                            type="text"
+                            className="data_set__modal"
+                            onChange={handleChange}
+                            value={fileName}
+                        />
+                    </div>
                 </div>
-            </div>
-            <div className="data_set__modal submit">
-                <button onClick={handleSubmit} >Submit</button>
+                <div className="data_set__modal submit">
+                    <button onClick={handleSubmit} >Submit</button>
+                </div>
             </div>
         </>
     )

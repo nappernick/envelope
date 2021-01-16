@@ -18,6 +18,7 @@ import FileUpload from "./components/Data/FileUpload";
 import Violinplot from "./components/Stats/ViolinPlot";
 import AllDataSets from "./components/Data/AllDataSets";
 import StatsPage from "./components/Stats/StatsPage";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch()
@@ -87,6 +88,7 @@ function App() {
           <Redirect to="/projects" />
         </Route>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

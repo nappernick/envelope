@@ -38,7 +38,7 @@ const NavBar = () => {
     <nav>
       <ul className="navbar__container">
         <div className="navbar__logo">
-          <i className="fas fa-envelope fa-4x"></i>
+          <i className="fas fa-envelope fa-3x"></i>
         </div>
         <div className="navbar__search">
           <Select
@@ -49,9 +49,9 @@ const NavBar = () => {
               borderRadius: 5,
               colors: {
                 ...theme.colors,
-                primary: "#e89313",
-                primary25: "#e8e07b",
-                primary50: "#636F84"
+                primary: "#edbb43",
+                primary25: "#e98641",
+                // primary50: "#e98641"
               }
             })}
             placeholder="Search Projects... "
