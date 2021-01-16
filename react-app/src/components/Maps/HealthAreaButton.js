@@ -25,7 +25,7 @@ function HealthAreaButton({ healthArea, ha_obj, index }) {
     return (
         <>
             <StyledButton>
-                <SmallCubeGrid areas={btnSpinArea} />
+                {/* <SmallCubeGrid areas={btnSpinArea} /> */}
                 <Button id="outlined-button-1" theme="primary" themeType="outline" onClick={handleClick}>
                     {healthArea.name}
                 </Button>

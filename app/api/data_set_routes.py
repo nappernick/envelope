@@ -83,21 +83,35 @@ def delete_data_set(dataSetId):
 
 
 
-@data_set_routes.route('/<int:dataSetId>/violinplot/<surveyField>')
+@data_set_routes.route('/<int:dataSetId>/projects/<int:projectId>/violinplot/<surveyField>')
 @login_required
-def violin_plot(dataSetId, surveyField):
+def violin_plot(dataSetId, projectId, surveyField):
     curr_user = current_user.to_dict()
-    surveys_query = db.session.query(DataSet.id,\
-        Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
-            ).filter(DataSet.id==dataSetId, Project.user_id ==current_user.id)\
+    print("______ CURR USER",type(curr_user["type_id"]))
+    if curr_user["type_id"] == 1:
+        surveys_query = db.session.query(DataSet.id,\
+            Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
+            # If the user is admin, query only by data set & project id's
+            ).filter(DataSet.id==dataSetId, Project.id ==projectId)\
+            .join(Project, Project.data_set_id==DataSet.id)\
+            .join(Survey, Survey.project_id==Project.id)
+    else:
+        surveys_query = db.session.query(DataSet.id,\
+            Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, \
+            Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
+            # If the user isn't admin, query with current user id
+            ).filter(DataSet.id==dataSetId, Project.user_id ==current_user.id, Project.id ==projectId)\
             .join(Project, Project.data_set_id==DataSet.id)\
             .join(Survey, Survey.project_id==Project.id)
     surveys = db.session.execute(surveys_query)
     result_obj = {}
     values_list = []
     outliers = []
+    # print("_______ SURVEYS", len(surveys))
     list_of_dict_survey_values = [dict(survey)[f"surveys_{surveyField}"] for survey in surveys]
-    print("_________ NUM OF VALUES", len(list_of_dict_survey_values))
+    # list_of_dict_survey_values = [survey.to_dict() for survey in surveys]
+    # print("_________ NUM OF VALUES", len(list_of_dict_survey_values))
+    # return
     for value in list_of_dict_survey_values:
         values_list.append(int(value))
         if int(value) in result_obj:

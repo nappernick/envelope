@@ -8,6 +8,7 @@ import Project from './Project'
 import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
 import NewProjectModal from './NewProjectModal';
+import AutoSizer from "react-virtualized-auto-sizer";
 
 Modal.setAppElement('#root')
 
@@ -58,22 +59,28 @@ function AllProjects() {
     }
     return (
         <div className="projects__page container">
-            <Spinner areas={areas.projects} />
-            <List
-                className="projects__list container"
-                height={500}
-                itemSize={320}
-                width={500}
-                itemCount={projects ? projects.length : 0}
-                itemData={{
-                    "project": project,
-                    "setProject": setProject
-                }}
-            // layout="horizontal"
-            >
-                {projects.length && Row}
+            <div className="projects__scroll container" style={{ height: "700px", minWidth: "20vw", paddingTop: "20px" }}>
+                <Spinner areas={areas.projects} />
+                <AutoSizer>
+                    {({ height, width }) => (
+                        <List
+                            className="projects__list container"
+                            height={height}
+                            itemSize={320}
+                            width={width}
+                            itemCount={projects ? projects.length : 0}
+                            itemData={{
+                                "project": project,
+                                "setProject": setProject
+                            }}
+                            layout="horizontal"
+                        >
+                            {projects.length && Row}
 
-            </List>
+                        </List>
+                    )}
+                </AutoSizer>
+            </div>
             <div className="projects__new_project container">
                 <div className="projects__new_project button">
                     <button onClick={openModal} className="projects__new_project">

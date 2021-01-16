@@ -17,6 +17,7 @@ import AllProjects from "./components/Projects/AllProjects";
 import FileUpload from "./components/Data/FileUpload";
 import Violinplot from "./components/Stats/ViolinPlot";
 import AllDataSets from "./components/Data/AllDataSets";
+import StatsPage from "./components/Stats/StatsPage";
 
 function App() {
   const dispatch = useDispatch()
@@ -74,7 +75,7 @@ function App() {
           {/* Component that shows a specific project in detail */}
         </Route>
         <Route path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
-          <Violinplot />
+          <StatsPage />
         </Route>
         <Route path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
           <Violinplot />

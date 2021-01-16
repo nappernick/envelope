@@ -23,6 +23,7 @@ function HealthAreaSelector({ healthAreas, setSelectedHA, spinAreaObj }) {
         </div>
     );
 
+
     return (
         <>
             <List
