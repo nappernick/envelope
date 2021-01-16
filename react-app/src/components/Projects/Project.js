@@ -49,25 +49,9 @@ function Project({ projectObj }) {
         </Menu>
     );
 
-
-    const handleUpdateProject = (project) => {
-        const postUpdate = async () => {
-            let post = await fetch(`/api/projects/${project.id}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ ...project })
-            })
-            const proj = await post.json()
-        }
-        postUpdate()
-    }
-
     const modalObj = {
         "project": stateProject,
         "setProject": setStateProject,
-        "handleUpdateProject": handleUpdateProject,
         "closeUpdateProjectModal": closeUpdateProjectModal
     }
 

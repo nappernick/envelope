@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { trackPromise } from 'react-promise-tracker';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { areas } from "../../common/areas"
+import { addProject } from '../../store/projects';
 import Spinner from '../Loaders/Spinner';
 import DataSetsListForm from './DataSetsListForm';
+import { multiProjectPostUpdate, singleProjectPostUpdate } from './ProjectUtils';
 import UserListForm from './UserListForm';
 
 function UpdateProjectModal({ modalObj }) {
+    const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
-    const { project, setProject, handleUpdateProject, closeUpdateProjectModal } = modalObj
+    const { project, setProject, closeUpdateProjectModal } = modalObj
     const sessUser = useSelector(store => store.session.user)
+    const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([project.user])
     const [selectedDataSetId, setSelectedDataSetId] = useState(project.data_set)
@@ -25,6 +29,20 @@ function UpdateProjectModal({ modalObj }) {
         "projectDataSetId": project.data_set.id
     }
 
+    const handleSubmit = async (e) => {
+        if (selectedUsers.length == 1) {
+            let project = singleProjectPostUpdate(project.id, projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            dispatch(addProject(project))
+        }
+        else {
+            selectedUsers.forEach(user => {
+                let project = multiProjectPostUpdate(project.id, projectName, selectedDataSetId, user, setErrors)
+                dispatch(addProject(project))
+            })
+
+        }
+        closeUpdateProjectModal()
+    }
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -38,9 +56,19 @@ function UpdateProjectModal({ modalObj }) {
 
     const handleNameChange = (e) => setProjectName(e.target.value)
 
+
+    useEffect(() => {
+        if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
+    }, [projectName, selectedUsers, selectedDataSetId])
+
     return (
         <>
             <div className="update_project__modal container">
+                <div className={"update_projects_modal__errors container"}>
+                    {errors.map((error) => (
+                        <div className={"projects_modal__errors error"}>{error}</div>
+                    ))}
+                </div>
                 <div className="update_project__modal header">
                     Update Project
                 </div>
@@ -78,7 +106,10 @@ function UpdateProjectModal({ modalObj }) {
                     </div>
                 </div>
                 <div className="update_project__modal submit">
-                    {/* <button onClick={handleSubmit} >Submit</button> */}
+                    <button
+                        disabled={disabled}
+                        onClick={handleSubmit}
+                    >Create Project</button>
                 </div>
             </div>
         </>

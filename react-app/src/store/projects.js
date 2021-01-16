@@ -22,6 +22,10 @@ const removeProject = (project) => {
     }
 }
 
+export const addProject = (project) => async (dispatch) => {
+    dispatch(_setProject(project))
+    return
+}
 
 export const setAllProjects = () => async (dispatch) => {
     const projectsFectch = await fetch("/api/projects/")
@@ -36,9 +40,14 @@ const projectsReducer = (state = [], action) => {
         case SET_ALL_PROJECTS:
             return [...action.projects]
         case SET_PROJECT:
-            let setIndex = state.findIndex(el => Object.values(el) === Object.values(action.project));
-            if (setIndex === -1) {
-                return [...state, action.project];
+            let filteredProjecs = state.filter(el => {
+                return el.id !== action.project.id
+            });
+            filteredProjecs.push(action.project)
+            if (state.length <= filteredProjecs.length) {
+                return [
+                    ...filteredProjecs
+                ];
             }
             return state
         case REMOVE_PROJECT:
