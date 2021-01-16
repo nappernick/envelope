@@ -16,7 +16,7 @@ const _setProject = (project) => {
     }
 }
 
-const removeProject = (project) => {
+const _removeProject = (id) => {
     return {
         type: REMOVE_PROJECT
     }
@@ -24,6 +24,11 @@ const removeProject = (project) => {
 
 export const addProject = (project) => async (dispatch) => {
     dispatch(_setProject(project))
+    return
+}
+
+export const removeProject = (id) => async (dispatch) => {
+    dispatch(_removeProject(id))
     return
 }
 
@@ -51,13 +56,13 @@ const projectsReducer = (state = [], action) => {
             }
             return state
         case REMOVE_PROJECT:
-            let unsetIndex = state.findIndex(el => Object.values(el) === Object.values(action.project));
-            if (unsetIndex !== -1) {
-                return [
-                    ...state.slice(0, unsetIndex),
-                    ...state.slice(unsetIndex + 1)
-                ]
-            }
+            let removedProject = state.filter((el) => {
+                console.log(el)
+                console.log(action.id)
+                return el.id !== action.id
+            });
+            console.log(removedProject)
+            if (state.length > removedProject.length) return [...removedProject]
             return state
         default:
             return state

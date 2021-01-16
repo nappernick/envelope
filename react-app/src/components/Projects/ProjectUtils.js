@@ -10,7 +10,7 @@ export const singleProjectPost = async (projectName, dataSetId, userId, setError
             "user_id": userId
         })
     }).catch((res) => { if (res.data && res.data.errors) return setErrors(res.data.errors) })
-    const project = post.json()
+    const project = await post.json()
     return project
 }
 
@@ -26,7 +26,7 @@ export const multiProjectPost = async (projectName, dataSetId, user, setErrors) 
             "user_id": user["id"]
         })
     }).catch((res) => { if (res.data && res.data.errors) return setErrors(res.data.errors) })
-    const project = post.json()
+    const project = await post.json()
     return project
 }
 
@@ -43,7 +43,7 @@ export const singleProjectPostUpdate = async (selectedProjectId, projectName, da
             "user_id": userId
         })
     }).catch((res) => { if (res.data && res.data.errors) return setErrors(res.data.errors) })
-    const project = post.json()
+    const project = await post.json()
     return project
 }
 
@@ -59,6 +59,6 @@ export const multiProjectPostUpdate = async (selectedProjectId, projectName, dat
             "user_id": user["id"]
         })
     }).catch((res) => { if (res.data && res.data.errors) return setErrors(res.data.errors) })
-    const project = post.json()
+    const project = await post.json()
     return project
 }

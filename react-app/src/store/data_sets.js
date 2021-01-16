@@ -45,13 +45,13 @@ const dataSetsReducer = (state = [], action) => {
         case SET_DATA_SETS:
             return [...action.dataSets]
         case SET_DATA_SET:
-            let newDataSets = state.filter(el => {
+            let filteredDataSets = state.filter(el => {
                 return el.id !== action.dataSet.id
             });
-            newDataSets.push(action.dataSet)
-            if (state.length <= newDataSets.length) {
+            filteredDataSets.push(action.dataSet)
+            if (state.length <= filteredDataSets.length) {
                 return [
-                    ...newDataSets
+                    ...filteredDataSets
                 ];
             }
             return state

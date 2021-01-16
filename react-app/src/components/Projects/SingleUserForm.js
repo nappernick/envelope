@@ -7,11 +7,13 @@ function SingleUserForm({ user, selectedObj }) {
 
     const handleSwitch = () => {
         setSwitched(!switched)
-        const newSelected = [...selectedUsers]
-        if (switched === false) newSelected.push(user)
+        let newSelected = [...selectedUsers]
+        if (switched === false) {
+            let i = newSelected.indexOf(user)
+            if (i === -1) newSelected.push(user)
+        }
         else {
-            const i = newSelected.indexOf(user)
-            if (i > -1) newSelected.splice(i, 1)
+            newSelected = newSelected.filter(el => el.id !== user.id)
         }
         setSelectedUsers(newSelected)
     }
@@ -20,6 +22,8 @@ function SingleUserForm({ user, selectedObj }) {
         if (!selectedUsers.length || !user) return
         if (selectedUsers[0].id === user.id) setSwitched(!switched)
     }, [])
+
+    console.log(selectedUsers)
 
     return (
         <>

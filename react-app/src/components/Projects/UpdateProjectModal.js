@@ -31,13 +31,13 @@ function UpdateProjectModal({ modalObj }) {
 
     const handleSubmit = async (e) => {
         if (selectedUsers.length == 1) {
-            let project = singleProjectPostUpdate(project.id, projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
-            dispatch(addProject(project))
+            let proj = singleProjectPostUpdate(project.id, projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            dispatch(addProject(proj))
         }
         else {
             selectedUsers.forEach(user => {
-                let project = multiProjectPostUpdate(project.id, projectName, selectedDataSetId, user, setErrors)
-                dispatch(addProject(project))
+                let proj = multiProjectPostUpdate(project.id, projectName, selectedDataSetId, user, setErrors)
+                dispatch(addProject(proj))
             })
 
         }

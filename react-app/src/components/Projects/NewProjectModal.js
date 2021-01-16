@@ -3,11 +3,13 @@ import Spinner from "../Loaders/Spinner"
 import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import UserListForm from './UserListForm';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DataSetsListForm from './DataSetsListForm';
 import { singleProjectPost, multiProjectPost } from "./ProjectUtils"
+import { addProject } from '../../store/projects';
 
 function NewProjectModal({ closeModal }) {
+    const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([]);
@@ -27,11 +29,13 @@ function NewProjectModal({ closeModal }) {
 
     const handleSubmit = async (e) => {
         if (selectedUsers.length == 1) {
-            singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            const project = singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            dispatch(addProject(project))
         }
         else {
             selectedUsers.forEach(user => {
-                multiProjectPost(projectName, selectedDataSetId, user, setErrors)
+                const project = multiProjectPost(projectName, selectedDataSetId, user, setErrors)
+                dispatch(addProject(project))
             })
 
         }

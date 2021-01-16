@@ -4,6 +4,8 @@ import Dropdown from 'rc-dropdown';
 import Menu, { Divider, Item as MenuItem } from 'rc-menu';
 import Modal from "react-modal"
 import UpdateProjectModal from './UpdateProjectModal';
+import { useDispatch } from 'react-redux';
+import { removeProject } from '../../store/projects';
 
 Modal.setAppElement('#root')
 
@@ -25,14 +27,19 @@ const customStyles = {
 };
 
 function Project({ projectObj }) {
+    const dispatch = useDispatch()
     const { project, user, stateProject, setStateProject } = projectObj
     const [showModal, setShowModal] = useState(false);
     const history = useHistory()
 
 
-    function onSelect({ key }) {
+    const onSelect = async ({ key }) => {
         console.log(key === "1")
         if (key === "1") openModal(project)
+        if (key === "2") {
+            const post = await fetch(`/api/projects/${project.id}`, { method: "DELETE" })
+            dispatch(removeProject(project.id))
+        }
     }
 
     const openModal = (project) => {
@@ -72,7 +79,7 @@ function Project({ projectObj }) {
                 animation="slide-up"
             >
                 <div className="project__card_heading">
-                    {project.project_name}
+                    {project && project.project_name}
                 </div>
             </Dropdown>
             <div className="project__info">
@@ -84,7 +91,7 @@ function Project({ projectObj }) {
                         Project Owner:
                     </div>
                     <div className="project__owner name">
-                        {project.user.first_name} {project.user.last_name}
+                        {project.user && project.user.first_name} {project.user && project.user.last_name}
                     </div>
                 </div>}
                 <div className="project__data_set container">
@@ -92,7 +99,7 @@ function Project({ projectObj }) {
                         Data Set:
                     </div>
                     <div className="project__data_set name">
-                        {project.data_set.data_set_name}
+                        {project.data_set && project.data_set.data_set_name}
                     </div>
                 </div>
             </div>
@@ -105,7 +112,7 @@ function Project({ projectObj }) {
                         Enumerator Count:
                     </div>
                     <div className="project__enumerators count">
-                        {project.enumerator_count}
+                        {project && project.enumerator_count}
                     </div>
                 </div>
                 <div className="project__surveys container">
@@ -113,7 +120,7 @@ function Project({ projectObj }) {
                         Surveys Count:
                     </div>
                     <div className="project__surveys count">
-                        {project.survey_count}
+                        {project && project.survey_count}
                     </div>
                 </div>
                 <div className="project__health_areas container">
@@ -121,7 +128,7 @@ function Project({ projectObj }) {
                         Health Area Count:
                     </div>
                     <div className="project__health_areas count">
-                        {project.health_area_count}
+                        {project && project.health_area_count}
                     </div>
                 </div>
                 <div className="project__duration_avg container">
@@ -129,7 +136,7 @@ function Project({ projectObj }) {
                         Average Survey Duration:
                     </div>
                     <div className="project__duration_avg count">
-                        {project.avg_duration}
+                        {project && project.avg_duration}
                     </div>
                 </div>
                 <div className="project__outliers container">
@@ -137,7 +144,7 @@ function Project({ projectObj }) {
                         Outlier Data Points:
                     </div>
                     <div className="project__outliers count">
-                        {project.outlier_count}
+                        {project && project.outlier_count}
                     </div>
                 </div>
                 <div className="project__dont_knows container">
@@ -145,7 +152,7 @@ function Project({ projectObj }) {
                         Don't Know Responses:
                     </div>
                     <div className="project__dont_knows count">
-                        {project.dont_know_count}
+                        {project && project.dont_know_count}
                     </div>
                 </div>
             </div>
