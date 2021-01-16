@@ -1,19 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Dropdown from 'rc-dropdown';
 import Menu, { Divider, Item as MenuItem } from 'rc-menu';
+import Modal from "react-modal"
+import UpdateProjectModal from './UpdateProjectModal';
 
+Modal.setAppElement('#root')
+
+const customStyles = {
+    content: {
+        top: '40%',
+        left: '70%',
+        right: '40%',
+        bottom: 'auto',
+        height: "65%",
+        marginRight: '-50%',
+        paddingTop: "0px",
+        transform: 'translate(-100%, -50%)',
+        border: '1px solid lightgrey',
+        fontFamily: "'DM Sans', sans-serif",
+        display: "flex",
+        justifyContent: "center",
+    }
+};
 
 function Project({ projectObj }) {
     const { project, user, stateProject, setStateProject } = projectObj
-
+    const [showModal, setShowModal] = useState(false);
     const history = useHistory()
 
+
     function onSelect({ key }) {
-        console.log(key)
+        console.log(key === "1")
+        if (key === "1") openModal(project)
     }
 
-    
+    const openModal = (project) => {
+        setShowModal(true)
+        setStateProject(project)
+    }
+    const closeUpdateProjectModal = () => setShowModal(false)
 
     const menuCallback = () => (
         <Menu onSelect={onSelect}>
@@ -23,8 +49,26 @@ function Project({ projectObj }) {
         </Menu>
     );
 
-    const handleUpdateProject = async (e, project) => {
 
+    const handleUpdateProject = (project) => {
+        const postUpdate = async () => {
+            let post = await fetch(`/api/projects/${project.id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...project })
+            })
+            const proj = await post.json()
+        }
+        postUpdate()
+    }
+
+    const modalObj = {
+        "project": stateProject,
+        "setProject": setStateProject,
+        "handleUpdateProject": handleUpdateProject,
+        "closeUpdateProjectModal": closeUpdateProjectModal
     }
 
     const handleMapClick = (e) => {
@@ -128,6 +172,16 @@ function Project({ projectObj }) {
                 <div className="project__stats button">
                     <button onClick={handleStatsClick}>Stats</button>
                 </div>
+            </div>
+            <div className="project__update modal">
+                <Modal
+                    isOpen={showModal}
+                    onRequestClose={closeUpdateProjectModal}
+                    style={customStyles}
+                    contentLabel="Update Project Modal"
+                >
+                    <UpdateProjectModal modalObj={modalObj} />
+                </Modal>
             </div>
         </>
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Switch from "react-switch";
 
 function SingleUserForm({ user, selectedObj }) {
@@ -15,6 +15,12 @@ function SingleUserForm({ user, selectedObj }) {
         }
         setSelectedUsers(newSelected)
     }
+
+    useEffect(() => {
+        if (!selectedUsers.length || !user) return
+        if (selectedUsers[0].id === user.id) setSwitched(!switched)
+    }, [])
+
     return (
         <>
             <tr className="projects_modal__user_list row">
