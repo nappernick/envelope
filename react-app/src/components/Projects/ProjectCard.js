@@ -26,7 +26,7 @@ const customStyles = {
     }
 };
 
-function Project({ projectObj }) {
+function ProjectCard({ projectObj }) {
     const dispatch = useDispatch()
     const { project, user, stateProject, setStateProject } = projectObj
     const [showModal, setShowModal] = useState(false);
@@ -35,21 +35,27 @@ function Project({ projectObj }) {
 
     const onSelect = async ({ key }) => {
         console.log(key === "1")
-        if (key === "1") openModal(project)
+        if (key === "1") {
+            setShowModal(true)
+            setStateProject(project)
+        }
         if (key === "2") {
             const post = await fetch(`/api/projects/${project.id}`, { method: "DELETE" })
             dispatch(removeProject(project.id))
         }
     }
 
-    const openModal = (project) => {
+    const openModal = async (project) => {
+        console.log()
         setShowModal(true)
         setStateProject(project)
     }
     const closeUpdateProjectModal = () => setShowModal(false)
 
     const menuCallback = () => (
-        <Menu onSelect={onSelect}>
+        <Menu onClick={onSelect}>
+            <MenuItem style={{ cursor: "pointer" }} key="3">Open Project</MenuItem>
+            <Divider />
             <MenuItem style={{ cursor: "pointer" }} key="1">Edit Project</MenuItem>
             <Divider />
             <MenuItem style={{ cursor: "pointer" }} key="2">Delete Project</MenuItem>
@@ -178,4 +184,4 @@ function Project({ projectObj }) {
     )
 }
 
-export default Project
+export default ProjectCard

@@ -4,7 +4,7 @@ import { FixedSizeList as List } from 'react-window';
 import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import { setAllProjects } from "../../store/projects"
-import Project from './Project'
+import ProjectCard from './ProjectCard'
 import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
 import NewProjectModal from './NewProjectModal';
@@ -53,7 +53,7 @@ function AllProjects() {
                 className="project__card_container"
                 style={style}
             >
-                <Project projectObj={projectObj} />
+                <ProjectCard projectObj={projectObj} />
             </div>
         )
     }

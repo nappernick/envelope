@@ -85,7 +85,8 @@ def update_project(id):
     project.project_name = req['project_name']
     project.updated_at = datetime.now()
     db.session.commit()
-    return jsonify(project.to_dict())
+    project = db.session.query(Project).get(id)
+    return jsonify(project.to_dict_survey_summary())
 
 @project_routes.route("/<int:projectId>", methods=["DELETE"])
 @login_required

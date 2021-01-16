@@ -18,7 +18,7 @@ const customStyles = {
         left: '65%',
         right: '55%',
         bottom: 'auto',
-        height: "45%",
+        height: "25%",
         marginRight: '-50%',
         paddingTop: "0px",
         transform: 'translate(-100%, -50%)',
