@@ -7,6 +7,7 @@ import MapGL, {
 } from 'react-map-gl';
 import Pins from "./Pins"
 import PopUp from "./Popup"
+import AutoSizer from "react-virtualized-auto-sizer";
 
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
@@ -45,32 +46,39 @@ function Map({ viewport, allData, setViewport }) {
     const handleMarkerClick = (info) => setPopUpInfo(info)
 
     return (
-        <MapGL
-            {...viewport}
-            width="50vw"
-            height="50vw"
-            mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
-            onViewportChange={setViewport}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-        // onHover={onHover}
-        >
-            <Pins data={allData} onClick={handleMarkerClick} />
+        <div className="map__autosizer container">
+            <AutoSizer>
+                {({ height, width }) => (
+                    <MapGL
+                        {...viewport}
+                        width={width}
+                        height={height}
+                        mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
+                        onViewportChange={setViewport}
+                        mapboxApiAccessToken={MAPBOX_TOKEN}
 
-            {popUpInfo && <PopUp popUpInfo={popUpInfo} setPopUpInfo={setPopUpInfo} />}
+                    // onHover={onHover}
+                    >
+                        <Pins data={allData} onClick={handleMarkerClick} />
 
-            <div style={geolocateStyle}>
-                <GeolocateControl />
-            </div>
-            <div style={fullscreenControlStyle}>
-                <FullscreenControl />
-            </div>
-            <div style={navStyle}>
-                <NavigationControl />
-            </div>
-            <div style={scaleControlStyle}>
-                <ScaleControl />
-            </div>
-        </MapGL>
+                        {popUpInfo && <PopUp popUpInfo={popUpInfo} setPopUpInfo={setPopUpInfo} />}
+
+                        <div style={geolocateStyle}>
+                            <GeolocateControl />
+                        </div>
+                        <div style={fullscreenControlStyle}>
+                            <FullscreenControl />
+                        </div>
+                        <div style={navStyle}>
+                            <NavigationControl />
+                        </div>
+                        <div style={scaleControlStyle}>
+                            <ScaleControl />
+                        </div>
+                    </MapGL>
+                )}
+            </AutoSizer>
+        </div>
     );
 }
 

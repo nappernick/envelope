@@ -2,8 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { trackPromise } from "react-promise-tracker";
 import { useParams } from 'react-router-dom';
 import { areas } from "../../common/areas";
-import HealthAreaSelector from './HealthAreaSelector';
+import HealthAreaSelector from './HealthAreas/HealthAreaSelector';
 import Map from './Map'
+import "./MapPage.css"
 
 function MapPage() {
     const { userId, projectId } = useParams()
@@ -45,7 +46,7 @@ function MapPage() {
             setViewport({
                 latitude: centerData[0],
                 longitude: centerData[1],
-                zoom: 15.1,
+                zoom: 14.5,
                 bearing: 0,
                 pitch: 0
             })
@@ -55,7 +56,7 @@ function MapPage() {
     }, [selectedHA]);
 
     return (
-        <div className="map__map_and_selector">
+        <div className="map__map_and_selector container">
             <div className="map__map">
                 <Map allData={data} viewport={viewport} setViewport={setViewport} />
             </div>

@@ -1,0 +1,11 @@
+div.map__map_and_selector {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.map__autosizer.container {
+    height: 80vh;
+    width: 70vw;
+}

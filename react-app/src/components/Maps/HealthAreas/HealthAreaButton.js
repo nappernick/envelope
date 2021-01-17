@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Button } from "@react-md/button";
 import styled from 'styled-components'
-import SmallCubeGrid from '../Loaders/SmallCubeGrid';
-import { areas } from "../../common/areas";
+import SmallCubeGrid from '../../Loaders/SmallCubeGrid';
+import { areas } from "../../../common/areas";
 
 const StyledButton = styled.div`
   display: flex;
