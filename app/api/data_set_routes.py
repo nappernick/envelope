@@ -205,14 +205,22 @@ def map_survey_center(projectId, healthAreaId):
     surveys = health_area.to_dict_full()['surveys']
     lat = {"sum": 0, "count": 0}
     long = {"sum": 0, "count": 0}
+    largest_lat = float("-inf")
+    largest_long = float("-inf")
     for survey in surveys:
+        if abs(survey["latitude"]) > largest_lat:
+            largest_lat = abs(survey["latitude"])
+        if abs(survey["longtitude"]) > largest_long:
+            largest_long = abs(survey["longtitude"])
         lat["sum"] += survey["latitude"]
         lat["count"] += 1
         long["sum"] += survey["longtitude"]
         long["count"] += 1
     lat_avg = lat["sum"]/lat["count"]
     long_avg = long["sum"]/long["count"]
-    return jsonify([ lat_avg, long_avg])
+    largest_lat_diff = abs(abs(lat_avg) - largest_lat)
+    largest_long_diff = abs(abs(long_avg) - largest_long)
+    return jsonify([ lat_avg, long_avg, largest_lat_diff, largest_long_diff])
 
 
 @data_set_routes.route("/health-areas")

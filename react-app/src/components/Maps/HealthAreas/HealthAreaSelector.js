@@ -5,12 +5,10 @@ import HealthAreaButton from './HealthAreaButton';
 import "./HealthAreas.css"
 
 
-function HealthAreaSelector({ healthAreas, setSelectedHA, spinAreaObj }) {
-    const { spinArea, setSpinArea } = spinAreaObj
+function HealthAreaSelector({ healthAreas, setSelectedHA, selectedHA }) {
     const ha_obj = {
         "setSelectedHA": setSelectedHA,
-        "spinArea": spinArea,
-        "setSpinArea": setSpinArea
+        "selectedHA": selectedHA
     }
 
     const Row = ({ data, index, style }) => (

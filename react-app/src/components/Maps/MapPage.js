@@ -19,10 +19,6 @@ function MapPage() {
     const [healthAreas, setHealthAreas] = useState([])
     const [selectedHA, setSelectedHA] = useState(null)
     const [spinArea, setSpinArea] = useState(areas.mapButtons)
-    const spinAreaObj = {
-        "spinArea": spinArea,
-        "setSpinArea": setSpinArea
-    }
 
     useEffect(() => {
         const fetchHealthArea = async () => {
@@ -43,15 +39,29 @@ function MapPage() {
 
             let center = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/center`)
             let centerData = await center.json()
+            console.log(centerData)
+            let centerLat = centerData[0]
+            let centerLong = centerData[1]
+            let latDiff = centerData[2]
+            let longDiff = centerData[3]
+            let viewZoom = 15.3
+            if (latDiff > .003 && longDiff > .003) viewZoom = 15.2
+            if (latDiff > .004) viewZoom = 14.9
+            if (longDiff > .01 || latDiff > .005) viewZoom = 14.8
+            // console.log("VIEW ZOOM", viewZoom)
+            // console.log("CENTER POINTS", centerLat, centerLong)
+            // console.log("AVG LONG: ", centerData[1])
+            // console.log("LARGEST LONG DIFF: ", centerData[3])
+            // console.log("AVG LAT: ", centerData[0])
+            // console.log("LARGEST LAT DIFF: ", centerData[2])
             setViewport({
-                latitude: centerData[0],
-                longitude: centerData[1],
-                zoom: 14.5,
+                latitude: centerLat,
+                longitude: centerLong,
+                zoom: viewZoom,
                 bearing: 0,
                 pitch: 0
             })
         }
-        // console.log("AT FETCH", spinArea)
         trackPromise(fetchMapData(), spinArea)
     }, [selectedHA]);
 
@@ -61,7 +71,7 @@ function MapPage() {
                 <Map allData={data} viewport={viewport} setViewport={setViewport} />
             </div>
             <div className="map__health_area_selector">
-                <HealthAreaSelector healthAreas={healthAreas} setSelectedHA={setSelectedHA} spinAreaObj={spinAreaObj} />
+                <HealthAreaSelector healthAreas={healthAreas} setSelectedHA={setSelectedHA} selectedHA={selectedHA} />
             </div>
         </div>
     )

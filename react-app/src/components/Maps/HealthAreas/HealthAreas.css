@@ -2,3 +2,53 @@ div.health_areas__autosizer {
     width: 20vw;
     height: 80vh;
 }
+
+div.health_areas__autosizer .health_areas__button.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.health_areas__button button {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    color: #83c2c1;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	border: 2px solid #83c2c1;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+div.health_areas__button.container button.mod {
+    color: #fff;
+	background-color: #83c2c1;
+	border: 2px solid #83c2c1;
+}
+
+.health_areas__button button:hover {
+    color: #fff;
+	background-color: transparent;
+	text-shadow: two;
+	border: 2px solid #fbb430;
+}
+
+.health_areas__button button:hover::before {
+	top: 0%;
+	bottom: auto;
+	height: 100%;
+}
+
+.health_areas__button button::before {
+	display: block;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	height: 0px;
+	width: 100%;
+	z-index: -1;
+	content: '';
+	color: #000 !important;
+	background: #fbb430;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
