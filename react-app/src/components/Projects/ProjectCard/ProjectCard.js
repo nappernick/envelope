@@ -4,9 +4,9 @@ import Dropdown from 'rc-dropdown';
 import Menu, { Divider, Item as MenuItem } from 'rc-menu';
 import Modal from "react-modal"
 import NumberFormat from "react-number-format";
-import UpdateProjectModal from './UpdateProjectModal';
+import UpdateProjectModal from '../UpdateProjectModal/UpdateProjectModal';
 import { useDispatch } from 'react-redux';
-import { removeProject } from '../../store/projects';
+import { removeProject } from '../../../store/projects';
 import "./ProjectCard.css"
 
 Modal.setAppElement('#root')

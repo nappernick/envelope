@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Spinner from "../Loaders/Spinner"
+import Spinner from "../../Loaders/Spinner"
 import { trackPromise } from "react-promise-tracker";
-import { areas } from "../../common/areas";
-import UserListForm from './UserListForm';
+import { areas } from "../../../common/areas";
+import UserListForm from '../ModalComponents/UserListForm';
 import { useDispatch, useSelector } from 'react-redux';
-import DataSetsListForm from './DataSetsListForm';
-import { singleProjectPost, multiProjectPost } from "./ProjectUtils"
-import { addProject } from '../../store/projects';
+import DataSetsListForm from '../ModalComponents/DataSetsListForm';
+import { singleProjectPost, multiProjectPost } from "../ProjectUtils"
+import { addProject } from '../../../store/projects';
 import "./NewProject.css"
 
 function NewProjectModal({ closeModal }) {

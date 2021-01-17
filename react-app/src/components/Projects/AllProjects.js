@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FixedSizeList as List } from 'react-window';
 import { areas } from "../../common/areas";
-import ProjectCard from './ProjectCard'
+import ProjectCard from './ProjectCard/ProjectCard'
 import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
-import NewProjectModal from './NewProjectModal';
+import NewProjectModal from './NewProjectModal/NewProjectModal';
 import AutoSizer from "react-virtualized-auto-sizer";
 import "./Projects.css"
 

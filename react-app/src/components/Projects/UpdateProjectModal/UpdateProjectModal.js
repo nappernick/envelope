@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { trackPromise } from 'react-promise-tracker';
 import { useDispatch, useSelector } from 'react-redux';
-import { areas } from "../../common/areas"
-import { addProject } from '../../store/projects';
-import Spinner from '../Loaders/Spinner';
-import DataSetsListForm from './DataSetsListForm';
-import { multiProjectPostUpdate, singleProjectPostUpdate } from './ProjectUtils';
-import UserListForm from './UserListForm';
+import { areas } from "../../../common/areas"
+import { addProject } from '../../../store/projects';
+import Spinner from '../../Loaders/Spinner';
+import DataSetsListForm from '../ModalComponents/DataSetsListForm';
+import { multiProjectPostUpdate, singleProjectPostUpdate } from '../ProjectUtils';
+import UserListForm from '../ModalComponents/UserListForm';
 import "./UpdateProject.css"
 
 function UpdateProjectModal({ modalObj }) {
