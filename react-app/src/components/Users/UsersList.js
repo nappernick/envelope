@@ -40,7 +40,7 @@ function UsersList() {
       setUsers(responseData);
     }
     trackPromise(fetchData(), areas.userList);
-  }, [showModal]);
+  }, []);
 
   const userComponents = users ? (
     <table className="users_list__user">

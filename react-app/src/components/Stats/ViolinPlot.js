@@ -58,7 +58,7 @@ function Violinplot({ statsField, h, w }) {
                 });
 
                 const xScale = scaleBand({
-                    range: [0, xMax - 110],
+                    range: [0, xMax - 100],
                     round: true,
                     domain: ["Test 1"],
                     padding: 0.4,

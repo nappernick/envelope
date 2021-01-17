@@ -1,0 +1,31 @@
+div.stats__page.container {
+    height: 70vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+div.stats__page.container .container {
+    height: 70vh;
+    /* margin-bottom: 5vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div.stats__page.container .header {
+    display: flex;
+    justify-content: center;
+    width: 270px;
+    border-bottom: 1px solid #e89313;
+    margin-bottom: 3vh;
+    font-weight: 700;
+    font-size: 25px;
+    color: #e89313;
+    
+}
+
+div.stats__page.container .graph {
+    height: 60vh;
+    width: 28vw;
+}
