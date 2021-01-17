@@ -24,6 +24,12 @@ div.projects_modal__container {
     margin-bottom: 8px;
 }
 
+.projects_modal__container >.container table {
+    width: 550px;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+}
+
 .projects_modal__container >.container .list {
     text-align: left;
 }
@@ -31,12 +37,6 @@ div.projects_modal__container {
 .projects_modal__container >.container .list th {
     font-family: 'Proza Libre', sans-serif;
     font-weight: 800;
-}
-
-.projects_modal__container >.container table {
-    width: 550px;
-    border-collapse: collapse;
-    margin-bottom: 5px;
 }
 
 .projects_modal__container >.container table th.switch {
@@ -57,6 +57,7 @@ div.projects_modal__container {
     font-weight: 700;
     font-family: "Proza Libre";
     padding-right: 10px;
+    padding-bottom: 1px;
 }
 
 .projects_modal__container .projects_modal__project_name.container {
@@ -68,12 +69,12 @@ div.projects_modal__container {
 }
 
 .projects_modal__container >.container .projects_modal__project_name input {
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 12px 4px 12px 8px;
     /* padding-left: 7px; */
     height: 23px;
-    font-size: 15px;
-    border-radius: 3px;
+    font-size: 14px;
+    border-radius: 5px;
 }
 
 .projects_modal__container > .button {

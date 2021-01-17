@@ -7,6 +7,7 @@ import Spinner from '../Loaders/Spinner';
 import DataSetsListForm from './DataSetsListForm';
 import { multiProjectPostUpdate, singleProjectPostUpdate } from './ProjectUtils';
 import UserListForm from './UserListForm';
+import "./UpdateProject.css"
 
 function UpdateProjectModal({ modalObj }) {
     const dispatch = useDispatch()
@@ -69,26 +70,13 @@ function UpdateProjectModal({ modalObj }) {
                         <div className={"projects_modal__errors error"}>{error}</div>
                     ))}
                 </div>
-                <div className="update_project__modal header">
-                    Update Project
-                </div>
-                <div className="update_project__modal update_name">
-                    <div className="update_project__modal sub_header">
-                        Update Project Name:
-                    </div>
-                    <div className="update_project__modal input">
-                        <input
-                            type="text"
-                            className="update_project__modal"
-                            onChange={handleNameChange}
-                            value={projectName}
-                        />
-                    </div>
+                <div className="update_project__header">
+                    <p>UPDATE PROJECT</p>
                 </div>
                 <hr />
-                <div className="update_project_modal__users">
-                    <div className="update_project_modal__users sub_header">
-                        Update User:
+                <div className="update_project_modal__users container">
+                    <div className="update_project_modal__users header">
+                        Update User
                     </div>
                     <div className="update_projects_modal__users table">
                         {users && users.length > 0 && <UserListForm users={users} selectedObj={selectedObj} />}
@@ -96,16 +84,29 @@ function UpdateProjectModal({ modalObj }) {
                     </div>
                 </div>
                 <hr />
-                <div className="update_project_modal__data_sets">
-                    <div className="update_project_modal__data_sets sub_header">
-                        Update Data Set:
+                <div className="update_project_modal__data_sets container">
+                    <div className="update_project_modal__data_sets header">
+                        Update Data Set
                     </div>
                     <div className="update_projects_modal__data_sets table">
                         {dataSets && <DataSetsListForm dataSetsObj={dataSetsObj} />}
                         <Spinner areas={areas.dataSetList} />
                     </div>
                 </div>
-                <div className="update_project__modal submit">
+                <div className="update_project_modal__project_name container">
+                    <div className="update_project_modal__project_name title">
+                        Update Project Name
+                    </div>
+                    <div className="update_project_modal__project_name input">
+                        <input
+                            type="text"
+                            className="update_project_modal"
+                            onChange={handleNameChange}
+                            value={projectName}
+                        />
+                    </div>
+                </div>
+                <div className="update_project_modal button">
                     <button
                         disabled={disabled}
                         onClick={handleSubmit}

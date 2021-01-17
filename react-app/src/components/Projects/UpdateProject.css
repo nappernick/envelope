@@ -1,0 +1,132 @@
+div.project_card__update.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 60px 20px;
+}
+
+div.update_project__modal.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.update_project__header {
+    display: flex;
+    justify-content: center;
+    width: 340px;
+    border-bottom: 1px solid #e89313;
+    margin-bottom: 1vh;
+    font-weight: 700;
+    font-size: 25px;
+    color: #e89313;
+}
+
+.update_project__modal.container > .container > .header {
+    font-size: 17px;
+    font-weight: 700;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 8px;
+}
+
+.update_project__modal.container > .container table {
+    width: 550px;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+}
+
+.update_project__modal.container > .container .list {
+    text-align: left;
+}
+
+.update_project__modal.container >.container .list th {
+    font-family: 'Proza Libre', sans-serif;
+    font-weight: 800;
+}
+
+.update_project__modal.container >.container table th.switch {
+    text-align: center;
+}
+
+.update_project__modal.container >.container .row {
+    padding: 3px 0px;
+}
+
+.update_project__modal.container >.container .row.switch {
+    display: flex;
+    justify-content: center;
+}
+
+.update_project__modal.container >.container .update_project_modal__project_name.title {
+    font-size: 17px;
+    font-weight: 700;
+    font-family: "Proza Libre";
+    padding-right: 10px;
+    padding-bottom: 1px;
+}
+
+.update_project__modal.container .update_project_modal__project_name.container {
+    display: flex;
+    width: 450px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.update_project__modal.container >.container .update_project_modal__project_name input {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 12px 4px 12px 8px;
+    /* padding-left: 7px; */
+    height: 23px;
+    font-size: 14px;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.update_project__modal.container > .button {
+    margin-top: 30px;
+    position: relative;
+    bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.update_project__modal.container > .button > button:enabled {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    color: #83c2c1;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	border: 2px solid #83c2c1;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.update_project__modal.container > .button > button:hover:enabled {
+    color: #fff;
+	background-color: transparent;
+	text-shadow: two;
+}
+
+.update_project__modal.container > .button > button:hover:enabled::before {
+	top: 0%;
+	bottom: auto;
+	height: 100%;
+}
+
+.update_project__modal.container > .button > button:enabled::before {
+    display: block;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	height: 0px;
+	width: 100%;
+	z-index: -1;
+	content: '';
+	color: #000 !important;
+	background: #83c2c1;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}

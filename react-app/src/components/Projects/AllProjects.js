@@ -24,6 +24,7 @@ const customStyles = {
         paddingRight: "60px",
         transform: 'translate(-100%, -50%)',
         border: 'none',
+        borderRadius: '10px',
         display: "flex",
         justifyContent: "center",
         boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px"
