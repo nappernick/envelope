@@ -37,9 +37,16 @@ function SingleDataSet({ dataSetObj }) {
                 <td className="projects_modal__user_list row">
                     {dataSet.created_at}
                 </td>
-                <td className="projects_modal__user_list row">
-                    <Switch onChange={handleSwitch} checked={switched}
-                        disabled={selected == index || selected == null ? false : true} />
+                <td className="projects_modal__user_list switch row">
+                    <Switch
+                        onChange={handleSwitch}
+                        checked={switched}
+                        disabled={selected == index || selected == null ? false : true}
+                        onColor="#83c2c1"
+                        offColor="#dcac63"
+                        height={20}
+                        width={50}
+                    />
                     {/* <input type="checkbox" /> */}
                 </td>
             </tr>

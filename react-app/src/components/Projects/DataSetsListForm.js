@@ -8,14 +8,14 @@ function DataSetsListForm({ dataSetsObj }) {
 
     return (
         <>
-            <table className="projects_modal__user_list">
+            <table className="projects_modal__user_list list">
                 <thead>
                     <tr className="projects_modal__user_list header">
                         <th className="projects_modal__user_list header">
                             Data Set name</th>
                         <th className="projects_modal__user_list header">
                             Created At</th>
-                        <th className="projects_modal__user_list header">
+                        <th className="projects_modal__user_list header switch">
                             Add to Project</th>
                     </tr>
                 </thead>

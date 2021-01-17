@@ -51,6 +51,28 @@ button, .button {
     font-family: 'Proza Libre', sans-serif;
 }
 
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    lightgray;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    lightgray;
+   opacity:  1;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    lightgray;
+   opacity:  1;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    lightgray;
+}
+input::-ms-input-placeholder { /* Microsoft Edge */
+   color:    lightgray;
+}
+
+input::placeholder { /* Most modern browsers support this now. */
+   color:    lightgray;
+}
+
 .ReactModal__Overlay {
     opacity: 0;
     transition: opacity 300ms ease-in-out;

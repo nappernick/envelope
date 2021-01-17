@@ -13,21 +13,24 @@ Modal.setAppElement('#root')
 
 const customStyles = {
     content: {
-        top: '45%',
+        top: '50%',
         left: 'auto',
-        right: '30%',
+        right: '23%',
         bottom: 'auto',
-        height: "65%",
+        height: "80%",
         marginRight: '-50%',
         paddingTop: "30px",
         paddingLeft: "60px",
         paddingRight: "60px",
         transform: 'translate(-100%, -50%)',
-        border: '1px solid lightgrey',
+        border: 'none',
         display: "flex",
         justifyContent: "center",
+        boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px"
     }
 };
+// rgba(17, 12, 46, 0.15) 0px 48px 100px 0px
+// box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px
 
 function AllProjects() {
     const user = useSelector(store => store.session.user)

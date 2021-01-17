@@ -44,7 +44,7 @@ div.project_card__container .header {
 }
 
 .project_card__container .title {
-    font-weight: bold;
+    font-weight: 500;
     font-family: "Proza Libre";
 }
 

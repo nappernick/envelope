@@ -29,13 +29,13 @@ function SingleUserForm({ user, selectedObj }) {
         <>
             <tr className="projects_modal__user_list row">
                 <td className="projects_modal__user_list row">
-                    {user.username}
-                </td>
-                <td className="projects_modal__user_list row">
                     {user.first_name}
                 </td>
                 <td className="projects_modal__user_list row">
                     {user.last_name}
+                </td>
+                <td className="projects_modal__user_list row">
+                    {user.username}
                 </td>
                 <td className="projects_modal__user_list row">
                     {user.email}
@@ -43,8 +43,16 @@ function SingleUserForm({ user, selectedObj }) {
                 <td className="projects_modal__user_list row">
                     {user.type}
                 </td>
-                <td className="projects_modal__user_list row">
-                    <Switch onChange={handleSwitch} checked={switched} />
+                <td className="projects_modal__user_list switch row">
+                    <Switch
+                        className="projects_modal__user_list"
+                        onChange={handleSwitch}
+                        checked={switched}
+                        onColor="#83c2c1"
+                        offColor="#dcac63"
+                        height={20}
+                        width={50}
+                    />
                     {/* <input type="checkbox" /> */}
                 </td>
             </tr>

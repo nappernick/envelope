@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DataSetsListForm from './DataSetsListForm';
 import { singleProjectPost, multiProjectPost } from "./ProjectUtils"
 import { addProject } from '../../store/projects';
+import "./NewProject.css"
 
 function NewProjectModal({ closeModal }) {
     const dispatch = useDispatch()
@@ -54,6 +55,7 @@ function NewProjectModal({ closeModal }) {
 
     useEffect(() => {
         if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
+        if (!projectName || selectedUsers.length > !0 || !selectedDataSetId) setDisabled(true)
     }, [projectName, selectedUsers, selectedDataSetId])
 
     return (
@@ -64,6 +66,9 @@ function NewProjectModal({ closeModal }) {
                         <div className={"projects_modal__errors error"}>{error}</div>
                     ))}
                 </div>
+                <div className="projects_modal__header">
+                    <p>NEW PROJECT</p>
+                </div>
                 <div className="projects_modal__user container">
                     <div className="projects_modal__users header">
                         Users
@@ -72,32 +77,31 @@ function NewProjectModal({ closeModal }) {
                         {users && users.length > 0 && <UserListForm users={users} selectedObj={selectedObj} />}
                         <Spinner areas={areas.userList} />
                     </div>
-                    <hr />
-                    <div className="projects_modal__data_sets table">
-                        <div className="projects_modal__data_sets header">
-                            Data Sets
+                    <div className="projects_modal__data_sets header">
+                        Data Sets
                         </div>
+                    <div className="projects_modal__data_sets table">
                         {dataSets && <DataSetsListForm dataSetsObj={dataSetsObj} />}
                         <Spinner areas={areas.dataSetList} />
                     </div>
-                    <hr />
-                    <div className="projects_modal__project_name container">
-                        <div className="projects_modal__project_name title">
-                            Project Name:
+                </div>
+                <div className="projects_modal__project_name container">
+                    <div className="projects_modal__project_name title">
+                        Project Name
                         </div>
-                        <div className="projects_modal__project_name input">
-                            <input type="text"
-                                onChange={e => setProjectName(e.target.value)}
-                                value={projectName}
-                            />
-                        </div>
+                    <div className="projects_modal__project_name input">
+                        <input type="text"
+                            onChange={e => setProjectName(e.target.value)}
+                            value={projectName}
+                            placeholder="Name this project..."
+                        />
                     </div>
-                    <div className="projects_modal__submit button">
-                        <button
-                            disabled={disabled}
-                            onClick={handleSubmit}
-                        >Create Project</button>
-                    </div>
+                </div>
+                <div className="projects_modal__submit button">
+                    <button
+                        disabled={disabled}
+                        onClick={handleSubmit}
+                    >Create Project</button>
                 </div>
             </div>
 

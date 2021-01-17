@@ -51,7 +51,7 @@
 div.projects__new_project.container .projects__new_project.button > button:hover {
     color: #fff;
 	background-color: transparent;
-	text-shadow: ntwo;
+	text-shadow: two;
 }
 
 .projects__new_project.button > button:hover::before {
