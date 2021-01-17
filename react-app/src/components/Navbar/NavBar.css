@@ -50,8 +50,7 @@
 
 .navbar__link:hover {
     border-radius: 5px;
-    box-shadow:  0 0 0 2px #aad68f;
-
+    box-shadow:  0 0 0 2px #83c2c1;
 }
 
 .rc-dropdown {

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { FixedSizeList as List } from 'react-window';
-import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
-import { setAllProjects } from "../../store/projects"
 import ProjectCard from './ProjectCard'
 import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
@@ -15,23 +13,23 @@ Modal.setAppElement('#root')
 
 const customStyles = {
     content: {
-        top: '40%',
-        left: '70%',
-        right: '40%',
+        top: '45%',
+        left: 'auto',
+        right: '30%',
         bottom: 'auto',
         height: "65%",
         marginRight: '-50%',
-        paddingTop: "0px",
+        paddingTop: "30px",
+        paddingLeft: "60px",
+        paddingRight: "60px",
         transform: 'translate(-100%, -50%)',
         border: '1px solid lightgrey',
-        fontFamily: "'DM Sans', sans-serif",
         display: "flex",
         justifyContent: "center",
     }
 };
 
 function AllProjects() {
-    const dispatch = useDispatch()
     const user = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
     const [project, setProject] = useState({})
@@ -60,6 +58,9 @@ function AllProjects() {
     }
     return (
         <div className="projects__page container">
+            <div className="projects__header">
+                <p>ALL PROJECTS</p>
+            </div>
             <div className="projects__scroll container" >
                 <Spinner areas={areas.projects} />
                 <AutoSizer>
@@ -67,7 +68,7 @@ function AllProjects() {
                         <List
                             className="projects__list container"
                             height={height}
-                            itemSize={320}
+                            itemSize={370}
                             width={width}
                             itemCount={projects ? projects.length : 0}
                             itemData={{

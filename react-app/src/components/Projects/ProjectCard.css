@@ -1,0 +1,104 @@
+div.project_card__container {
+    height: 60vh;
+    margin: 0px 30px;
+    padding: 20px 30px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+div.project_card__heading {
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+div.project_card__container .outermost {
+    margin-bottom: 15px;
+}
+
+div.project_card__container .container {
+    display: flex;
+    justify-content: space-between;
+    margin: 2px 0px;
+}
+
+.project_card__container .container > div {
+    margin: 2px 0px;
+}
+
+div.project_card__container .header {
+    font-weight: 500;
+    font-size: 14px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 2px;
+}
+
+.project_card__info.header {
+    width: 85px;
+}
+
+.project_stats.header {
+    width: 95px;
+}
+
+.project_card__container .title {
+    font-weight: bold;
+    font-family: "Proza Libre";
+}
+
+.project_card__map_stats_btns {
+    position: relative;
+    bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.project_card__map_stats_btns button {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    color: #edbb43;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	border: 2px solid #edbb43;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.project_card__map_stats_btns button:hover {
+    color: #fff;
+	border: 2px solid #83c2c1;
+	background-color: transparent;
+	text-shadow: ntwo;
+}
+
+.project_card__map_stats_btns button:hover::before {
+	top: auto;
+	bottom: 0%;
+	height: 100%;
+}
+
+.project_card__map_stats_btns button::before {
+	display: block;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	height: 0px;
+	width: 100%;
+	z-index: -1;
+	content: '';
+	color: #83c2c1 !important;
+	background: #83c2c1;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.rc-dropdown-menu {
+    width: 100px;
+    margin-left: 180px;
+}
+
+.rc-dropdown-menu > .rc-dropdown-menu-item:hover,
+.rc-dropdown-menu > .rc-dropdown-menu-item-selected {
+    background-color: #edbb43;
+}

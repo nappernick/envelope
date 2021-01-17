@@ -7,7 +7,7 @@ div.footer__main_container {
     height: 4.1rem;
     display: flex;
     justify-content: space-around;
-    background-color: #e89313;
+    background-color: #fbb430;
     font-size: 14px;
     font-weight: 500;
 }
@@ -39,7 +39,7 @@ div.footer__main_container {
 
 .footer__main_container .link:hover {
     border-radius: 5px;
-    box-shadow:  0 0 0 2px #edbb43;
+    box-shadow:  0 0 0 2px #e89313;
 }
 
 .footer__linkedin.container {
@@ -48,7 +48,7 @@ div.footer__main_container {
 }
 
 .footer__readme.container {
-    width: 180px;
+    width: 174px;
     min-width: 168px;
 }
 
