@@ -18,7 +18,8 @@ const _setProject = (project) => {
 
 const _removeProject = (id) => {
     return {
-        type: REMOVE_PROJECT
+        type: REMOVE_PROJECT,
+        id
     }
 }
 

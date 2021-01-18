@@ -34,6 +34,10 @@ div.data_sets__container {
     text-align: left;
 }
 
+.data_sets__container th.button {
+    text-align: center;
+}
+
 .data_sets__container tr {
     font-size: 15px;
     height: 38px;
@@ -46,6 +50,11 @@ div.data_sets__container {
 }
 
 .data_set__data_set .spinner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+div.data_set__data_set.data.button {
     display: flex;
     justify-content: center;
 }
@@ -130,7 +139,7 @@ button.data_set__upload_button.button {
     position: relative;
     display: block;
     color: #fbb430;
-    margin: 30px 0;
+    margin: 15px 0;
     border: 2px solid #fbb430;
     text-transform: uppercase;
     overflow: hidden;

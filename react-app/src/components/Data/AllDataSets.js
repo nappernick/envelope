@@ -8,7 +8,7 @@ import { removeDataSet } from "../../store/data_sets"
 import { trackPromise } from 'react-promise-tracker';
 import { areas } from "../../common/areas";
 import { usePromiseTracker } from "react-promise-tracker";
-import { DoubleBounce } from "better-react-spinkit"
+import { ThreeBounce } from "better-react-spinkit"
 import Spinner from '../Loaders/Spinner';
 import "./AllDataSets.css"
 
@@ -116,10 +116,10 @@ function AllDataSets() {
                             <th className="data_set__data_set header">
                                 Updated At
                             </th>
-                            <th className="data_set__data_set header">
+                            <th className="data_set__data_set header button">
                                 Update Name
                             </th>
-                            <th className="data_set__data_set header">
+                            <th className="data_set__data_set header button">
                                 Delete Data Set
                             </th>
                         </tr>
@@ -138,19 +138,25 @@ function AllDataSets() {
                                     <td className="data_set__data_set data">
                                         {configDate(dataSet.updated_at)}
                                     </td>
-                                    <td className="data_set__data_set data">
-                                        <button className="data_set__data_set button" onClick={(e) => openModal(e, dataSet)} >Update</button>
+                                    <td className="data_set__data_set data button">
+                                        <div className="data_set__data_set data button" >
+                                            <button className="data_set__data_set button" onClick={(e) => openModal(e, dataSet)} >Update</button>
+                                        </div>
                                     </td>
-                                    <td className="data_set__data_set data">
-                                        {promiseInProgress ? <div className="spinner">
-                                            <DoubleBounce
-                                                size={5}
-                                                color="#e98641"
-                                            />
-                                        </div> :
-                                            <button className="data_set__data_set delete"
-                                                onClick={(e) => handleDelete(e, dataSet.id)}
-                                            >Delete</button>}
+                                    <td className="data_set__data_set data button">
+                                        {promiseInProgress ?
+                                            <div className="spinner">
+                                                <ThreeBounce
+                                                    size={15}
+                                                    color="#e98641"
+                                                    duration=".5s"
+                                                />
+                                            </div> :
+                                            <div className="data_set__data_set data button" >
+                                                <button className="data_set__data_set delete"
+                                                    onClick={(e) => handleDelete(e, dataSet.id)}
+                                                >Delete</button>
+                                            </div>}
                                     </td>
                                 </tr>
                             )

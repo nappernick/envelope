@@ -29,18 +29,18 @@ function NewProjectModal({ closeModal }) {
     }
 
     const handleSubmit = async (e) => {
+        closeModal()
         if (selectedUsers.length == 1) {
-            const project = singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
             dispatch(addProject(project))
         }
         else {
-            selectedUsers.forEach(user => {
-                const project = multiProjectPost(projectName, selectedDataSetId, user, setErrors)
+            selectedUsers.forEach(async (user) => {
+                const project = await multiProjectPost(projectName, selectedDataSetId, user, setErrors)
                 dispatch(addProject(project))
             })
 
         }
-        closeModal()
     }
 
     useEffect(() => {

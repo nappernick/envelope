@@ -47,8 +47,8 @@ function ProjectCard({ projectObj }) {
             setShowModal(true)
         }
         if (key === "2") {
-            fetch(`/api/projects/${project.id}`, { method: "DELETE" })
             dispatch(removeProject(project.id))
+            fetch(`/api/projects/${project.id}`, { method: "DELETE" })
         }
     }
     // console.log("MODAL STATE", showModal)

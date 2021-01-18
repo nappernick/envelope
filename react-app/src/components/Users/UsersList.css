@@ -1,0 +1,85 @@
+div.users_list__container,
+.users_list__list_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.users_list___header {
+    display: flex;
+    justify-content: center;
+    width: 270px;
+    border-bottom: 1px solid #e89313;
+    margin-bottom: 3vh;
+    font-weight: 700;
+    font-size: 25px;
+    color: #e89313;
+}
+
+.users_list__list_container table {
+    width: 60vw;
+    border-collapse: collapse;
+    margin-bottom: 5px;
+}
+
+.users_list__list_container th {
+    text-align: left;
+}
+
+.users_list__list_container th.button {
+    text-align: center;
+}
+
+.users_list__list_container tr {
+    font-size: 15px;
+    height: 30px;
+}
+
+.users_list__container tr td.email {
+    width: auto;
+}
+
+.users_list__container td.username > a {
+    color: black;
+    text-decoration: none;
+}
+
+.users_list__new_user button {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    position: relative;
+    display: block;
+    color: #fbb430;
+    margin: 15px 0;
+    border: 2px solid #fbb430;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 1s all ease;
+}
+
+.users_list__new_user button::before {
+    background: #fbb430;
+    content: "";
+    position: absolute;
+	color: #000 !important;
+    top: 49%;
+    bottom: 49%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: -1;
+    transition: all 0.6s ease;
+}
+
+.users_list__new_user button::before {
+    width: 110%;
+    height: 0%;
+  }
+
+  .users_list__new_user button:hover {
+    color: white;
+    transition: all 0.6s ease;
+  }
+
+.users_list__new_user button:hover::before {
+    height: 110%;
+  }

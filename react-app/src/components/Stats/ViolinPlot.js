@@ -37,6 +37,7 @@ function Violinplot({ statsField, h, w }) {
             }
         }
         fetchStatsData()
+        debugger
     }, [dataSetId])
 
     // console.log("BOX PLOT DATA: ", boxPlotData)

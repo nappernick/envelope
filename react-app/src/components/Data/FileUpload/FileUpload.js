@@ -72,8 +72,7 @@ function FileUpload() {
             dispatch(addDataSet(dataSet))
             setKey(null)
         }
-        trackPromise(fileUpload(), areas.uploadDS)
-        return history.push("/data-sets")
+        trackPromise(fileUpload(), areas.uploadDS).then(() => history.push("/data-sets"))
     }
 
     const file_tools = {

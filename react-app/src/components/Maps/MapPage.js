@@ -5,6 +5,7 @@ import { areas } from "../../common/areas";
 import HealthAreaSelector from './HealthAreas/HealthAreaSelector';
 import Map from './Map'
 import "./MapPage.css"
+import { calculateZoom } from './MapUtils';
 
 function MapPage() {
     const { userId, projectId } = useParams()
@@ -44,10 +45,8 @@ function MapPage() {
             let centerLong = centerData[1]
             let latDiff = centerData[2]
             let longDiff = centerData[3]
-            let viewZoom = 15.3
-            if (latDiff > .003 && longDiff > .003) viewZoom = 15.2
-            if (latDiff > .004) viewZoom = 14.9
-            if (longDiff > .01 || latDiff > .005) viewZoom = 14.8
+            calculateZoom(latDiff, longDiff)
+            let viewZoom = calculateZoom(latDiff, longDiff)
             // console.log("VIEW ZOOM", viewZoom)
             // console.log("CENTER POINTS", centerLat, centerLong)
             // console.log("AVG LONG: ", centerData[1])

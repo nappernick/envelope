@@ -17,7 +17,7 @@ div.data_set__modal.container {
 
 .data_set__modal.input input {
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-    padding: 15px 4px 12px 8px;
+    padding: 15px 4px 14px 8px;
     height: 23px;
     font-size: 14px;
     border-radius: 5px;

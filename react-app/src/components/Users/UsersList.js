@@ -5,6 +5,7 @@ import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import Modal from "react-modal"
 import SignUpForm from "../Auth/SignUpForm";
+import "./UsersList.css"
 
 Modal.setAppElement('#root')
 
@@ -55,7 +56,7 @@ function UsersList() {
           <th className="users_list__user header">
             Last Name
           </th>
-          <th className="users_list__user header">
+          <th className="users_list__user header email">
             Email
           </th>
           <th className="users_list__user header">
@@ -68,8 +69,8 @@ function UsersList() {
           return (
 
             <tr className="users_list__user row">
-              <td className="users_list__user data">
-                <NavLink to={`/users/${user.id}`}>{user.username}</NavLink>
+              <td className="users_list__user data username">
+                {user.username}
               </td>
               <td className="users_list__user data">
                 {user.first_name}
@@ -77,7 +78,7 @@ function UsersList() {
               <td className="users_list__user data">
                 {user.last_name}
               </td>
-              <td className="users_list__user data">
+              <td className="users_list__user data email">
                 {user.email}
               </td>
               <td className="users_list__user data">
@@ -96,7 +97,7 @@ function UsersList() {
       <div className="users_list__container">
         <div className="users_list__list_container">
           <div className="users_list___header">
-            <h1>User List: </h1>
+            <p>User List</p>
           </div>
           <div className="users_list__list">
             <div>

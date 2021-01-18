@@ -8,6 +8,7 @@ import Modal from "react-modal"
 import NewProjectModal from './NewProjectModal/NewProjectModal';
 import AutoSizer from "react-virtualized-auto-sizer";
 import "./Projects.css"
+import { usePromiseTracker } from 'react-promise-tracker';
 
 Modal.setAppElement('#root')
 
@@ -36,8 +37,14 @@ const customStyles = {
 function AllProjects() {
     const user = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
+    const [area, setArea] = useState('')
     const [project, setProject] = useState({})
     const [showModal, setShowModal] = useState(false);
+    const { promiseInProgress } = usePromiseTracker({
+        area: area,
+        delay: 0,
+    });
+
 
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
@@ -55,6 +62,9 @@ function AllProjects() {
             "setStateProject": setProject,
             "project": projects[index],
             "user": user,
+            "area": area,
+            "setArea": setArea,
+            "index": index,
         }
         return (
             <div
@@ -62,7 +72,7 @@ function AllProjects() {
                 className="project__card_container"
                 style={style}
             >
-                <ProjectCard projectObj={projectObj} />
+                {promiseInProgress ? <Spinner areas={area} /> : <ProjectCard projectObj={projectObj} />}
             </div>
         )
     }
@@ -107,7 +117,9 @@ function AllProjects() {
                         closeTimeoutMS={300}
                         contentLabel="New Project Upload Modal"
                     >
-                        <NewProjectModal closeModal={closeModal} />
+                        <NewProjectModal
+                            closeModal={closeModal}
+                        />
                     </Modal>
                 </div>
             </div>

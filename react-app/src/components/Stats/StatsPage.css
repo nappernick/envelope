@@ -29,3 +29,10 @@ div.stats__page.container .graph {
     height: 60vh;
     width: 28vw;
 }
+
+.stats__page g > *,
+.stats__page.container svg path {
+    transition-timing-function: ease;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: all .3s ease;
+}

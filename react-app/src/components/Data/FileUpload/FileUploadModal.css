@@ -31,7 +31,7 @@ div.upload_modal__container {
 
 .upload_modal__update_name.input input {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    padding: 15px 4px 12px 8px;
+    padding: 15px 4px 14px 8px;
     height: 23px;
     font-size: 16px;
     border-radius: 5px;
@@ -55,7 +55,7 @@ div.upload_modal__container {
     position: relative;
     display: block;
     color: #fbb430;
-    margin: 30px 0;
+    margin: 15px 0;
     border: 2px solid #fbb430;
     text-transform: uppercase;
     overflow: hidden;

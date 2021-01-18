@@ -39,6 +39,15 @@ function App() {
     })()
   }, [dispatch]);
 
+  useEffect(() => {
+    (async () => {
+      dispatch(setAllDataSets())
+    })();
+    (async () => {
+      trackPromise(dispatch(setAllProjects()), areas.projects)
+    })()
+  }, [dispatch, user]);
+
   if (!loaded) {
     return null;
   }
@@ -52,22 +61,22 @@ function App() {
           />
         </Route>
         <Route path="/sign-up" exact={true}>
-          <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
+          {user ? <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users" exact={true} authenticated={user}>
-          <UsersList />
+          {user ? <UsersList /> : <Redirect to="/login" />}
         </Route>
-        <Route path="/users/:userId" exact={true} authenticated={user}>
+        {/* <Route path="/users/:userId" exact={true} authenticated={user}>
           <User />
-        </Route>
+        </Route> */}
         <Route path="/data-sets" exact={true} authenticated={user}>
-          <AllDataSets />
+          {user ? <AllDataSets /> : <Redirect to="/login" />}
         </Route>
         <Route path="/data-sets/upload" exact={true} authenticated={user}>
-          <FileUpload />
+          {user ? <FileUpload /> : <Redirect to="/login" />}
         </Route>
         <Route path="/projects" exact={true} authenticated={user}>
-          <AllProjects />
+          {user ? <AllProjects /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users/:userId/projects" exact={true} authenticated={user}>
           {/* Component that shows this user's projects */}
@@ -76,16 +85,16 @@ function App() {
           {/* Component that shows a specific project in detail */}
         </Route>
         <Route path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
-          <StatsPage />
+          {user ? <StatsPage /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
-          <Violinplot />
+          {user ? <Violinplot /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users/:userId/projects/:projectId/map" exact={true} authenticated={user}>
-          <MapPage />
+          {user ? <MapPage /> : <Redirect to="/login" />}
         </Route>
         <Route path="/" exact={true} authenticated={user}>
-          <Redirect to="/projects" />
+          {user ? <Redirect to="/projects" /> : <Redirect to="/login" />}
         </Route>
       </Switch>
       <Footer />
