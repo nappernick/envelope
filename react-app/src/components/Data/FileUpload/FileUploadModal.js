@@ -21,7 +21,6 @@ function FileUploadModal({ file_tools, origFileName }) {
     useEffect(() => {
         if (!fileName) setDisabled(true)
     }, [fileName])
-    console.log(fileName)
 
     useEffect(() => {
         setFileName(origFileName[0])

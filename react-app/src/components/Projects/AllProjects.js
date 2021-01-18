@@ -42,7 +42,7 @@ function AllProjects() {
     const [showModal, setShowModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const { promiseInProgress } = usePromiseTracker({
-        area: area,
+        area: "projects-area",
         delay: 0,
     });
 
@@ -50,15 +50,8 @@ function AllProjects() {
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
-    const modalObj = {
-        "project": project,
-        "setProject": setProject,
-        "closeUpdateProjectModal": closeModal,
-
-    }
-
     const Row = ({ index, style, data }) => {
-        let { project, setProject } = data
+        let { projects, project, setProject } = data
         const projectObj = {
             "stateProject": project,
             "setStateProject": setProject,
@@ -76,7 +69,7 @@ function AllProjects() {
                 className="project__card_container"
                 style={style}
             >
-                {promiseInProgress ? <Spinner areas={area} /> : <ProjectCard projectObj={projectObj} />}
+                <ProjectCard projectObj={projectObj} />
             </div>
         )
     }
@@ -86,26 +79,28 @@ function AllProjects() {
                 <p>ALL PROJECTS</p>
             </div>
             <div className="projects__scroll container" >
-                <Spinner areas={areas.projects} />
-                <AutoSizer>
-                    {({ height, width }) => (
-                        <List
-                            className="projects__list container"
-                            height={height}
-                            itemSize={370}
-                            width={width}
-                            itemCount={projects ? projects.length : 0}
-                            itemData={{
-                                "project": project,
-                                "setProject": setProject
-                            }}
-                            layout="horizontal"
-                        >
-                            {projects.length && Row}
+                {promiseInProgress ? <Spinner areas={areas.projects} /> :
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <List
+                                className="projects__list container"
+                                height={height}
+                                itemSize={370}
+                                width={width}
+                                itemCount={projects ? projects.length : 0}
+                                itemData={{
+                                    "projects": projects,
+                                    "project": project,
+                                    "setProject": setProject
+                                }}
+                                layout="horizontal"
+                            >
+                                {projects.length && Row}
 
-                        </List>
-                    )}
-                </AutoSizer>
+                            </List>
+                        )}
+                    </AutoSizer>
+                }
             </div>
             <div className="projects__new_project container">
                 <div className="projects__new_project button">

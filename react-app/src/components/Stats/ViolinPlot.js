@@ -23,7 +23,7 @@ function Violinplot({ statsField, h, w }) {
         }
         fetchDataSetId()
     }, [])
-    console.log(statsField)
+    
     useEffect(() => {
         if (!dataSetId) return
         const fetchStatsData = async () => {
@@ -37,12 +37,7 @@ function Violinplot({ statsField, h, w }) {
             }
         }
         fetchStatsData()
-        debugger
     }, [dataSetId])
-
-    // console.log("BOX PLOT DATA: ", boxPlotData)
-    // console.log("VIOLIN FETCH: ", `/api/data/${dataSetId}/violinplot/${statsString}`)
-    console.log("VIOLIN PLOT DATA: ", violinPlotData)
 
     return (
         <AutoSizer>
@@ -51,7 +46,7 @@ function Violinplot({ statsField, h, w }) {
                 const yMax = height - 30;
                 const minYValue = boxPlotData ? boxPlotData.min : null
                 const maxYValue = boxPlotData ? boxPlotData.max : null
-                console.log(yMax)
+
                 const yScale = scaleLinear({
                     range: [yMax, 10],
                     round: true,

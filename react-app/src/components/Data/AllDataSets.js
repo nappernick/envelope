@@ -74,7 +74,6 @@ function AllDataSets() {
                 body: JSON.stringify({ ...dataSet })
             })
             const ds = await post.json()
-            // console.log(ds)
             if (Object.keys(ds).length) dispatch(addDataSet(ds))
         }
         postFetch()

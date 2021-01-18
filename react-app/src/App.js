@@ -6,12 +6,10 @@ import { setAllProjects } from './store/projects'
 import { setAllDataSets } from "./store/data_sets"
 import { areas } from "./common/areas"
 import { trackPromise } from "react-promise-tracker";
-import LoginForm from "./components/Auth/LoginForm";
+import LoginForm from "./components/LoginForm/LoginForm";
 import SignUpForm from "./components/Users/SignupForm/SignUpForm";
 import NavBar from "./components/Navbar/NavBar";
-import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import UsersList from "./components/Users/UsersList";
-import User from "./components/Users/User";
 import MapPage from "./components/Maps/MapPage";
 import AllProjects from "./components/Projects/AllProjects";
 import FileUpload from "./components/Data/FileUpload/FileUpload";
@@ -27,7 +25,6 @@ function App() {
   const user = useSelector(state => state.session.user)
   // const [user, setUser] = useState()
   const [loaded, setLoaded] = useState(false);
-  console.log(user)
 
   useEffect(() => {
     (async () => {
@@ -67,9 +64,6 @@ function App() {
         <Route path="/users" exact={true} authenticated={user}>
           {user ? <UsersList /> : <Redirect to="/login" />}
         </Route>
-        {/* <Route path="/users/:userId" exact={true} authenticated={user}>
-          <User />
-        </Route> */}
         <Route path="/data-sets" exact={true} authenticated={user}>
           {user ? <AllDataSets /> : <Redirect to="/login" />}
         </Route>

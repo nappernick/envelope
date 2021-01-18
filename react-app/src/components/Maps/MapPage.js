@@ -40,19 +40,12 @@ function MapPage() {
 
             let center = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/center`)
             let centerData = await center.json()
-            console.log(centerData)
             let centerLat = centerData[0]
             let centerLong = centerData[1]
             let latDiff = centerData[2]
             let longDiff = centerData[3]
             calculateZoom(latDiff, longDiff)
             let viewZoom = calculateZoom(latDiff, longDiff)
-            // console.log("VIEW ZOOM", viewZoom)
-            // console.log("CENTER POINTS", centerLat, centerLong)
-            // console.log("AVG LONG: ", centerData[1])
-            // console.log("LARGEST LONG DIFF: ", centerData[3])
-            // console.log("AVG LAT: ", centerData[0])
-            // console.log("LARGEST LAT DIFF: ", centerData[2])
             setViewport({
                 latitude: centerLat,
                 longitude: centerLong,

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
-import LogoutButton from '../Auth/LogoutButton';
+import LogoutButton from './LogoutButton';
 import { AdminBurgMenu } from "./BurgerMenus/BurgerMenus"
 import 'rc-dropdown/assets/index.css';
 import "./NavBar.css"
@@ -14,6 +14,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const [projects, setProjects] = useState([])
+  const [path, setPath] = useState("")
   const authenticated = useSelector(state => state.session.user)
 
   const menuCallback = () => (
@@ -34,7 +35,11 @@ const NavBar = () => {
       setProjects(projects)
     })()
   }, [])
-  console.log(history.location.pathname)
+
+  useEffect(() => {
+    setPath(history.location.pathname)
+  })
+  console.log(path)
 
   return (
     <nav>
@@ -62,49 +67,55 @@ const NavBar = () => {
             }} />
         </div>
         <div className="navbar__links">
-          {!authenticated && <li
-            className={history.location.pathname == "/login" ? `navbar__link on` : "navbar__link"}
+          {!authenticated && <div
+            className={path === "/login" ? `navbar__link on` : "navbar__link"}
+            onClick={() => setPath(history.location.pathname)}
           >
-            <NavLink to="/login" exact={true} activeClassName="active">
+            <NavLink to="/login" exact={true} >
               Login
           </NavLink>
-          </li>}
-          {!authenticated && <li
-            className={history.location.pathname == "/sign-up" ? `navbar__link on` : "navbar__link"}
+          </div>}
+          {!authenticated && <div
+            className={path === "/sign-up" ? `navbar__link on` : "navbar__link"}
+            onClick={() => setPath(history.location.pathname)}
           >
-            <NavLink to="/sign-up" exact={true} activeClassName="active">
+            <NavLink to="/sign-up" exact={true} >
               Sign Up
           </NavLink>
-          </li>}
-          {(authenticated && authenticated.type_id === 1) && <li
-            className={history.location.pathname == "/users" ? `navbar__link on` : "navbar__link"}
+          </div>}
+          {(authenticated && authenticated.type_id === 1) && <div
+            className={path === "/users" ? `navbar__link on` : "navbar__link"}
+            onClick={() => setPath(history.location.pathname)}
           >
             <NavLink to="/users" exact={true}>
               Users
           </NavLink>
-          </li>}
-          {(authenticated && authenticated.type_id === 1) && <li
-            className={history.location.pathname == "/data-sets" ? `navbar__link on` : "navbar__link"}
+          </div>}
+          {(authenticated && authenticated.type_id === 1) && <div
+            className={path === "/data-sets" ? `navbar__link on` : "navbar__link"}
+            onClick={() => setPath(history.location.pathname)}
           >
-            <NavLink to="/data-sets" exact={true} activeClassName="active">
+            <NavLink to="/data-sets" exact={true} >
               Data Sets
           </NavLink>
-          </li>}
-          {(authenticated && authenticated.type_id === 1) && <li
-            className={history.location.pathname == "/projects" ? `navbar__link on` : "navbar__link"}
+          </div>}
+          {(authenticated && authenticated.type_id === 1) && <div
+            className={path === "/projects" ? `navbar__link on` : "navbar__link"}
+            onClick={() => setPath(history.location.pathname)}
           >
-            <NavLink to="/projects" exact={true} activeClassName="active">
+            <NavLink to="/projects" exact={true} >
               All Projects
           </NavLink>
-          </li>}
-          {(authenticated && authenticated.type_id === 2) && <li
-            className={history.location.pathname == `/users/${authenticated.id}/projects` ? `navbar__link on` : "navbar__link"}
+          </div>}
+          {(authenticated && authenticated.type_id === 2) && <div
+            className={path === `/users/${authenticated.id}/projects` ? `navbar__link on` : "navbar__link"}
+            onClick={() => setPath(history.location.pathname)}
           >
-            <NavLink to={`/users/${authenticated.id}/projects`} exact={true} activeClassName="active">
+            <NavLink to={`/users/${authenticated.id}/projects`} exact={true} >
               My Projects
           </NavLink>
-          </li>}
-          {authenticated && <li className="navbar__link">
+          </div>}
+          {authenticated && <div className="navbar__link">
             <div className="navbar__user" style={{ cursor: "pointer" }}>
               <Dropdown
                 trigger={['hover']}
@@ -114,7 +125,7 @@ const NavBar = () => {
                 <div>{authenticated.first_name}</div>
               </Dropdown>
             </div>
-          </li>}
+          </div>}
         </div>
       </ul>
     </nav>

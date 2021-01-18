@@ -65,7 +65,6 @@ const dataSetsReducer = (state = [], action) => {
             let removedDataSet = state.filter(el => {
                 return el.id !== action.id
             });
-            console.log(removedDataSet)
             if (state.length > removedDataSet.length) return [...removedDataSet]
             return state
         default:

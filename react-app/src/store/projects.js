@@ -61,11 +61,8 @@ const projectsReducer = (state = [], action) => {
             return state
         case REMOVE_PROJECT:
             let removedProject = state.filter((el) => {
-                console.log(el)
-                console.log(action.id)
                 return el.id !== action.id
             });
-            console.log(removedProject)
             if (state.length > removedProject.length) return [...removedProject]
             return state
         default:

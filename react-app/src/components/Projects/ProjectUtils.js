@@ -69,5 +69,4 @@ export const timeDecimaltoTime = (timeDecimal) => {
     if (firstArr[0].length > 2) {
         firstArr = [firstArr[0].slice(0, firstArr[0].length - 3), firstArr[0].slice(firstArr[0].length - 3, firstArr[0].length - 1), firstArr[1]]
     }
-    console.log(firstArr)
 }

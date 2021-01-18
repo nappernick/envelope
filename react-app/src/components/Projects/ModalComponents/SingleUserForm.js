@@ -23,8 +23,6 @@ function SingleUserForm({ user, selectedObj }) {
         if (selectedUsers[0].id === user.id) setSwitched(!switched)
     }, [])
 
-    console.log(selectedUsers)
-
     return (
         <>
             <tr className="projects_modal__user_list row">

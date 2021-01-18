@@ -7,8 +7,7 @@ export const Spinner = (props) => {
         area: props.areas,
         delay: 0,
     });
-    // debugger
-    // console.log("CIRCLE PROMISE IN PROGRESS: ", promiseInProgress)
+    
     return (
         <>
             {promiseInProgress && (

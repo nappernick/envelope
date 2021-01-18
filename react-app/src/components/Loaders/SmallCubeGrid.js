@@ -8,7 +8,7 @@ function SmallCubeGrid(props) {
         area: props.areas,
         delay: 0,
     });
-    // console.log("SML CUBE PROMISE IN PROGRESS: ", promiseInProgress)
+    
     return (
         <>
             {promiseInProgress && (

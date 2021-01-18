@@ -39,6 +39,8 @@ function ProjectCard({ projectObj }) {
 
     const onSelect = ({ key }) => {
         if (key === "2") {
+            console.log(stateProject)
+            console.log(project)
             dispatch(removeProject(project.id))
             fetch(`/api/projects/${project.id}`, { method: "DELETE" })
         }
@@ -46,8 +48,6 @@ function ProjectCard({ projectObj }) {
 
     const closeUpdateProjectModal = () => setShowUpdateModal(false)
     const openUpdateProjectModal = () => setShowUpdateModal(true)
-
-    console.log(showUpdateModal)
 
     const menuCallback = () => (
         <Menu
@@ -74,6 +74,12 @@ function ProjectCard({ projectObj }) {
     const handleStatsClick = (e) => {
         e.preventDefault()
         return history.push(`/users/${user.id}/projects/${project.id}/stats`)
+    }
+
+    const handleEditClick = (e) => {
+        e.preventDefault()
+        console.log(project)
+        openUpdateProjectModal()
     }
 
     useEffect(() => {
@@ -203,14 +209,13 @@ function ProjectCard({ projectObj }) {
                     <button onClick={handleMapClick}>Map</button>
                 </div>
                 <div className="project_card__edit button">
-                    <button onClick={() => openUpdateProjectModal()}>Edit</button>
+                    <button onClick={openUpdateProjectModal}>Edit</button>
                 </div>
                 <div className="project_card__stats button">
                     <button onClick={handleStatsClick}>Stats</button>
                 </div>
             </div>
             <div className="project_card__update modal">
-                {/* {console.log("IN LINES OF CODE MODAL", showUpdateModal)} */}
                 <Modal
                     isOpen={showUpdateModal}
                     onRequestClose={closeUpdateProjectModal}
