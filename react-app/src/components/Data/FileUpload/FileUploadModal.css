@@ -1,0 +1,90 @@
+div.upload_modal__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.upload_modal__file_name.header {
+    display: flex;
+    justify-content: center;
+    width: 360px;
+    margin-bottom: 2.5vh;
+    font-weight: 700;
+    font-size: 25px;
+    color: #e89313;
+}
+
+.upload_modal__container .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0px;
+}
+
+.upload_modal__container .title {
+    font-weight: 800;
+    font-family: 'Proza Libre', sans-serif;
+    font-size: 16px;
+}
+
+.upload_modal__update_name.input input {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 15px 4px 12px 8px;
+    height: 23px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.upload_modal__file_size.display {
+    font-size: 14px;
+}
+
+.upload_modal__upload.button > button {
+    margin-top: 30px;
+    position: relative;
+    bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.upload_modal__upload.button > button:enabled {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    position: relative;
+    display: block;
+    color: #fbb430;
+    margin: 30px 0;
+    border: 2px solid #fbb430;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 1s all ease;
+}
+
+.upload_modal__upload.button > button:enabled::before {
+    background: #fbb430;
+    content: "";
+    position: absolute;
+	color: #000 !important;
+    top: 49%;
+    bottom: 49%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: -1;
+    transition: all 0.6s ease;
+}
+
+.upload_modal__upload.button > button:enabled::before {
+    width: 110%;
+    height: 0%;
+  }
+
+.upload_modal__upload.button > button:hover:enabled {
+color: white;
+transition: all 0.6s ease;
+}
+
+.upload_modal__upload.button > button:hover:enabled::before {
+    height: 110%;
+  }

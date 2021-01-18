@@ -1,19 +1,27 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { addDataSet } from "../../../store/data_sets"
+import React, { useEffect, useState } from 'react'
+import "./FileUploadModal.css"
 
 function FileUploadModal({ file_tools, origFileName }) {
-    const dispatch = useDispatch()
     const { file, fileName, onFileUpload, setFileName, closeModal } = file_tools
+    const [disabled, setDisabled] = useState(true)
 
 
-    const updateFileName = (e) => setFileName(e.target.value)
+    const updateFileName = (e) => {
+        setDisabled(false)
+        setFileName(e.target.value)
+    }
 
     const handleUpload = (e) => {
         e.preventDefault()
         onFileUpload(e)
         closeModal()
     }
+
+
+    useEffect(() => {
+        if (!fileName) setDisabled(true)
+    }, [fileName])
+    console.log(fileName)
 
     useEffect(() => {
         setFileName(origFileName[0])
@@ -24,27 +32,31 @@ function FileUploadModal({ file_tools, origFileName }) {
             <div className="upload_modal__file_name header">
                 {fileName ? fileName : file.name.split(".")[0]}
             </div>
-            <div className="upload_modal__update_name">
+            <div className="upload_modal__update_name container">
                 <div className="upload_modal__update_name title">
-                    Update File Name:
+                    Update File Name
                 </div>
                 <div className="upload_modal__update_name input">
                     <input
                         type="text"
+                        placeholder="New file name here..."
                         onChange={updateFileName}
                     />
                 </div>
             </div>
-            <div className="upload_modal__file_size">
+            <div className="upload_modal__file_size container">
                 <div className="upload_modal__file_size title">
-                    Upload Size:
+                    Upload Size
                 </div>
                 <div className="upload_modal__file_size display">
                     {(file.size / 1000000).toFixed(2)} MB
                 </div>
             </div>
             <div className="upload_modal__upload button">
-                <button onClick={handleUpload}>Confirm & Upload</button>
+                <button
+                    onClick={handleUpload}
+                    disabled={disabled}
+                >Confirm & Upload</button>
             </div>
         </div>
     )

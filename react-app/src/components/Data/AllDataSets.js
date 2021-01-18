@@ -24,7 +24,7 @@ const customStyles = {
         marginRight: '-50%',
         paddingTop: "0px",
         transform: 'translate(-100%, -50%)',
-        border: '1px solid lightgrey',
+        border: 'none',
         fontFamily: "'DM Sans', sans-serif",
         display: "flex",
         justifyContent: "center",
