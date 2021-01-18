@@ -1,21 +1,27 @@
 div.project_card__container {
-    height: 60vh;
+    height: 355px;
     margin: 0px 30px;
-    padding: 20px 30px;
+    padding: 10px 30px 0px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 div.project_card__heading {
     font-weight: 700;
+    height: 40px;
     font-size: 16px;
     display: flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
     margin-bottom: 10px;
 }
 
 div.project_card__container .outermost {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+div.project_card__container .project_card__stats.outermost {
+    margin-bottom: 10px;
 }
 
 div.project_card__container .container {
@@ -50,7 +56,6 @@ div.project_card__container .header {
 
 .project_card__map_stats_btns {
     position: relative;
-    bottom: 5px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -58,11 +63,11 @@ div.project_card__container .header {
 
 .project_card__map_stats_btns button {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-    color: #edbb43;
+    color: #fbb430;
 	cursor: pointer;
 	display: block;
 	position: relative;
-	border: 2px solid #edbb43;
+	border: 2px solid #fbb430;
 	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
@@ -93,6 +98,42 @@ div.project_card__container .header {
 	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
+.project_card__edit.button button {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    color: #83c2c1;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	border: 2px solid #83c2c1;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.project_card__edit.button button:hover {
+    color: #fff;
+	background-color: transparent;
+	text-shadow: two;
+}
+
+.project_card__edit.button button:hover::before {
+	top: 0%;
+	bottom: auto;
+	height: 100%;
+}
+
+.project_card__edit.button button::before {
+	display: block;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	height: 0px;
+	width: 100%;
+	z-index: -1;
+	content: '';
+	color: #000 !important;
+	background: #83c2c1;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
 div.project_card__container .rc-dropdown-menu {
     width: 100px;
     margin-left: 180px;
@@ -100,5 +141,5 @@ div.project_card__container .rc-dropdown-menu {
 
 div.project_card__container .rc-dropdown-menu > .rc-dropdown-menu-item:hover,
 div.project_card__container .rc-dropdown-menu > .rc-dropdown-menu-item-selected {
-    background-color: #edbb43;
+    background-color: #fbb430;
 }

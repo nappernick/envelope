@@ -18,12 +18,13 @@ const NavBar = () => {
 
   const menuCallback = () => (
     <Menu style={{ cursor: "pointer" }}>
-      <MenuItem style={{ cursor: "pointer" }} key="1" onClick={() => {
-        dispatch(logout())
-      }}>
+      <MenuItem
+        style={{ cursor: "pointer" }}
+        key="1"
+      >
         <LogoutButton />
       </MenuItem>
-    </Menu>
+    </Menu >
   );
 
   useEffect(() => {

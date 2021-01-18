@@ -94,9 +94,10 @@ div.update_project__modal.container {
 }
 
 .update_project__modal.container > .button {
-    margin-top: 30px;
+    margin-bottom: 30px;
+    margin: 30px 0px;
     position: relative;
-    bottom: 5px;
+    /* bottom: 5px; */
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -108,8 +109,9 @@ div.update_project__modal.container {
 	cursor: pointer;
 	display: block;
 	position: relative;
+    margin-bottom: 30px;
 	border: 2px solid #83c2c1;
-	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+	transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
 .update_project__modal.container > .button > button:hover:enabled {
@@ -135,5 +137,5 @@ div.update_project__modal.container {
 	content: '';
 	color: #000 !important;
 	background: #83c2c1;
-	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+	transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }

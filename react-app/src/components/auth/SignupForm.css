@@ -1,56 +1,61 @@
-div.upload_modal__container {
+div.signup_form__container,
+form {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-between;
+    width: 400px;
 }
 
-.upload_modal__file_name.header {
+
+.signup_form__header {
     display: flex;
     justify-content: center;
-    width: 360px;
+    width: 300px;
+    border-bottom: 1px solid #e89313;
     margin-bottom: 2.5vh;
     font-weight: 700;
-    font-size: 25px;
+    font-size: 30px;
     color: #e89313;
 }
 
-.upload_modal__container .container {
+.signup_form__field.field {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
-    margin: 10px 0px;
+    margin: 6px 0px;
 }
 
-.upload_modal__container .title {
-    font-weight: 800;
+.signup_form__field .title {
+    font-weight: 400;
     font-family: 'Proza Libre', sans-serif;
     font-size: 16px;
 }
 
-.upload_modal__update_name.input input {
+.signup_form__field input {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 15px 4px 14px 8px;
     height: 23px;
     font-size: 16px;
     border-radius: 5px;
+    width: 200px;
 }
 
-.upload_modal__file_size.display {
-    font-size: 14px;
+.signup_form__field > .signup_form__input.select {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border: none;
+    width: 200px;
 }
 
-.upload_modal__upload.button > button {
-    margin-top: 30px;
+.signup_form__submit.button > button {
+    margin-top: 10px;
     position: relative;
-    bottom: 5px;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.upload_modal__upload.button > button:enabled {
+.signup_form__submit.button > button:enabled {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     position: relative;
     display: block;
@@ -62,7 +67,7 @@ div.upload_modal__container {
     transition: 1s all ease;
 }
 
-.upload_modal__upload.button > button:enabled::before {
+.signup_form__submit.button > button:enabled::before {
     background: #fbb430;
     content: "";
     position: absolute;
@@ -75,16 +80,16 @@ div.upload_modal__container {
     transition: all 0.6s ease;
 }
 
-.upload_modal__upload.button > button:enabled::before {
+.signup_form__submit.button > button:enabled::before {
     width: 110%;
     height: 0%;
 }
 
-.upload_modal__upload.button > button:hover:enabled {
-color: white;
-transition: all 0.6s ease;
+.signup_form__submit.button > button:hover:enabled {
+    color: white;
+    transition: all 0.6s ease;
 }
 
-.upload_modal__upload.button > button:hover:enabled::before {
+.signup_form__submit.button > button:hover:enabled::before {
     height: 110%;
 }

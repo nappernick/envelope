@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from './store/session';
 import { setAllProjects } from './store/projects'
@@ -21,6 +21,7 @@ import StatsPage from "./components/Stats/StatsPage";
 import Footer from "./components/Footer/Footer";
 
 function App() {
+  const history = useHistory()
   const dispatch = useDispatch()
   const [authenticated, setAuthenticated] = useState(false);
   const user = useSelector(state => state.session.user)

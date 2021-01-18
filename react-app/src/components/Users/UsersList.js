@@ -11,19 +11,23 @@ Modal.setAppElement('#root')
 
 const customStyles = {
   content: {
-    top: '40%',
+    top: '50%',
     left: '70%',
     right: '40%',
     bottom: 'auto',
-    height: "45%",
+    height: "75%",
     marginRight: '-50%',
     paddingTop: "0px",
     transform: 'translate(-100%, -50%)',
-    border: '1px solid lightgrey',
+    border: 'none',
     fontFamily: "'DM Sans', sans-serif",
     display: "flex",
-    justifyContent: "center",
-  }
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+    boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px"
+  },
+  overlay: { zIndex: 1000 }
 };
 
 
@@ -118,7 +122,7 @@ function UsersList() {
               closeTimeoutMS={300}
               contentLabel="New User Upload Modal"
             >
-              <SignUpForm closeModal={closeModal} />
+              <SignUpForm closeModal={closeModal} users={users} setUsers={setUsers} />
             </Modal>
           </div>
         </div>

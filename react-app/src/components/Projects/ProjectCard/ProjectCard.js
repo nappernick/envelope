@@ -39,21 +39,17 @@ function ProjectCard({ projectObj }) {
 
 
     const onSelect = ({ key }) => {
-        // console.log(key === "1")
-        if (key === "1") {
-            // console.log("HERE AFTER CLICK")
-            setStateProject(project)
-            setShowModal(true)
-            setShowModal(true)
-        }
         if (key === "2") {
             dispatch(removeProject(project.id))
             fetch(`/api/projects/${project.id}`, { method: "DELETE" })
         }
     }
-    // console.log("MODAL STATE", showModal)
 
     const closeUpdateProjectModal = () => setShowModal(false)
+    const openUpdateProjectModal = () => {
+        setShowModal(true)
+        setStateProject(project)
+    }
 
     const menuCallback = () => (
         <Menu
@@ -62,8 +58,6 @@ function ProjectCard({ projectObj }) {
             selectable={false}
         >
             <MenuItem style={{ cursor: "pointer" }} key="3">Open Project</MenuItem>
-            <Divider />
-            <MenuItem style={{ cursor: "pointer" }} key="1">Edit Project</MenuItem>
             <Divider />
             <MenuItem style={{ cursor: "pointer" }} key="2">Delete Project</MenuItem>
         </Menu>
@@ -205,6 +199,9 @@ function ProjectCard({ projectObj }) {
             <div className="project_card__map_stats_btns outermost">
                 <div className="project_card__map button">
                     <button onClick={handleMapClick}>Map</button>
+                </div>
+                <div className="project_card__edit button">
+                    <button onClick={() => openUpdateProjectModal()}>Edit</button>
                 </div>
                 <div className="project_card__stats button">
                     <button onClick={handleStatsClick}>Stats</button>
