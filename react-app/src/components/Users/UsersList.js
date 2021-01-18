@@ -4,7 +4,7 @@ import Spinner from "../Loaders/Spinner"
 import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import Modal from "react-modal"
-import SignUpForm from "../Auth/SignUpForm";
+import SignUpForm from "./SignupForm/SignUpForm";
 import "./UsersList.css"
 
 Modal.setAppElement('#root')

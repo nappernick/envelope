@@ -7,7 +7,7 @@ import { setAllDataSets } from "./store/data_sets"
 import { areas } from "./common/areas"
 import { trackPromise } from "react-promise-tracker";
 import LoginForm from "./components/Auth/LoginForm";
-import SignUpForm from "./components/Auth/SignUpForm";
+import SignUpForm from "./components/Users/SignupForm/SignUpForm";
 import NavBar from "./components/Navbar/NavBar";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import UsersList from "./components/Users/UsersList";

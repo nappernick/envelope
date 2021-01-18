@@ -7,7 +7,7 @@ const SIZE = 20;
 
 function Pins({ data, onClick }) {
     const [enumerators, setEnumerators] = useState([])
-    const colors = ["#bada55", "#7fe5f0", "#ff0000", "#ff80ed", "#407294", "#cbcba9", "#420420", "#133337", "#065535", "#c0c0c0", "#ffa500", "#660066", "#696969", "#bada55", "#7fe5f0", "#ff0000", "#ff80ed", "#407294", "#cbcba9", "#420420", "#133337", "#065535", "#c0c0c0", "#ffa500", "#660066"]
+    const colors = ["#bada55", "#7fe5f0", "#ff0000", "#ff80ed", "#e89a2c", "#cbcba9", "#420420", "#133337", "#065535", "#c0c0c0", "#ffa500", "#660066", "#696969", "#bada55", "#7fe5f0", "#ff0000", "#ff80ed", "#407294", "#cbcba9", "#420420", "#133337", "#065535", "#c0c0c0", "#ffa500", "#660066"]
 
     useEffect(() => {
         const setEnums = () => {

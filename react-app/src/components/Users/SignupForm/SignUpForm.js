@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { signup } from '../../store/session';
+import { signup } from '../../../store/session';
 import "./SignupForm.css"
 
 const SignUpForm = ({ closeModal, setUsers, users }) => {

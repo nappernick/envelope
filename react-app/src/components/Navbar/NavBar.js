@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Select from "react-select";
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
 import LogoutButton from '../Auth/LogoutButton';
-import { logout } from "../../store/session";
+import { AdminBurgMenu } from "./BurgerMenus/BurgerMenus"
 import 'rc-dropdown/assets/index.css';
 import "./NavBar.css"
-import { useDispatch, useSelector } from 'react-redux';
 
 
 const NavBar = () => {
@@ -34,6 +34,7 @@ const NavBar = () => {
       setProjects(projects)
     })()
   }, [])
+  console.log(history.location.pathname)
 
   return (
     <nav>
@@ -61,32 +62,44 @@ const NavBar = () => {
             }} />
         </div>
         <div className="navbar__links">
-          {!authenticated && <li className="navbar__link">
+          {!authenticated && <li
+            className={history.location.pathname == "/login" ? `navbar__link on` : "navbar__link"}
+          >
             <NavLink to="/login" exact={true} activeClassName="active">
               Login
           </NavLink>
           </li>}
-          {!authenticated && <li className="navbar__link">
+          {!authenticated && <li
+            className={history.location.pathname == "/sign-up" ? `navbar__link on` : "navbar__link"}
+          >
             <NavLink to="/sign-up" exact={true} activeClassName="active">
               Sign Up
           </NavLink>
           </li>}
-          {authenticated && <li className="navbar__link">
-            <NavLink to="/users" exact={true} activeClassName="active">
+          {(authenticated && authenticated.type_id === 1) && <li
+            className={history.location.pathname == "/users" ? `navbar__link on` : "navbar__link"}
+          >
+            <NavLink to="/users" exact={true}>
               Users
           </NavLink>
           </li>}
-          {(authenticated && authenticated.type_id === 1) && <li className="navbar__link">
+          {(authenticated && authenticated.type_id === 1) && <li
+            className={history.location.pathname == "/data-sets" ? `navbar__link on` : "navbar__link"}
+          >
             <NavLink to="/data-sets" exact={true} activeClassName="active">
               Data Sets
           </NavLink>
           </li>}
-          {(authenticated && authenticated.type_id === 1) && <li className="navbar__link">
+          {(authenticated && authenticated.type_id === 1) && <li
+            className={history.location.pathname == "/projects" ? `navbar__link on` : "navbar__link"}
+          >
             <NavLink to="/projects" exact={true} activeClassName="active">
               All Projects
           </NavLink>
           </li>}
-          {(authenticated && authenticated.type_id === 2) && <li className="navbar__link">
+          {(authenticated && authenticated.type_id === 2) && <li
+            className={history.location.pathname == `/users/${authenticated.id}/projects` ? `navbar__link on` : "navbar__link"}
+          >
             <NavLink to={`/users/${authenticated.id}/projects`} exact={true} activeClassName="active">
               My Projects
           </NavLink>
