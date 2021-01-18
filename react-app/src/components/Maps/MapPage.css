@@ -3,6 +3,7 @@ div.map__map_and_selector {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    height: 100%;
 }
 
 .map__autosizer.container {

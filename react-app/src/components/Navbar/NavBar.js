@@ -38,8 +38,7 @@ const NavBar = () => {
 
   useEffect(() => {
     setPath(history.location.pathname)
-  })
-  console.log(path)
+  }, [history])
 
   return (
     <nav>
@@ -73,14 +72,6 @@ const NavBar = () => {
           >
             <NavLink to="/login" exact={true} >
               Login
-          </NavLink>
-          </div>}
-          {!authenticated && <div
-            className={path === "/sign-up" ? `navbar__link on` : "navbar__link"}
-            onClick={() => setPath(history.location.pathname)}
-          >
-            <NavLink to="/sign-up" exact={true} >
-              Sign Up
           </NavLink>
           </div>}
           {(authenticated && authenticated.type_id === 1) && <div

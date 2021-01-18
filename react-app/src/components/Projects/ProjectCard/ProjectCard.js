@@ -41,13 +41,16 @@ function ProjectCard({ projectObj }) {
         if (key === "2") {
             console.log(stateProject)
             console.log(project)
-            dispatch(removeProject(project.id))
-            fetch(`/api/projects/${project.id}`, { method: "DELETE" })
+            // dispatch(removeProject(project.id))
+            // fetch(`/api/projects/${project.id}`, { method: "DELETE" })
         }
     }
 
     const closeUpdateProjectModal = () => setShowUpdateModal(false)
     const openUpdateProjectModal = () => setShowUpdateModal(true)
+    // const handleMouseEnter = () => {
+    //     setStateProject(project)
+    // }
 
     const menuCallback = () => (
         <Menu
@@ -56,13 +59,16 @@ function ProjectCard({ projectObj }) {
         >
             {/* <MenuItem style={{ cursor: "pointer" }} key="3">Open Project</MenuItem>
             <Divider /> */}
-            <MenuItem style={{ cursor: "pointer" }} key="2">Delete Project</MenuItem>
+            <MenuItem
+                style={{ cursor: "pointer" }}
+                key="2"
+                onMouseEnter={handleMouseEnter}
+            >Delete Project</MenuItem>
         </Menu>
     );
 
     const modalObj = {
-        "project": stateProject,
-        "setProject": setStateProject,
+        "project": project,
         "closeUpdateProjectModal": closeUpdateProjectModal
     }
 
@@ -79,6 +85,7 @@ function ProjectCard({ projectObj }) {
     const handleEditClick = (e) => {
         e.preventDefault()
         console.log(project)
+        setStateProject(project)
         openUpdateProjectModal()
     }
 

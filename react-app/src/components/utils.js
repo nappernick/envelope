@@ -5,8 +5,9 @@ export const configDate = (date) => {
     const [day, numDate, month, year, time, timeZone] = dateArr
     const timeArr = time.split(":")
     const [hour, minute, second] = timeArr
-    let newHour = hour > 12 ? hour - 12 : hour
-    let newDate = `${day} ${month} ${numDate}th ${year} at ${newHour}:${minute} ${hour > 12 ? "PM" : "AM"}`
+    let correctedHour = hour - 4
+    let newHour = correctedHour > 12 ? correctedHour - 12 : correctedHour
+    let newDate = `${day} ${month} ${numDate}th ${year} at ${newHour}:${minute} ${correctedHour > 12 ? "PM" : "AM"}`
     return newDate
 }
 

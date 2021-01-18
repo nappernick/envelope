@@ -12,7 +12,7 @@ import "./UpdateProject.css"
 function UpdateProjectModal({ modalObj }) {
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
-    const { project, setProject, closeUpdateProjectModal } = modalObj
+    const { project, closeUpdateProjectModal } = modalObj
     const sessUser = useSelector(store => store.session.user)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
