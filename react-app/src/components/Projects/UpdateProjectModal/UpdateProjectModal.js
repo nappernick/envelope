@@ -60,6 +60,7 @@ function UpdateProjectModal({ modalObj }) {
 
     useEffect(() => {
         if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
+        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId) setDisabled(true)
     }, [projectName, selectedUsers, selectedDataSetId])
 
     return (
@@ -70,7 +71,7 @@ function UpdateProjectModal({ modalObj }) {
                         <div className={"projects_modal__errors error"}>{error}</div>
                     ))}
                 </div>
-                <div className="update_project__header">
+                <div className={`update_project__header ${disabled ? "" : "complete"}`}>
                     <p>UPDATE PROJECT</p>
                 </div>
                 <hr />
@@ -83,7 +84,6 @@ function UpdateProjectModal({ modalObj }) {
                         <Spinner areas={areas.userList} />
                     </div>
                 </div>
-                <hr />
                 <div className="update_project_modal__data_sets container">
                     <div className="update_project_modal__data_sets header">
                         Update Data Set

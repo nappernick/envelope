@@ -55,7 +55,7 @@ function NewProjectModal({ closeModal }) {
 
     useEffect(() => {
         if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
-        if (!projectName || selectedUsers.length > !0 || !selectedDataSetId) setDisabled(true)
+        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId) setDisabled(true)
     }, [projectName, selectedUsers, selectedDataSetId])
 
     return (
@@ -66,7 +66,7 @@ function NewProjectModal({ closeModal }) {
                         <div className={"projects_modal__errors error"}>{error}</div>
                     ))}
                 </div>
-                <div className="projects_modal__header">
+                <div className={`projects_modal__header ${disabled ? "" : "complete"}`}>
                     <p>NEW PROJECT</p>
                 </div>
                 <div className="projects_modal__user container">

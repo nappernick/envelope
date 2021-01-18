@@ -42,6 +42,12 @@ function AllProjects() {
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
+    const modalObj = {
+        "project": project,
+        "setProject": setProject,
+        "closeUpdateProjectModal": closeModal
+    }
+
     const Row = ({ index, style, data }) => {
         let { project, setProject } = data
         const projectObj = {

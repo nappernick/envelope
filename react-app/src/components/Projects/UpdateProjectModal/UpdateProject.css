@@ -13,16 +13,23 @@ div.update_project__modal.container {
     align-items: center;
 }
 
+.update_project__modal .update_project_modal__users.container {
+    margin-bottom: 10px;
+}
 
 .update_project__header {
     display: flex;
     justify-content: center;
     width: 340px;
-    border-bottom: 1px solid #e89313;
-    margin-bottom: 1vh;
+    /* border-bottom: 1px solid #e89313; */
+    /* margin-bottom: 1vh; */
     font-weight: 700;
     font-size: 25px;
     color: #e89313;
+}
+
+.update_project__header.complete {
+    color: #83c2c1;
 }
 
 .update_project__modal.container > .container > .header {

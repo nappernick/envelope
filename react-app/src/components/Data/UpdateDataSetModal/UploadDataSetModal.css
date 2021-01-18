@@ -1,0 +1,62 @@
+div.data_set__modal.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.data_set__modal.header {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5vh;
+    font-weight: 700;
+    font-size: 25px;
+    color: #e89313;
+
+}
+
+.data_set__modal.input input {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    padding: 15px 4px 12px 8px;
+    height: 23px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+.data_set__modal.submit button {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    color: #76b4a3;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	border: 2px solid #76b4a3;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+
+.data_set__modal.submit button:hover {
+    color: #fff;
+	background-color: transparent;
+	text-shadow: two;
+}
+
+.data_set__modal.submit button:hover::before {
+	top: auto;
+	bottom: 0%;
+	height: 100%;
+}
+
+.data_set__modal.submit button::before {
+	display: block;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	height: 0px;
+	width: 100%;
+	z-index: -1;
+	content: '';
+	color: #000 !important;
+	background: #76b4a3;
+	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}

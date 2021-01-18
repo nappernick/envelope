@@ -1,3 +1,6 @@
+import { trackPromise } from "react-promise-tracker"
+import { areas } from "../common/areas"
+
 const SET_DATA_SETS = 'dataSet/setDataSets'
 const SET_DATA_SET = 'dataSet/setDataSet'
 const REMOVE_DATA_SET = 'dataSet/removeDataSet'
@@ -34,10 +37,13 @@ export const addDataSet = (dataSet) => async (dispatch) => {
 }
 
 export const setAllDataSets = () => async (dispatch) => {
-    const dataSetFetch = await fetch("/api/data/data-sets")
-    const dataSets = await dataSetFetch.json()
-    if (!dataSets.errors) dispatch(_setDataSets(dataSets))
-    return
+    const fetchAndDistpatchDS = async () => {
+        const dataSetFetch = await fetch("/api/data/data-sets")
+        const dataSets = await dataSetFetch.json()
+        if (!dataSets.errors) dispatch(_setDataSets(dataSets))
+        return
+    }
+    trackPromise(fetchAndDistpatchDS(), areas.dataSetList)
 }
 
 const dataSetsReducer = (state = [], action) => {

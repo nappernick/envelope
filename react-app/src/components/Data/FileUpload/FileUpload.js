@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux"
 import { DropzoneArea } from 'material-ui-dropzone'
 import Modal from "react-modal"
 import axios from "axios"
-import { addDataSet } from "../../store/data_sets"
+import { addDataSet } from "../../../store/data_sets"
 import FileUploadModal from './FileUploadModal'
+import { useDebounce } from 'use-debounce';
 
 Modal.setAppElement('#root')
 
@@ -31,6 +32,8 @@ function FileUpload() {
     const [file, setFile] = useState(null)
     const [fileName, setFileName] = useState('')
     const [origFileName, setOrigFileName] = useState([])
+    const [key, setKey] = useState(0);
+    const [debounceKey] = useDebounce(key, 1000);
 
 
     const openModal = () => setShowModal(true)
@@ -50,8 +53,8 @@ function FileUpload() {
         );
         let dsJSON = await axios.post("/api/data/upload", formData);
         let dataSet = dsJSON.data
-        console.log(dataSet)
         dispatch(addDataSet(dataSet))
+        setKey(null)
     }
 
     const file_tools = {
@@ -70,6 +73,7 @@ function FileUpload() {
         <div className="file_upload__container">
             <div className="file_upload__dropzone">
                 <DropzoneArea
+                    key={debounceKey}
                     maxFileSize={500000000}
                     onChange={values => handleFile(values)}
                     acceptedFiles={[".zip", "text/csv", ".dta"]}

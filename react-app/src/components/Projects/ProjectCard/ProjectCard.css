@@ -93,12 +93,12 @@ div.project_card__container .header {
 	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
-.rc-dropdown-menu {
+div.project_card__container .rc-dropdown-menu {
     width: 100px;
     margin-left: 180px;
 }
 
-.rc-dropdown-menu > .rc-dropdown-menu-item:hover,
-.rc-dropdown-menu > .rc-dropdown-menu-item-selected {
+div.project_card__container .rc-dropdown-menu > .rc-dropdown-menu-item:hover,
+div.project_card__container .rc-dropdown-menu > .rc-dropdown-menu-item-selected {
     background-color: #edbb43;
 }

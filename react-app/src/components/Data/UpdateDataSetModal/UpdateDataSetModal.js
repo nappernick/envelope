@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import "./UploadDataSetModal.css"
 
 function UpdateDataSetModal({ dataSet, setDataSet, handleUpdateClick }) {
     const { data_set_name } = dataSet
@@ -20,8 +21,8 @@ function UpdateDataSetModal({ dataSet, setDataSet, handleUpdateClick }) {
         <>
             <div className="data_set__modal container">
                 <div className="data_set__modal header">
-                    Update Data Set Name
-            </div>
+                    <p>UPDATE DATA SET NAME</p>
+                </div>
                 <div className="data_set__modal body">
                     <div className="data_set__modal input">
                         <input

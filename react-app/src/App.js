@@ -14,7 +14,7 @@ import UsersList from "./components/Users/UsersList";
 import User from "./components/Users/User";
 import MapPage from "./components/Maps/MapPage";
 import AllProjects from "./components/Projects/AllProjects";
-import FileUpload from "./components/Data/FileUpload";
+import FileUpload from "./components/Data/FileUpload/FileUpload";
 import Violinplot from "./components/Stats/ViolinPlot";
 import AllDataSets from "./components/Data/AllDataSets";
 import StatsPage from "./components/Stats/StatsPage";

@@ -9,12 +9,16 @@ div.projects_modal__container {
     display: flex;
     justify-content: center;
     width: 340px;
-    border-bottom: 1px solid #e89313;
+    /* border-bottom: 1px solid #e89313; */
     margin-bottom: 2.5vh;
     font-weight: 700;
     font-size: 25px;
     color: #e89313;
 
+}
+
+.projects_modal__header.complete {
+    color: #83c2c1;
 }
 
 .projects_modal__container >.container > .header {
