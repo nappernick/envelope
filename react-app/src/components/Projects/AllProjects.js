@@ -40,6 +40,7 @@ function AllProjects() {
     const [area, setArea] = useState('')
     const [project, setProject] = useState({})
     const [showModal, setShowModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const { promiseInProgress } = usePromiseTracker({
         area: area,
         delay: 0,
@@ -52,7 +53,8 @@ function AllProjects() {
     const modalObj = {
         "project": project,
         "setProject": setProject,
-        "closeUpdateProjectModal": closeModal
+        "closeUpdateProjectModal": closeModal,
+
     }
 
     const Row = ({ index, style, data }) => {
@@ -65,6 +67,8 @@ function AllProjects() {
             "area": area,
             "setArea": setArea,
             "index": index,
+            "showUpdateModal": showUpdateModal,
+            "setShowUpdateModal": setShowUpdateModal,
         }
         return (
             <div

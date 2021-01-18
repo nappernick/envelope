@@ -2,14 +2,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useState } from 'react'
 import Modal from "react-modal"
 import { Redirect, useHistory } from 'react-router-dom';
+import { usePromiseTracker } from "react-promise-tracker";
+import { ThreeBounce } from "better-react-spinkit"
+import { trackPromise } from 'react-promise-tracker';
+import Spinner from '../Loaders/Spinner';
 import UpdateDataSetModal from './UpdateDataSetModal/UpdateDataSetModal';
 import { addDataSet } from "../../store/data_sets"
 import { removeDataSet } from "../../store/data_sets"
-import { trackPromise } from 'react-promise-tracker';
 import { areas } from "../../common/areas";
-import { usePromiseTracker } from "react-promise-tracker";
-import { ThreeBounce } from "better-react-spinkit"
-import Spinner from '../Loaders/Spinner';
+import { configDate } from "../utils"
 import "./AllDataSets.css"
 
 Modal.setAppElement('#root')
@@ -42,19 +43,6 @@ function AllDataSets() {
         area: "delete-data-set",
         delay: 0,
     });
-
-    const configDate = (date) => {
-        if (!date) return
-        let dateArr = date.split(" ")
-        // Fri, 15 Jan 2021 13:24:45 GMT
-        const [day, numDate, month, year, time, timeZone] = dateArr
-        const timeArr = time.split(":")
-        const [hour, minute, second] = timeArr
-        let newHour = hour > 12 ? hour - 12 : hour
-        let newDate = `${day} ${month} ${numDate}th ${year} at ${newHour}:${minute} ${hour > 12 ? "PM" : "AM"}`
-        return newDate
-    }
-
     const openModal = (e, dataSet) => {
         e.preventDefault()
         setShowModal(true)

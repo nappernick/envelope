@@ -14,3 +14,7 @@ div.map__map_and_selector {
     width: 20vw;
     height: 78vh;
 }
+
+.map__autosizer.container div.overlays {
+    border-radius: 5px;
+}

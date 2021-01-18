@@ -27,7 +27,6 @@ const customStyles = {
     alignItems: "center",
     boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px"
   },
-  overlay: { zIndex: 1000 }
 };
 
 

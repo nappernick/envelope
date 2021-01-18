@@ -1,0 +1,16 @@
+.popup_info__container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup_info__details .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup_info__details .title {
+    font-weight: 600;
+}

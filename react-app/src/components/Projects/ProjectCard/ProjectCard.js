@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Dropdown from 'rc-dropdown';
 import Menu, { Divider, Item as MenuItem } from 'rc-menu';
@@ -27,14 +27,13 @@ const customStyles = {
         borderRadius: '10px',
         display: "flex",
         justifyContent: "center",
-        boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px"
+        boxShadow: "rgba(0, 0, 0, 0.4) 0px 30px 90px",
     }
 };
 
 function ProjectCard({ projectObj }) {
     const dispatch = useDispatch()
-    const { project, user, stateProject, setStateProject } = projectObj
-    const [showModal, setShowModal] = useState(false);
+    const { project, user, stateProject, setStateProject, showUpdateModal, setShowUpdateModal } = projectObj
     const history = useHistory()
 
 
@@ -45,20 +44,18 @@ function ProjectCard({ projectObj }) {
         }
     }
 
-    const closeUpdateProjectModal = () => setShowModal(false)
-    const openUpdateProjectModal = () => {
-        setShowModal(true)
-        setStateProject(project)
-    }
+    const closeUpdateProjectModal = () => setShowUpdateModal(false)
+    const openUpdateProjectModal = () => setShowUpdateModal(true)
+
+    console.log(showUpdateModal)
 
     const menuCallback = () => (
         <Menu
-            // onSelect={onSelect}
             onClick={onSelect}
             selectable={false}
         >
-            <MenuItem style={{ cursor: "pointer" }} key="3">Open Project</MenuItem>
-            <Divider />
+            {/* <MenuItem style={{ cursor: "pointer" }} key="3">Open Project</MenuItem>
+            <Divider /> */}
             <MenuItem style={{ cursor: "pointer" }} key="2">Delete Project</MenuItem>
         </Menu>
     );
@@ -78,6 +75,11 @@ function ProjectCard({ projectObj }) {
         e.preventDefault()
         return history.push(`/users/${user.id}/projects/${project.id}/stats`)
     }
+
+    useEffect(() => {
+        setStateProject(project)
+    }, [showUpdateModal])
+
     return (
         <div className="project_card__container" >
             <Dropdown
@@ -208,9 +210,9 @@ function ProjectCard({ projectObj }) {
                 </div>
             </div>
             <div className="project_card__update modal">
-                {/* {console.log("IN LINES OF CODE MODAL", showModal)} */}
+                {/* {console.log("IN LINES OF CODE MODAL", showUpdateModal)} */}
                 <Modal
-                    isOpen={showModal}
+                    isOpen={showUpdateModal}
                     onRequestClose={closeUpdateProjectModal}
                     style={customStyles}
                     closeTimeoutMS={300}
