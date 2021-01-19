@@ -61,7 +61,7 @@ def post_project():
             ) 
             db.session.add(survey_seed)
         db.session.commit()
-        return project.to_dict()
+        return project.to_dict_survey_summary()
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 

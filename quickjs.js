@@ -5,5 +5,4 @@
         array.push(i)
     }
 
-    console.log(array)
 })()

@@ -33,13 +33,12 @@ const customStyles = {
 
 function ProjectCard({ projectObj }) {
     const dispatch = useDispatch()
-    const { project, user, stateProject, setStateProject, showUpdateModal, setShowUpdateModal } = projectObj
+    const { project, user, showUpdateModal, setShowUpdateModal } = projectObj
     const history = useHistory()
 
 
     const onSelect = ({ key }) => {
         if (key === "2") {
-            console.log(stateProject)
             console.log(project)
             // dispatch(removeProject(project.id))
             // fetch(`/api/projects/${project.id}`, { method: "DELETE" })
@@ -48,9 +47,6 @@ function ProjectCard({ projectObj }) {
 
     const closeUpdateProjectModal = () => setShowUpdateModal(false)
     const openUpdateProjectModal = () => setShowUpdateModal(true)
-    // const handleMouseEnter = () => {
-    //     setStateProject(project)
-    // }
 
     const menuCallback = () => (
         <Menu
@@ -62,7 +58,6 @@ function ProjectCard({ projectObj }) {
             <MenuItem
                 style={{ cursor: "pointer" }}
                 key="2"
-            // onMouseEnter={handleMouseEnter}
             >Delete Project</MenuItem>
         </Menu>
     );
@@ -85,13 +80,8 @@ function ProjectCard({ projectObj }) {
     const handleEditClick = (e) => {
         e.preventDefault()
         console.log(project)
-        setStateProject(project)
         openUpdateProjectModal()
     }
-
-    useEffect(() => {
-        setStateProject(project)
-    }, [showUpdateModal])
 
     return (
         <div className="project_card__container" >

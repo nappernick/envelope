@@ -77,7 +77,7 @@ def sign_up():
         )
         db.session.add(user)
         db.session.commit()
-        return user.to_dict()
+        return user.to_dict_full()
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 

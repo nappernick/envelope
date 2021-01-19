@@ -21,6 +21,8 @@ function UpdateProjectModal({ modalObj }) {
     const [selectedDataSetId, setSelectedDataSetId] = useState(project.data_set)
     const [projectName, setProjectName] = useState(project.project_name)
     debugger
+    console.log("PROJECT", project)
+    console.log("PROJECT", project)
     const [disabled, setDisabled] = useState(true)
     const selectedObj = {
         "selectedUsers": selectedUsers,
