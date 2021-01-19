@@ -35,12 +35,8 @@ const customStyles = {
 // box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px
 
 function AllProjects() {
-    const user = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
-    const [area, setArea] = useState('')
-    const [project, setProject] = useState({})
     const [showModal, setShowModal] = useState(false);
-    const [showUpdateModal, setShowUpdateModal] = useState(false);
     const { promiseInProgress } = usePromiseTracker({
         area: "projects-area",
         delay: 0,
@@ -51,25 +47,14 @@ function AllProjects() {
     const closeModal = () => setShowModal(false)
 
     const Row = ({ index, style, data }) => {
-        let { projects, project, setProject } = data
-        const projectObj = {
-            "stateProject": project,
-            "setStateProject": setProject,
-            "project": projects[index],
-            "user": user,
-            "area": area,
-            "setArea": setArea,
-            "index": index,
-            "showUpdateModal": showUpdateModal,
-            "setShowUpdateModal": setShowUpdateModal,
-        }
+        let { projects } = data
         return (
             <div
                 key={`m_${index}`}
                 className="project__card_container"
                 style={style}
             >
-                <ProjectCard projectObj={projectObj} />
+                <ProjectCard project={projects[index]} />
             </div>
         )
     }
@@ -89,9 +74,7 @@ function AllProjects() {
                                 width={width}
                                 itemCount={projects ? projects.length : 0}
                                 itemData={{
-                                    "projects": projects,
-                                    "project": project,
-                                    "setProject": setProject
+                                    "projects": projects
                                 }}
                                 layout="horizontal"
                             >

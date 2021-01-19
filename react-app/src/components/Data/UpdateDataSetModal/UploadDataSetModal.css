@@ -2,7 +2,8 @@ div.data_set__modal.container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+	align-items: center;
+	width: 40vw;
 }
 
 .data_set__modal.header {
@@ -20,7 +21,8 @@ div.data_set__modal.container {
     padding: 15px 4px 14px 8px;
     height: 23px;
     font-size: 14px;
-    border-radius: 5px;
+	border-radius: 5px;
+	width: 280px;
 }
 
 

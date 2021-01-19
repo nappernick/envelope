@@ -5,7 +5,7 @@ import Menu, { Divider, Item as MenuItem } from 'rc-menu';
 import Modal from "react-modal"
 import NumberFormat from "react-number-format";
 import UpdateProjectModal from '../UpdateProjectModal/UpdateProjectModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeProject } from '../../../store/projects';
 import "./ProjectCard.css"
 
@@ -31,22 +31,23 @@ const customStyles = {
     }
 };
 
-function ProjectCard({ projectObj }) {
+function ProjectCard({ project }) {
+    const user = useSelector(store => store.session.user)
     const dispatch = useDispatch()
-    const { project, user, showUpdateModal, setShowUpdateModal } = projectObj
+    const [proj, setProj] = useState(null)
+    const [showModal, setShowModal] = useState(false)
     const history = useHistory()
 
 
     const onSelect = ({ key }) => {
         if (key === "2") {
-            console.log(project)
-            // dispatch(removeProject(project.id))
-            // fetch(`/api/projects/${project.id}`, { method: "DELETE" })
+            dispatch(removeProject(project.id))
+            fetch(`/api/projects/${project.id}`, { method: "DELETE" })
         }
     }
 
-    const closeUpdateProjectModal = () => setShowUpdateModal(false)
-    const openUpdateProjectModal = () => setShowUpdateModal(true)
+    const closeUpdateProjectModal = () => setShowModal(false)
+    const openUpdateProjectModal = () => setShowModal(true)
 
     const menuCallback = () => (
         <Menu
@@ -62,11 +63,6 @@ function ProjectCard({ projectObj }) {
         </Menu>
     );
 
-    const modalObj = {
-        "project": project,
-        "closeUpdateProjectModal": closeUpdateProjectModal
-    }
-
     const handleMapClick = (e) => {
         e.preventDefault()
         return history.push(`/users/${user.id}/projects/${project.id}/map`)
@@ -79,8 +75,8 @@ function ProjectCard({ projectObj }) {
 
     const handleEditClick = (e) => {
         e.preventDefault()
-        console.log(project)
-        openUpdateProjectModal()
+        setProj(project)
+        setShowModal(true)
     }
 
     return (
@@ -206,7 +202,7 @@ function ProjectCard({ projectObj }) {
                     <button onClick={handleMapClick}>Map</button>
                 </div>
                 <div className="project_card__edit button">
-                    <button onClick={openUpdateProjectModal}>Edit</button>
+                    <button onClick={handleEditClick}>Edit</button>
                 </div>
                 <div className="project_card__stats button">
                     <button onClick={handleStatsClick}>Stats</button>
@@ -214,13 +210,13 @@ function ProjectCard({ projectObj }) {
             </div>
             <div className="project_card__update modal">
                 <Modal
-                    isOpen={showUpdateModal}
+                    isOpen={showModal}
                     onRequestClose={closeUpdateProjectModal}
                     style={customStyles}
                     closeTimeoutMS={300}
                     contentLabel="Update Project Modal"
                 >
-                    <UpdateProjectModal modalObj={modalObj} />
+                    <UpdateProjectModal project={proj} closeUpdateProjectModal={closeUpdateProjectModal} />
                 </Modal>
             </div>
         </div>

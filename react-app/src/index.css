@@ -5,7 +5,7 @@ ol, li, dl, dt, dd, form, a, fieldset, input, th, td, button {
     border: 0;
     outline: none;
     box-sizing: border-box;
-    font-family:  'Rubik', "Graphik Webfont",-apple-system,BlinkMacSystemFont,"Roboto","Droid Sans","Segoe UI","Helvetica",Arial,sans-serif
+    font-family:  'Montserrat', "Graphik Webfont",-apple-system,BlinkMacSystemFont,"Roboto","Droid Sans","Segoe UI","Helvetica",Arial,sans-serif
 }
 
 html {
@@ -48,7 +48,12 @@ button, .button {
 }
 
 .header {
-    font-family: 'Proza Libre', sans-serif;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+
+.title {
+    font-weight: 700;
 }
 
 input::-webkit-input-placeholder { /* WebKit, Blink, Edge */

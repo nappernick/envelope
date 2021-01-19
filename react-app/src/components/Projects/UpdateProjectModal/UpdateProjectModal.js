@@ -9,20 +9,15 @@ import { multiProjectPostUpdate, singleProjectPostUpdate } from '../ProjectUtils
 import UserListForm from '../ModalComponents/UserListForm';
 import "./UpdateProject.css"
 
-function UpdateProjectModal({ modalObj }) {
+function UpdateProjectModal({ project, closeUpdateProjectModal }) {
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
-    const { project, closeUpdateProjectModal } = modalObj
-    debugger
     const sessUser = useSelector(store => store.session.user)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([project.user])
     const [selectedDataSetId, setSelectedDataSetId] = useState(project.data_set)
     const [projectName, setProjectName] = useState(project.project_name)
-    debugger
-    console.log("PROJECT", project)
-    console.log("PROJECT", project)
     const [disabled, setDisabled] = useState(true)
     const selectedObj = {
         "selectedUsers": selectedUsers,
