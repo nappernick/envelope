@@ -3,6 +3,7 @@ from app.api.data_processing import data_processing_for_health_areas
 
 def seed_health_areas():
     health_areas = data_processing_for_health_areas("/var/www/app/seeds/seed_survey.csv")
+    # health_areas = data_processing_for_health_areas("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
 
     for health_area1 in health_areas:
         health_area_seed = HealthArea(

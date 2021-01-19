@@ -49,7 +49,7 @@ const LoginForm = () => {
         <div className="login_form__logo_text container">
           <img src={bigLogo} alt="" />
           <div className="login_form__text">
-            <p>Designed for data, mapping, and visualization in the nonprofit world. Powerful data analysis, beautiful visualizations, easy, interactive location maps.</p>
+            <p>Designed for processing large data-sets, mapping, and visualizations in the nonprofit world. Powerful data analysis, beautiful visualizations, easy, interactive location maps.</p>
             <p>Free & open-source, forever.</p>
           </div>
         </div>

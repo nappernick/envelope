@@ -78,7 +78,7 @@ div.login_form__outermost {
     font-weight: 500;
     color: red;
     line-height: 1.6;
-    margin-top: 170px;
+    margin-top: 18vh;
 }
 
 .login_form__input_submit {
@@ -102,6 +102,7 @@ div.login_form__outermost {
     color: #fbb430;
     font-size: 22px;
     font-family: "Monteserrat";
+    margin-right: 15px;
 }
 
 .login_form__input.container input {
