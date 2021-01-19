@@ -23,7 +23,6 @@ function MapPage() {
 
     useEffect(() => {
         const fetchHealthArea = async () => {
-            // let has = await (fetch("/api/data/1/projects/1/health-areas"))
             let has = await (fetch(`/api/data/${userId}/projects/${projectId}/health-areas`))
             let hasRes = await has.json()
             setHealthAreas(hasRes)
@@ -54,7 +53,7 @@ function MapPage() {
                 pitch: 0
             })
         }
-        trackPromise(fetchMapData(), spinArea)
+        if (healthAreas.length) trackPromise(fetchMapData(), spinArea)
     }, [selectedHA]);
 
     return (
