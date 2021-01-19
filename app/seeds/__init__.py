@@ -33,16 +33,3 @@ def undo():
     undo_projects()
     undo_health_areas()
     undo_surveys()
-
-
-# Specifically undo projects
-@seed_commands.command('projects_undo')
-def undo_projects():
-    undo_projects()
-
-
-
-# Specifically undo projects
-@seed_commands.command('surveys_undo')
-def undo_surveys():
-    undo_surveys()

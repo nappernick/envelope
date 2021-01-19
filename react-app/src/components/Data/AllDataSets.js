@@ -60,7 +60,7 @@ function AllDataSets() {
             const res = await post.json()
             dispatch(removeDataSet(id))
         }
-        trackPromise(deleteFetch(), areas.deleteDS)
+        if (!dataSets.length) trackPromise(deleteFetch(), areas.deleteDS)
     }
     const handleUpdateClick = (e, dataSet) => {
         e.preventDefault()

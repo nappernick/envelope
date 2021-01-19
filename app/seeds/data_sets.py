@@ -19,11 +19,26 @@ def seed_data_sets():
 
 
     data_set1 = DataSet(
-        data_set_name="test_set.csv",
+        data_set_name="DRC Annual Survey.csv",
         data_set=pickledfile,
     )
-
     db.session.add(data_set1)
+    data_set2 = DataSet(
+        data_set_name="RMAC Sub-Saharan Water Access.dta",
+        data_set=pickledfile,
+    )
+    db.session.add(data_set2)
+    data_set3 = DataSet(
+        data_set_name="DWB Overview Data.csv.zip",
+        data_set=pickledfile,
+    )
+    db.session.add(data_set3)
+    data_set4 = DataSet(
+        data_set_name="DRC Annual Survey.csv",
+        data_set=pickledfile,
+    )
+    db.session.add(data_set4)
+
     db.session.commit()
 # seed_data_sets()
 

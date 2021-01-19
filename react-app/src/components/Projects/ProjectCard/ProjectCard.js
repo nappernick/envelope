@@ -37,7 +37,6 @@ function ProjectCard({ project }) {
     const [proj, setProj] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const history = useHistory()
-    console.log(user)
 
 
     const onSelect = ({ key }) => {

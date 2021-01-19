@@ -47,9 +47,6 @@ const projectsReducer = (state = [], action) => {
             return [...action.projects]
         case SET_PROJECT:
             let filteredProjecs = state.filter(el => {
-                console.log("FILTER ELEMENT: ", el)
-                console.log("PROJECT: ", action.project)
-                console.log("COMPARISON: ", el.id !== action.project.id)
                 return el.id !== action.project.id
             });
             filteredProjecs.push(action.project)

@@ -8,6 +8,7 @@ import LogoutButton from './LogoutButton';
 import { AdminBurgMenu } from "./BurgerMenus/BurgerMenus"
 import 'rc-dropdown/assets/index.css';
 import "./NavBar.css"
+import logo from "./envelopeLogo.png"
 
 
 const NavBar = () => {

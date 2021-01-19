@@ -16,20 +16,8 @@ const removeUser = () => {
 }
 
 export const login = (userr) => async (dispatch) => {
-    const { email, password } = userr
-    const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            email,
-            password
-        })
-    });
-    const res = await response.json()
-    if (res.email) dispatch(setUser(res))
-    return
+    dispatch(setUser(userr))
+    return userr
 }
 
 export const logout = () => async (dispatch) => {
