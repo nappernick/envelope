@@ -44,9 +44,12 @@ const NavBar = () => {
   return (
     <nav>
       <ul className="navbar__container">
-        <div className="navbar__logo">
+        {!authenticated && <div className="navbar__logo">
           <i className="fas fa-envelope fa-3x"></i>
-        </div>
+        </div>}
+        {authenticated && <div className="navbar__logo">
+          <img src={logo} alt="Envelope Logo" />
+        </div>}
         <div className="navbar__search">
           <Select
             options={projects}
@@ -63,7 +66,8 @@ const NavBar = () => {
             })}
             placeholder="Search Projects... "
             onChange={(values) => {
-              return history.push(`/users/${authenticated.id}/projects/${values.value}`)
+              // return history.push(`/users/${authenticated.id}/projects/${values.value}`)
+              return history.push(`/projects`)
             }} />
         </div>
         <div className="navbar__links">
