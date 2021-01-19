@@ -29,15 +29,10 @@ def seed_data_sets():
     )
     db.session.add(data_set2)
     data_set3 = DataSet(
-        data_set_name="DWB Overview Data.csv.zip",
+        data_set_name="WHO SSA W18-24 Lit.csv.zip",
         data_set=pickledfile,
     )
     db.session.add(data_set3)
-    data_set4 = DataSet(
-        data_set_name="WHO  SSA W18-24 Lit.csv",
-        data_set=pickledfile,
-    )
-    db.session.add(data_set4)
 
     db.session.commit()
 # seed_data_sets()
