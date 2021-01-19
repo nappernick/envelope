@@ -1,20 +1,32 @@
-# envelope - non-profit dashboard & reporting
+# Envelope - non-profit data processing, visualizations, and multi-location mapping
 
-## MVP (but for real)
+## V1
 ### Three types of users: 
  - Admin user with access to all data sets & reports (not direct data access, but the data necessary to render reports)
  - Client users with access to their specific data sets & reports
  - Low bandwidth (LB) users who need very limited data / functionality
 ### Admin Tools:
-- Users view: 
+- All Projects View
+    - On login users infinite scroll of all the active projects, displayed in card formt, with highlights of their overall statistics, from who the project owner is (Client users), to the number of surveys included and data points of interest
+    - From this view the admin can update, create, copy, and delete current projects
+    - Beneath each project is a link to view statistical visualizations for the surveys in the project, or render a MapBox map of surveys by health area
+    - Utilizes an initial fetch, transferred to Redux store, with infinite scroll built on an autosizer & react-window
+- New Project Creation
+    - TBW
+- Update Projects (implicit creation)
+    - TBW
+- Data Sets View
+    - Users first see a table of the datasets currently in the database, including basic details, and buttons to edit & delete dataset
+    - At the bottom of the page users can find a button to upload a new data set, which will take them to a new page with a dropzone that will accept only three file types: .csv, .dta, and .csv.zip
+    - Once a file has been uploaded, users will be prompted to choose a name and confirm the upload, at which point the file is pushed to the backend, file structure is normalized to a .csv string, and written into the database
+- Users View
+Users view: 
     - A view allowing admin to see all current clients & LB users
     - Button to add new user - a modal to create a new user, with type (admin, client, LB), email, password, etc
-- Add Report Access:
-    - Button to open a modal that renders two sections: the top with data sets, and the bottom with client users. The top section will allow multiselect (possibly check boxes), while the lower section renders all client users, allowing the user to select only 1. On submit this creates a new "project" record in the project table (which is part join between users & datasets, part extra information on that union, i.e. name of project, notes on the project, etc)
 ### Reporting:
 - A violin plot able to display data on interview duration, don't know responses, integer outlier data points, and distance outliers
     - Render all four versions of the violin in one page, with navlink titles allowing the user to click a report title and render the plot on it's own page
-- Below the violin plots, render a MapBox map with 5 separate sets of waypoints/indicators, each a different color, which on hover/when clicked will show:
+- Render a MapBox map with an infinite scroll set of health areas, which when clicked will zoom the map & display that set of surveys as icons. :
     - time stamp of the survey
     - the surveyor code
     - respondent name
@@ -24,8 +36,9 @@
   - A data review form to mark data points that fall 2 standard deviations outside the mean as either plausible or implausible
     * once completed, alow admin to add that data to a LB user, so they can update the data with field reps
   - Upload Stata data & generate a set of reports automatically
+  - TBW
 
-## Routes
+## Routes (NEEDS REWRITE)
  - User auth
      - Login Post (/auth/login)
      - New user Post (/auth/new-user)
@@ -46,8 +59,8 @@
  
 ## Schema
 ![](https://github.com/nappernick/envelope/blob/master/wiki_readme_resources/envelop_db_schema.png?raw=true)
-## Python Analysis
- - Algo to run on surveys, creating an entry in the 
+## Python Analysis (
+ - TBW
 
 ## Technologies
 - Python
