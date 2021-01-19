@@ -16,7 +16,7 @@ div.footer__main_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 10vw;
+    width: 201px;
     min-width: 188px;
     margin: 10px 0px;
 }
@@ -48,7 +48,7 @@ div.footer__main_container {
 }
 
 .footer__readme.container {
-    width: 174px;
+    width: 179px;
     min-width: 168px;
 }
 

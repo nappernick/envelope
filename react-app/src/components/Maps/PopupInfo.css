@@ -1,5 +1,5 @@
 .popup_info__container {
-    width: 240px;
+    width: 270px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,7 +14,7 @@
 }
 
 .popup_info__details {
-    width: 200px;
+    width: 230px;
     margin-bottom: 10px;
 }
 

@@ -8,10 +8,25 @@
 
 .projects__scroll.container {
     height: 63vh;
+    /* width: 27vw; */
     width: 87vw;
+    max-width: 87vw;
     display: flex;
     padding-top: 10px;
 }
+
+.projects__scroll.container.one {
+    width: 27vw;
+}
+
+.projects__scroll.container.two {
+    width: 57vw;
+}
+
+.projects__scroll.container.three {
+    width: 87vw;
+}
+
 .projects__header {
     display: flex;
     justify-content: center;

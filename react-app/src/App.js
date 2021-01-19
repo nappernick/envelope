@@ -74,7 +74,7 @@ function App() {
           {user ? <AllProjects /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users/:userId/projects" exact={true} authenticated={user}>
-          {/* Component that shows this user's projects */}
+          {user ? <AllProjects /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users/:userId/projects/:projectId" exact={true} authenticated={user}>
           {/* Component that shows a specific project in detail */}

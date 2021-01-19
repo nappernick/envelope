@@ -37,6 +37,7 @@ function ProjectCard({ project }) {
     const [proj, setProj] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const history = useHistory()
+    console.log(user)
 
 
     const onSelect = ({ key }) => {
@@ -81,7 +82,7 @@ function ProjectCard({ project }) {
 
     return (
         <div className="project_card__container" >
-            <Dropdown
+            {user.type_id === 1 ? <Dropdown
                 trigger={['hover']}
                 overlay={menuCallback}
                 animation="slide-up"
@@ -91,7 +92,11 @@ function ProjectCard({ project }) {
                         {project && project.project_name}
                     </p>
                 </div>
-            </Dropdown>
+            </Dropdown> : <div className="project_card__heading">
+                    <p>
+                        {project && project.project_name}
+                    </p>
+                </div>}
             <div className="project_card__info outermost">
                 <div className="project_card__info header">
                     Project Info
@@ -201,9 +206,9 @@ function ProjectCard({ project }) {
                 <div className="project_card__map button">
                     <button onClick={handleMapClick}>Map</button>
                 </div>
-                <div className="project_card__edit button">
+                {user.type_id === 1 && <div className="project_card__edit button">
                     <button onClick={handleEditClick}>Edit</button>
-                </div>
+                </div>}
                 <div className="project_card__stats button">
                     <button onClick={handleStatsClick}>Stats</button>
                 </div>

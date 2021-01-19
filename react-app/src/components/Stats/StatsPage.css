@@ -16,7 +16,7 @@ div.stats__page.container .container {
 div.stats__page.container .header {
     display: flex;
     justify-content: center;
-    width: 270px;
+    width: 320px;
     border-bottom: 1px solid #e89313;
     margin-bottom: 3vh;
     font-weight: 700;

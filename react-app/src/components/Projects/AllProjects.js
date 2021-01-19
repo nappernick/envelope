@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FixedSizeList as List } from 'react-window';
 import { areas } from "../../common/areas";
@@ -35,7 +35,9 @@ const customStyles = {
 // box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px
 
 function AllProjects() {
+    const user = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
+    const [viewSet, setViewSet] = useState('')
     const [showModal, setShowModal] = useState(false);
     const { promiseInProgress } = usePromiseTracker({
         area: "projects-area",
@@ -58,12 +60,19 @@ function AllProjects() {
             </div>
         )
     }
+
+    useEffect(() => {
+        if (!projects) return
+        else if (projects.length == 1) setViewSet("one")
+        else if (projects.length == 2) setViewSet("two")
+        else if (projects.length == 3) setViewSet("three")
+    }, [projects])
     return (
         <div className="projects__page container">
             <div className="projects__header">
                 <p>ALL PROJECTS</p>
             </div>
-            <div className="projects__scroll container" >
+            <div className={`projects__scroll container ${viewSet}`} >
                 {promiseInProgress ? <Spinner areas={areas.projects} /> :
                     <AutoSizer>
                         {({ height, width }) => (
@@ -86,11 +95,11 @@ function AllProjects() {
                 }
             </div>
             <div className="projects__new_project container">
-                <div className="projects__new_project button">
+                {user.type_id === 1 && <div className="projects__new_project button">
                     <button onClick={openModal} className="projects__new_project">
                         New Project
                     </button>
-                </div>
+                </div>}
                 <div className="projects__new_project modal">
                     <Modal
                         isOpen={showModal}
