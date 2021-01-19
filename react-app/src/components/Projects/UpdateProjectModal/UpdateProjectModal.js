@@ -13,12 +13,14 @@ function UpdateProjectModal({ modalObj }) {
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
     const { project, closeUpdateProjectModal } = modalObj
+    debugger
     const sessUser = useSelector(store => store.session.user)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([project.user])
     const [selectedDataSetId, setSelectedDataSetId] = useState(project.data_set)
     const [projectName, setProjectName] = useState(project.project_name)
+    debugger
     const [disabled, setDisabled] = useState(true)
     const selectedObj = {
         "selectedUsers": selectedUsers,

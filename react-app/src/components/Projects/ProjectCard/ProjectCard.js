@@ -62,7 +62,7 @@ function ProjectCard({ projectObj }) {
             <MenuItem
                 style={{ cursor: "pointer" }}
                 key="2"
-                onMouseEnter={handleMouseEnter}
+            // onMouseEnter={handleMouseEnter}
             >Delete Project</MenuItem>
         </Menu>
     );
