@@ -18,7 +18,7 @@ const customStyles = {
         left: 'auto',
         right: '23%',
         bottom: 'auto',
-        height: "80%",
+        height: "90%",
         marginRight: '-50%',
         paddingTop: "30px",
         paddingLeft: "60px",
