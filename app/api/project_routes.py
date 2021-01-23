@@ -19,11 +19,9 @@ project_routes = Blueprint("projects", __name__)
 def all_projects():
     user = db.session.query(User).get(current_user.get_id()).to_dict()
     if user["type_id"] == 1:
-        # projects = db.session.query(Project).all()
         projects = db.session.query(Project).options(joinedload("surveys")).all()
     if user["type_id"] == 2:
         projects = db.session.query(Project).filter_by(user_id = user["id"]).all()
-    print([project.to_dict_survey_summary() for project in projects])
     return jsonify([project.to_dict_survey_summary() for project in projects])
 
 @project_routes.route("/", methods=["POST"])
@@ -42,7 +40,7 @@ def post_project():
         )
         db.session.add(project)
         db.session.commit()
-        project_id = db.session.query(Project.id).filter(Project.project_name==form.data['project_name']).options(joinedload("surveys")).first()[0]
+        project_id = db.session.query(Project.id).filter(Project.project_name==form.data['project_name']).first()[0]
         data_set = db.session.query(DataSet.data_set).filter(DataSet.id==form.data['data_set_id']).first()
         data_set = data_set._asdict()
         pickle_file = pickle.loads(data_set["data_set"])
