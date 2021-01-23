@@ -30,19 +30,15 @@ function App() {
     (async () => {
       dispatch(sessionActions.restore())
       setLoaded(true);
-      dispatch(setAllDataSets())
     })();
-    (async () => {
-      trackPromise(dispatch(setAllProjects()), areas.projects)
-    })()
   }, [dispatch]);
 
   useEffect(() => {
     (async () => {
-      dispatch(setAllDataSets())
+      if (user) dispatch(setAllDataSets())
     })();
     (async () => {
-      trackPromise(dispatch(setAllProjects()), areas.projects)
+      if (user) trackPromise(dispatch(setAllProjects()), areas.projects)
     })()
   }, [dispatch, user]);
 

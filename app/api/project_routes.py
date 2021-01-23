@@ -8,6 +8,7 @@ from app.forms import ProjectForm
 from app.models import Project, User, DataSet, Survey, db
 from app.api import validation_errors_to_error_messages
 from .data_processing import data_processing_for_survey_records
+from sqlalchemy.orm import joinedload
 
 fake = Faker()
 project_routes = Blueprint("projects", __name__)
@@ -18,7 +19,8 @@ project_routes = Blueprint("projects", __name__)
 def all_projects():
     user = db.session.query(User).get(current_user.get_id()).to_dict()
     if user["type_id"] == 1:
-        projects = db.session.query(Project).all()
+        # projects = db.session.query(Project).all()
+        projects = db.session.query(Project).options(joinedload("surveys")).all()
     if user["type_id"] == 2:
         projects = db.session.query(Project).filter_by(user_id = user["id"]).all()
     print([project.to_dict_survey_summary() for project in projects])
@@ -40,7 +42,7 @@ def post_project():
         )
         db.session.add(project)
         db.session.commit()
-        project_id = db.session.query(Project.id).filter(Project.project_name==form.data['project_name']).first()[0]
+        project_id = db.session.query(Project.id).filter(Project.project_name==form.data['project_name']).options(joinedload("surveys")).first()[0]
         data_set = db.session.query(DataSet.data_set).filter(DataSet.id==form.data['data_set_id']).first()
         data_set = data_set._asdict()
         pickle_file = pickle.loads(data_set["data_set"])
@@ -80,7 +82,7 @@ def project(id):
 @project_routes.route("/<int:id>", methods=["POST"])
 @login_required
 def update_project(id):
-    project = db.session.query(Project).get(id)
+    project = db.session.query(Project).options(joinedload("surveys")).get(id)
     req = dict(request.json)
     project.project_name = req['project_name']
     project.updated_at = datetime.now()
@@ -99,5 +101,5 @@ def delete_project(projectId):
 @project_routes.route("/<int:id>/surveys")
 @login_required
 def project_surveys(id):
-    project = db.session.query(Project).get(id)
+    project = db.session.query(Project).options(joinedload("surveys")).get(id)
     return jsonify(project.to_dict_full())

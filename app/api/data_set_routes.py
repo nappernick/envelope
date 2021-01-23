@@ -8,6 +8,7 @@ from flask import Flask, Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, DataSet, HealthArea, Survey, Project
 from .auth_routes import authenticate
+from sqlalchemy.orm import joinedload
 # from .data_processing import data_processing
 
 data_set_routes = Blueprint('data', __name__)
@@ -174,7 +175,7 @@ def violin_plot_by_enumerator(dataSetId, surveyField):
 @data_set_routes.route("/projects/<int:projectId>/health-areas/<int:healthAreaId>/map")
 @login_required
 def map_surveys(projectId, healthAreaId):
-    health_area = db.session.query(HealthArea).get(healthAreaId)
+    health_area = db.session.query(HealthArea).options(joinedload("surveys")).get(healthAreaId)
     surveys = health_area.to_dict_full()['surveys']
     meaningful_fields = ["date_time_administered", "duration", "num_dont_know_responses", "num_outlier_data_points", "enumerator_id", "respondent"]
     map_data = {
@@ -201,7 +202,7 @@ def map_surveys(projectId, healthAreaId):
 @data_set_routes.route("/projects/<int:projectId>/health-areas/<int:healthAreaId>/center")
 @login_required
 def map_survey_center(projectId, healthAreaId):
-    health_area = db.session.query(HealthArea).get(healthAreaId)
+    health_area = db.session.query(HealthArea).options(joinedload("surveys")).get(healthAreaId)
     surveys = health_area.to_dict_full()['surveys']
     lat = {"sum": 0, "count": 0}
     long = {"sum": 0, "count": 0}
