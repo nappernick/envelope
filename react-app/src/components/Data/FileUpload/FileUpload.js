@@ -16,11 +16,12 @@ Modal.setAppElement('#root')
 
 const customStyles = {
     content: {
-        top: '40%',
-        left: '70%',
-        right: '40%',
+        top: '45%',
+        left: '72%',
+        right: 'auto',
         bottom: 'auto',
-        height: "45%",
+        height: "60%",
+        width: "550px",
         marginRight: '-50%',
         paddingTop: "0px",
         transform: 'translate(-100%, -50%)',
@@ -45,11 +46,6 @@ function FileUpload() {
     const [origFileName, setOrigFileName] = useState([])
     const [key, setKey] = useState(0);
     const [debounceKey] = useDebounce(key, 1000);
-    const { promiseInProgress } = usePromiseTracker({
-        area: "upload-data-set",
-        delay: 0,
-    });
-
 
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
@@ -72,7 +68,8 @@ function FileUpload() {
             dispatch(addDataSet(dataSet))
             setKey(null)
         }
-        trackPromise(fileUpload(), areas.uploadDS).then(() => history.push("/data-sets"))
+        fileUpload()
+        return history.push("/data-sets")
     }
 
     const file_tools = {
@@ -91,31 +88,24 @@ function FileUpload() {
 
     return (
         <div className="file_upload__container">
-            {promiseInProgress ? <div className="data_set__spinnner">
-                <Spinner
-                    areas={areas.uploadDS}
-                />
-            </div>
-                :
-                <div className="drop_zone__container">
-                    <div className="file_upload__dropzone">
-                        <DropzoneArea
-                            key={debounceKey}
-                            showFileNames
-                            dropzoneText="Click Here Or Drag & Drop .csv, .csv.zip, or .dta"
-                            filesLimit={1}
-                            maxFileSize={500000000}
-                            onChange={values => handleFile(values)}
-                            acceptedFiles={[".zip", "text/csv", ".dta"]}
-                        />
-                    </div>
-                    <div className="file_upload__button">
-                        <button onClick={openModal} disabled={disabled}>
-                            Confirm & Upload
-                    </button>
-                    </div>
+            <div className="drop_zone__container">
+                <div className="file_upload__dropzone">
+                    <DropzoneArea
+                        key={debounceKey}
+                        showFileNames
+                        dropzoneText="Click Here Or Drag & Drop .csv, .csv.zip, or .dta"
+                        filesLimit={1}
+                        maxFileSize={500000000}
+                        onChange={values => handleFile(values)}
+                        acceptedFiles={[".zip", "text/csv", ".dta"]}
+                    />
                 </div>
-            }
+                <div className="file_upload__button">
+                    <button onClick={openModal} disabled={disabled}>
+                        Confirm & Upload
+                    </button>
+                </div>
+            </div>
             <Modal
                 isOpen={showModal}
                 onRequestClose={closeModal}

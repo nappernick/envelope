@@ -22,9 +22,29 @@ function FileUploadModal({ file_tools, origFileName }) {
         closeModal()
     }
 
+    useEffect(() => {
+        if (dataSets) {
+            const dataSetNames = []
+            dataSets.forEach(dataSet => {
+                dataSetNames.push(dataSet.data_set_name.split(".")[0])
+            })
+            setDataSetNames(dataSetNames)
+        }
+    }, []);
 
     useEffect(() => {
+        // logic to jiggle button if name is duplicate & disable if there is 
+        // no file name provided
         if (!fileName) setDisabled(true)
+        if (dataSetNames.indexOf(fileName) > -1) {
+            debugger
+            setDupeName(true)
+            setDisabled(true)
+        }
+        else {
+            setDupeName(false)
+            setDisabled(false)
+        }
     }, [fileName])
 
     useEffect(() => {
@@ -43,7 +63,7 @@ function FileUploadModal({ file_tools, origFileName }) {
                 <div className="upload_modal__update_name input">
                     <input
                         type="text"
-                        placeholder="New file name here..."
+                        placeholder="Leave blank for same title..."
                         onChange={updateFileName}
                     />
                 </div>
@@ -56,10 +76,16 @@ function FileUploadModal({ file_tools, origFileName }) {
                     {(file.size / 1000000).toFixed(2)} MB
                 </div>
             </div>
+            <div className="upload_modal__file_background container">
+                <div className="upload_modal__file_background">
+                    File Will Upload In The Background
+                </div>
+            </div>
             <div className="upload_modal__upload button">
                 <button
                     onClick={handleUpload}
                     disabled={disabled}
+                    className={dupeName ? "dupe" : ""}
                 >Confirm & Upload</button>
             </div>
         </div>
