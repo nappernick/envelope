@@ -19,6 +19,7 @@ function NewProjectModal({ closeModal }) {
     const [selectedUsers, setSelectedUsers] = useState([])
     const [selectedDataSetId, setSelectedDataSetId] = useState(null)
     const [projectName, setProjectName] = useState("")
+    const [targetHACount, setTargetHACount] = useState(0)
     const [disabled, setDisabled] = useState(true)
     // Local state for checking duplicate project names
     const [projectNames, setProjectNames] = useState([])
@@ -78,13 +79,13 @@ function NewProjectModal({ closeModal }) {
     }, [projectName, selectedUsers, selectedDataSetId])
 
     useEffect(() => {
+        if (projectName === "") setDisabled(true)
+        else setDisabled(false)
         if (projectNames.indexOf(projectName) > -1) {
             setDupeName(true)
-            setDisabled(true)
         }
         else {
             setDupeName(false)
-            setDisabled(false)
         }
     }, [projectName])
 
@@ -115,6 +116,18 @@ function NewProjectModal({ closeModal }) {
                         <Spinner areas={areas.dataSetList} />
                     </div>
                 </div>
+                <div className="projects_modal__target_ha_count container">
+                    <div className="projects_modal__target_ha_count title">
+                        Target Number of Health Areas
+                        </div>
+                    <div className="projects_modal__target_ha_count input">
+                        <input type="number"
+                            onChange={e => setTargetHACount(e.target.value)}
+                            value={targetHACount}
+                        // placeholder="Name this project..."
+                        />
+                    </div>
+                </div>
                 <div className="projects_modal__project_name container">
                     <div className="projects_modal__project_name title">
                         Project Name
@@ -132,7 +145,7 @@ function NewProjectModal({ closeModal }) {
                         disabled={disabled}
                         onClick={handleSubmit}
                         className={dupeName ? "dupe" : ""}
-                    >Create Project</button>
+                    >{dupeName ? "Name Taken" : "Create Project"}</button>
                 </div>
             </div>
 

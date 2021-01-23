@@ -57,7 +57,8 @@ div.projects_modal__container {
     justify-content: center;
 }
 
-.projects_modal__container >.container .projects_modal__project_name.title {
+.projects_modal__container >.container .projects_modal__project_name.title,
+.projects_modal__container >.container .projects_modal__target_ha_count.title {
     font-size: 17px;
     font-weight: 700;
     font-family: "Proza Libre";
@@ -65,21 +66,28 @@ div.projects_modal__container {
     padding-bottom: 1px;
 }
 
-.projects_modal__container .projects_modal__project_name.container {
+.projects_modal__container .projects_modal__project_name.container,
+.projects_modal__container .projects_modal__target_ha_count.container {
     display: flex;
-    width: 320px;
+    width: 70%;
     justify-content: space-between;
     align-items: center;
     margin-top: 30px;
 }
 
-.projects_modal__container >.container .projects_modal__project_name input {
+.projects_modal__container >.container .projects_modal__project_name input,
+.projects_modal__container >.container .projects_modal__target_ha_count input {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 12px 4px 12px 8px;
     /* padding-left: 7px; */
     height: 23px;
     font-size: 14px;
     border-radius: 5px;
+    width: 200px;
+}
+
+.projects_modal__container >.container .projects_modal__target_ha_count.input input {
+    width: 65px;
 }
 
 .projects_modal__container > .button {
@@ -91,10 +99,10 @@ div.projects_modal__container {
     align-items: center;
 }
 
-.projects_modal__container > .button > button.dupe {
+.projects_modal__container > .projects_modal__submit.button > button.dupe {
     transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
     background-color: #fe4b03;
-    border: 1px solid white;
+    border: none;
     color: white;
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
     transform: translate3d(0, 0, 0);
