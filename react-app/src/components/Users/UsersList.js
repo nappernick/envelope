@@ -71,7 +71,7 @@ function UsersList() {
         {users.map((user) => {
           return (
 
-            <tr className="users_list__user row">
+            <tr className="users_list__user row" key={user.id} >
               <td className="users_list__user data username">
                 {user.username}
               </td>

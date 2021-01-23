@@ -53,14 +53,16 @@ function AllDataSets() {
     const handleUploadClick = () => history.push("/data-sets/upload")
     const handleDelete = (e, id) => {
         e.preventDefault()
+        debugger
         const deleteFetch = async () => {
             let post = await fetch(`/api/data/${id}`, {
                 method: "DELETE"
             })
             const res = await post.json()
+            debugger
             dispatch(removeDataSet(id))
         }
-        if (!dataSets.length) trackPromise(deleteFetch(), areas.deleteDS)
+        trackPromise(deleteFetch(), areas.deleteDS)
     }
     const handleUpdateClick = (e, dataSet) => {
         e.preventDefault()

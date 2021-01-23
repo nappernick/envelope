@@ -19,6 +19,7 @@ div.projects_modal__container {
 
 .projects_modal__header.complete {
     color: #83c2c1;
+	transition: color 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
 .projects_modal__container >.container > .header {
@@ -88,6 +89,35 @@ div.projects_modal__container {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.projects_modal__container > .button > button.dupe {
+    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    background-color: #fe4b03;
+    border: 1px solid white;
+    color: white;
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+  
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }
 
 .projects_modal__container > .button > button:enabled {

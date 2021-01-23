@@ -12,13 +12,16 @@ import "./NewProject.css"
 function NewProjectModal({ closeModal }) {
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
+    const sessUser = useSelector(store => store.session.user)
+    const projects = useSelector(store => store.projects)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([])
     const [selectedDataSetId, setSelectedDataSetId] = useState(null)
     const [projectName, setProjectName] = useState("")
-    const sessUser = useSelector(store => store.session.user)
     const [disabled, setDisabled] = useState(true)
+    const [projectNames, setProjectNames] = useState([])
+    const [dupeName, setDupeName] = useState(false)
     const selectedObj = {
         "selectedUsers": selectedUsers,
         "setSelectedUsers": setSelectedUsers
@@ -29,15 +32,24 @@ function NewProjectModal({ closeModal }) {
     }
 
     const handleSubmit = async (e) => {
-        closeModal()
+        let dupeProjectName = false
+        projects.forEach(project => {
+            if (project.project_name === projectName) {
+                setErrors([...errors, "That name has already been used, please choose another"])
+                dupeProjectName = true
+                return
+            }
+        })
+        if (!dupeProjectName) closeModal()
         if (selectedUsers.length == 1) {
             const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
-            dispatch(addProject(project))
+            debugger
+            if (project.project_name === projectName) dispatch(addProject(project))
         }
         else {
             selectedUsers.forEach(async (user) => {
                 const project = await multiProjectPost(projectName, selectedDataSetId, user, setErrors)
-                dispatch(addProject(project))
+                if (project.project_name === projectName) dispatch(addProject(project))
             })
 
         }
@@ -51,12 +63,30 @@ function NewProjectModal({ closeModal }) {
             setUsers(responseData);
         }
         trackPromise(fetchUsers(), areas.userList)
+        if (projects) {
+            const newProjectNames = []
+            projects.forEach(project => {
+                newProjectNames.push(project.project_name)
+            })
+            setProjectNames(newProjectNames)
+        }
     }, []);
 
     useEffect(() => {
         if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
         if (!projectName || selectedUsers.length == 0 || !selectedDataSetId) setDisabled(true)
     }, [projectName, selectedUsers, selectedDataSetId])
+
+    useEffect(() => {
+        if (projectNames.indexOf(projectName) > -1) {
+            setDupeName(true)
+            setDisabled(true)
+        }
+        else {
+            setDupeName(false)
+            setDisabled(false)
+        }
+    }, [projectName])
 
     return (
         <>
@@ -101,6 +131,7 @@ function NewProjectModal({ closeModal }) {
                     <button
                         disabled={disabled}
                         onClick={handleSubmit}
+                        className={dupeName ? "dupe" : ""}
                     >Create Project</button>
                 </div>
             </div>
