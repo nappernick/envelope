@@ -8,7 +8,7 @@ class DataSet(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now(), index=True)
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now(), index=True)
 
-    projects = db.relationship("Project", backref="data-set", lazy='dynamic', cascade="all,delete")
+    projects = db.relationship("Project", backref="data-set", lazy='dynamic')
 
 
 

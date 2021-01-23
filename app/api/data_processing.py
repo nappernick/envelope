@@ -63,15 +63,17 @@ def data_processing_for_survey_records(csv_file):
             return process_data_for_reader(reader)
 
 def process_data_for_reader(reader):
-    # original column headings: ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
+    headings = ["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"]
     target_columns = ["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"]
-    target_indices = [4,5,11,14,2861,2862,2868,2899,2902, 0]
+    target_indices = []
     column_data = {}
     health_areas = []
     for row in reader:
         if len(row) == 0:
             continue
         if row[0] == '':
+            for value in headings:
+                target_indices.append(row.index(value))
             continue
         if row[11] not in health_areas:
             health_areas.append(row[11])

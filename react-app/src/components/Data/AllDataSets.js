@@ -12,6 +12,7 @@ import { removeDataSet } from "../../store/data_sets"
 import { areas } from "../../common/areas";
 import { configDate } from "../utils"
 import "./AllDataSets.css"
+import { removeProject } from '../../store/projects';
 
 Modal.setAppElement('#root')
 
@@ -37,6 +38,7 @@ function AllDataSets() {
     const history = useHistory()
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
+    const projects = useSelector(store => store.projects)
     const [dataSet, setDataSet] = useState({})
     const [showModal, setShowModal] = useState(false);
     const { promiseInProgress } = usePromiseTracker({
@@ -53,16 +55,20 @@ function AllDataSets() {
     const handleUploadClick = () => history.push("/data-sets/upload")
     const handleDelete = (e, id) => {
         e.preventDefault()
-        debugger
         const deleteFetch = async () => {
             let post = await fetch(`/api/data/${id}`, {
                 method: "DELETE"
             })
             const res = await post.json()
-            debugger
-            dispatch(removeDataSet(id))
+            if (!res.errors) dispatch(removeDataSet(id))
         }
         trackPromise(deleteFetch(), areas.deleteDS)
+        projects.forEach(project => {
+            if (project.data_set_id === id) {
+                dispatch(removeProject(project.id))
+                fetch(`/api/projects/${project.id}`, { method: "DELETE" })
+            }
+        })
     }
     const handleUpdateClick = (e, dataSet) => {
         e.preventDefault()

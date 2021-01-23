@@ -20,6 +20,7 @@ function NewProjectModal({ closeModal }) {
     const [selectedDataSetId, setSelectedDataSetId] = useState(null)
     const [projectName, setProjectName] = useState("")
     const [disabled, setDisabled] = useState(true)
+    // Local state for checking duplicate project names
     const [projectNames, setProjectNames] = useState([])
     const [dupeName, setDupeName] = useState(false)
     const selectedObj = {
@@ -43,7 +44,6 @@ function NewProjectModal({ closeModal }) {
         if (!dupeProjectName) closeModal()
         if (selectedUsers.length == 1) {
             const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
-            debugger
             if (project.project_name === projectName) dispatch(addProject(project))
         }
         else {

@@ -36,7 +36,7 @@ def data_file_upload():
         print("__________AT DTA")
         data = pd.io.stata.read_stata(file)
         csv_file = data.to_csv()
-        csv_file = csv_file.decode("utf-8")
+        # csv_file = csv_file.decode("utf-8")
         file_final = pickle.dumps(csv_file)
 
     elif file_name_list[len(file_name_list)-1] == "zip":

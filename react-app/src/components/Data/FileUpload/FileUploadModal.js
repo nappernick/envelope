@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import "./FileUploadModal.css"
 
 function FileUploadModal({ file_tools, origFileName }) {
     const { file, fileName, onFileUpload, setFileName, closeModal } = file_tools
+    const dataSets = useSelector(store => store.dataSets)
     const [disabled, setDisabled] = useState(true)
+    // Local state for checking duplicate data set names
+    const [dataSetNames, setDataSetNames] = useState([])
+    const [dupeName, setDupeName] = useState(false)
 
 
     const updateFileName = (e) => {
