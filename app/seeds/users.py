@@ -6,8 +6,13 @@ def seed_users():
 
     demo = User(username='demo', email='demo@aa.io',
                 password='password', first_name='Demo', last_name='User', type_id=1)
-
     db.session.add(demo)
+    demo1 = User(username='billyblanks', email='billyblanks@taibo.com',
+                password='password', first_name='William', last_name='Blanks', type_id=2)
+    db.session.add(demo1)
+    demo2 = User(username='pattycakes', email='pcakes@bakerswoman.com',
+                password='password', first_name='Patricia', last_name='Cakes', type_id=2)
+    db.session.add(demo2)
 
     db.session.commit()
 

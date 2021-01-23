@@ -7,6 +7,7 @@ class Project(db.Model):
     project_notes = db.Column(db.Text, nullable = True)
     data_set_id = db.Column(db.Integer, db.ForeignKey("data_sets.id"), nullable = True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
+    target_health_area_count = db.Column(db.Integer, nullable = False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -22,6 +23,7 @@ class Project(db.Model):
             "data_set_id": self.data_set_id,
             "user_id": self.user_id,
             "created_at": self.created_at,
+            "target_health_area_count": self.target_health_area_count,
             "updated_at": self.updated_at
         }
 
@@ -32,6 +34,7 @@ class Project(db.Model):
             "project_notes": self.project_notes,
             "data_set_id": self.data_set_id,
             "user_id": self.user_id,
+            "target_health_area_count": self.target_health_area_count,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "user": self.user.to_dict(),
@@ -71,6 +74,7 @@ class Project(db.Model):
             "project_notes": self.project_notes,
             "data_set_id": self.data_set_id,
             "user_id": self.user_id,
+            "target_health_area_count": self.target_health_area_count,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "user": self.user.to_dict(),

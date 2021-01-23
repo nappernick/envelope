@@ -3,8 +3,8 @@ import csv
 import pickle
 
 def seed_data_sets():
-    # with open('/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv') as csvfile:
-    with open('/var/www/app/seeds/seed_survey.csv') as csvfile:
+    with open('/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv') as csvfile:
+    # with open('/var/www/app/seeds/seed_survey.csv') as csvfile:
         reader = csv.reader(csvfile)
         parsed_file = []
         for row in reader:

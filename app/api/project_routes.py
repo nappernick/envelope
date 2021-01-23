@@ -35,6 +35,7 @@ def post_project():
             project_name=form.data['project_name'],
             data_set_id=form.data['data_set_id'],
             user_id=form.data['user_id'],
+            target_health_area_count=form.data['target_health_area_count'],
             created_at=datetime.now(),
             updated_at=datetime.now()
         )
@@ -83,6 +84,7 @@ def update_project(id):
     project = db.session.query(Project).options(joinedload("surveys")).get(id)
     req = dict(request.json)
     project.project_name = req['project_name']
+    project.target_health_area_count=req['target_health_area_count']
     project.updated_at = datetime.now()
     db.session.commit()
     project = db.session.query(Project).get(id)

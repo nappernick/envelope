@@ -16,3 +16,4 @@ class ProjectForm(FlaskForm):
     data_set_id = IntegerField("data_set_id", validators=[DataRequired()])
     data_set_id = IntegerField("data_set_id", validators=[DataRequired()])
     user_id = IntegerField("user_id", validators=[DataRequired()])
+    target_health_area_count = IntegerField("target_health_area_count", validators=[DataRequired()])
