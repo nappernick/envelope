@@ -13,12 +13,17 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
     const sessUser = useSelector(store => store.session.user)
+    const projects = useSelector(store => store.projects)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([project.user])
     const [selectedDataSetId, setSelectedDataSetId] = useState(project.data_set)
     const [projectName, setProjectName] = useState(project.project_name)
+    const [targetHACount, setTargetHACount] = useState(project.target_health_area_count)
     const [disabled, setDisabled] = useState(true)
+    // Local state for checking duplicate project names
+    const [projectNames, setProjectNames] = useState([])
+    const [dupeName, setDupeName] = useState(false)
     const selectedObj = {
         "selectedUsers": selectedUsers,
         "setSelectedUsers": setSelectedUsers
@@ -31,12 +36,12 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
 
     const handleSubmit = async (e) => {
         if (selectedUsers.length == 1) {
-            let proj = await singleProjectPostUpdate(project.id, projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            let proj = await singleProjectPostUpdate(project.id, projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors)
             dispatch(addProject(proj))
         }
         else {
             selectedUsers.forEach(async (user) => {
-                let proj = await multiProjectPostUpdate(project.id, projectName, selectedDataSetId, user, setErrors)
+                let proj = await multiProjectPostUpdate(project.id, projectName, selectedDataSetId, user, targetHACount, setErrors)
                 dispatch(addProject(proj))
             })
 
@@ -52,15 +57,34 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
             setUsers(responseData);
         }
         trackPromise(fetchUsers(), areas.userList)
+        if (projects) {
+            const newProjectNames = []
+            projects.forEach(project => {
+                if (projectName !== project.project_name) newProjectNames.push(project.project_name)
+            })
+            setProjectNames(newProjectNames)
+        }
     }, []);
 
     const handleNameChange = (e) => setProjectName(e.target.value)
+    const handleTargetHAChange = (e) => setTargetHACount(e.target.value)
 
 
     useEffect(() => {
         if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
         if (!projectName || selectedUsers.length == 0 || !selectedDataSetId) setDisabled(true)
     }, [projectName, selectedUsers, selectedDataSetId])
+
+    useEffect(() => {
+        if (projectName === "") setDisabled(true)
+        else setDisabled(false)
+        if (projectNames.indexOf(projectName) > -1) {
+            setDupeName(true)
+        }
+        else {
+            setDupeName(false)
+        }
+    }, [projectName])
 
     return (
         <>
@@ -102,6 +126,19 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
                             className="update_project_modal"
                             onChange={handleNameChange}
                             value={projectName}
+                        />
+                    </div>
+                </div>
+                <div className="update_project_modal__target_ha_count container">
+                    <div className="update_project_modal__target_ha_count title">
+                        Update Health Area Count Target
+                    </div>
+                    <div className="update_project_modal__target_ha_count input">
+                        <input
+                            type="number"
+                            className="update_project_modal"
+                            onChange={handleTargetHAChange}
+                            value={targetHACount}
                         />
                     </div>
                 </div>

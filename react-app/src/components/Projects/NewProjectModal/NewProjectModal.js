@@ -44,12 +44,12 @@ function NewProjectModal({ closeModal }) {
         })
         if (!dupeProjectName) closeModal()
         if (selectedUsers.length == 1) {
-            const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], setErrors)
+            const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors)
             if (project.project_name === projectName) dispatch(addProject(project))
         }
         else {
             selectedUsers.forEach(async (user) => {
-                const project = await multiProjectPost(projectName, selectedDataSetId, user, setErrors)
+                const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, setErrors)
                 if (project.project_name === projectName) dispatch(addProject(project))
             })
 
@@ -124,7 +124,6 @@ function NewProjectModal({ closeModal }) {
                         <input type="number"
                             onChange={e => setTargetHACount(e.target.value)}
                             value={targetHACount}
-                        // placeholder="Name this project..."
                         />
                     </div>
                 </div>

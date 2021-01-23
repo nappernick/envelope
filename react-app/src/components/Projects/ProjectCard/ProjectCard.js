@@ -152,14 +152,16 @@ function ProjectCard({ project }) {
                 </div>
                 <div className="project_card__health_areas container">
                     <div className="project_card__health_areas title">
-                        Health Area Count:
+                        Health Area Coverage:
                     </div>
                     <div className="project_card__health_areas count">
                         {project &&
                             <NumberFormat
-                                value={project.health_area_count}
+                                value={project.health_area_count / project.target_health_area_count * 100}
                                 displayType={"text"}
-                                thousandSeparator={true}
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                                suffix={"%"}
                                 renderText={(value) => <div>{value}</div>}
                             />}
                     </div>

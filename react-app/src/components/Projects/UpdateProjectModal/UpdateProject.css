@@ -67,7 +67,8 @@ div.update_project__modal.container {
     justify-content: center;
 }
 
-.update_project__modal.container >.container .update_project_modal__project_name.title {
+.update_project__modal.container >.container .update_project_modal__project_name.title,
+.update_project__modal.container >.container .update_project_modal__target_ha_count.title {
     font-size: 17px;
     font-weight: 700;
     font-family: "Proza Libre";
@@ -75,7 +76,8 @@ div.update_project__modal.container {
     padding-bottom: 1px;
 }
 
-.update_project__modal.container .update_project_modal__project_name.container {
+.update_project__modal.container .update_project_modal__project_name.container,
+.update_project__modal.container .update_project_modal__target_ha_count.container {
     display: flex;
     width: 450px;
     justify-content: space-between;
@@ -83,7 +85,8 @@ div.update_project__modal.container {
     margin-top: 30px;
 }
 
-.update_project__modal.container >.container .update_project_modal__project_name input {
+.update_project__modal.container >.container .update_project_modal__project_name input,
+.update_project__modal.container >.container .update_project_modal__target_ha_count input {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 12px 4px 12px 8px;
     /* padding-left: 7px; */
@@ -91,6 +94,10 @@ div.update_project__modal.container {
     font-size: 14px;
     border-radius: 5px;
     width: 250px;
+}
+
+.update_project__modal.container >.container .update_project_modal__target_ha_count input {
+    width: 65px;
 }
 
 .update_project__modal.container > .button {
