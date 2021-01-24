@@ -20,8 +20,8 @@ function ProjectModal({ project, closeModal }) {
     const [selectedDataSetId, setSelectedDataSetId] = useState(project ? project.data_set : null)
     // Fields for project details
     const [projectName, setProjectName] = useState(project ? project.project_name : "")
-    const [targetHACount, setTargetHACount] = useState(project ? project.target_health_area_count : 0)
-    const [targetSurvCount, setTargetSurvCount] = useState(project ? project.target_surv_count : 0)
+    const [targetHACount, setTargetHACount] = useState(project ? project.target_health_area_count : "")
+    const [targetSurvCount, setTargetSurvCount] = useState(project ? project.target_surv_count : "")
     // Local state for checking duplicate project names / data completeness
     const [disabled, setDisabled] = useState(true)
     const [projectNames, setProjectNames] = useState([])
@@ -95,13 +95,12 @@ function ProjectModal({ project, closeModal }) {
 
 
     useEffect(() => {
-        if (projectName && selectedUsers.length > 0 && selectedDataSetId) setDisabled(false)
-        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId) setDisabled(true)
-    }, [projectName, selectedUsers, selectedDataSetId])
+        if (projectName && selectedUsers.length > 0 && selectedDataSetId && targetHACount && targetSurvCount) setDisabled(false)
+        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId || targetHACount == "" || !targetHACount || targetSurvCount == "" || !targetSurvCount) setDisabled(true)
+    }, [projectName, selectedUsers, selectedDataSetId, targetHACount, targetSurvCount])
+    console.log(selectedUsers.length > 0)
 
     useEffect(() => {
-        if (projectName === "") setDisabled(true)
-        else setDisabled(false)
         if (projectNames.indexOf(projectName) > -1) {
             setDupeName(true)
         }
@@ -109,6 +108,12 @@ function ProjectModal({ project, closeModal }) {
             setDupeName(false)
         }
     }, [projectName])
+
+    // useEffect(() => {
+    //     if (projectName === "") setDisabled(true)
+    //     if (dupeName === true) setDisabled(true)
+    //     if (dupeName === false && projectNames.length > 0) setDisabled(false)
+    // }, [dupeName, projectName])
 
     return (
         <>
@@ -150,6 +155,7 @@ function ProjectModal({ project, closeModal }) {
                             className="update_project_modal"
                             onChange={handleNameChange}
                             value={projectName}
+                            placeholder="Project name..."
                         />
                     </div>
                 </div>
@@ -163,6 +169,7 @@ function ProjectModal({ project, closeModal }) {
                             className="update_project_modal"
                             onChange={handleTargetHAChange}
                             value={targetHACount}
+                            placeholder="178"
                         />
                     </div>
                 </div>
@@ -176,6 +183,7 @@ function ProjectModal({ project, closeModal }) {
                             className="update_project_modal"
                             onChange={handleTargetSurvChange}
                             value={targetSurvCount}
+                            placeholder="24"
                         />
                     </div>
                 </div>

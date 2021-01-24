@@ -80,7 +80,7 @@ function MapPage() {
             <div className="map__map">
                 <div className="map__selected_ha_survey_count container">
                     <div className="map__selected_ha_survey_count header">
-                        {selectedHA ?
+                        {selectedHA && surveyCoveragePercent && project.target_surv_count ?
                             (<div className="health_area_coverage_container" >
                                 <div className="health_area_coverage_header container">
                                     <div className="health_area_coverage title">Survey Coverage in {healthAreaName}</div>

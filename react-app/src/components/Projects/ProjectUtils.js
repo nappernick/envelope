@@ -1,5 +1,4 @@
 export const singleProjectPost = async (projectName, dataSetId, userId, targetHACount, targetSurvCount, setErrors) => {
-    debugger
     const post = await fetch("/api/projects/", {
         method: "POST",
         headers: {

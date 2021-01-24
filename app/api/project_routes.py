@@ -31,6 +31,7 @@ def post_project():
     form['csrf_token'].data = request.cookies['csrf_token']
     print(form.data)
     if form.validate_on_submit():
+        print("______HERE")
         project = Project(
             project_name=form.data['project_name'],
             data_set_id=form.data['data_set_id'],
@@ -42,6 +43,7 @@ def post_project():
         )
         db.session.add(project)
         db.session.commit()
+        print("_____PROJECT", project.to_dict())
         project_id = db.session.query(Project.id).filter(Project.project_name==form.data['project_name']).first()[0]
         data_set = db.session.query(DataSet.data_set).filter(DataSet.id==form.data['data_set_id']).first()
         data_set = data_set._asdict()
