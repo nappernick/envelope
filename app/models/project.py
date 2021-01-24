@@ -12,7 +12,7 @@ class Project(db.Model):
     enumerator_count = db.Column(db.Integer, nullable=True)
     survey_count = db.Column(db.Integer, nullable=True)
     health_area_count = db.Column(db.Integer, nullable=True)
-    avg_duration = db.Column(db.Float, nullable=True)
+    enumerator_count = db.Column(db.Float, nullable=True)
     outlier_count = db.Column(db.Integer, nullable=True)
     dont_know_count = db.Column(db.Integer, nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -83,20 +83,10 @@ class Project(db.Model):
                 health_area_survey_count[survey["health_area_id"]] = 1
             if survey["health_area_id"] in health_area_survey_count:
                 health_area_survey_count[survey["health_area_id"]] += 1
-            if survey["enumerator_id"] not in enumerators:
-                enumerator_count += 1
-                enumerators.append(survey["enumerator_id"])
-            if survey["health_area_id"] not in health_areas:
-                health_area_count += 1
-                health_areas.append(survey["health_area_id"])
-            dont_know_count += survey["num_dont_know_responses"]
-            outlier_count += survey["num_outlier_data_points"]
-            sum_duration += survey["duration"]
         surv_coverage_total = float()
         for survey_count in health_area_survey_count.values():
             surv_coverage_total += survey_count / self.target_surv_count
         survey_coverage = surv_coverage_total / len(health_areas)
-        avg_duration = float(sum_duration / len(surveys)) if len(surveys) else 0.00
         return {
             "id": self.id,
             "project_name": self.project_name,
@@ -109,12 +99,12 @@ class Project(db.Model):
             "updated_at": self.updated_at,
             "user": self.user.to_dict(),
             "data_set": self.data_set.to_dict(),
-            "survey_count": len(surveys), 
-            "health_area_count": health_area_count,
-            "health_area_coverage": health_area_count / self.target_health_area_count,
+            "survey_count": self.survey_count, 
+            "health_area_count": self.health_area_count,
+            "health_area_coverage": self.health_area_count / self.target_health_area_count,
             "survey_coverage": survey_coverage,
-            "enumerator_count": enumerator_count,
-            "dont_know_count": dont_know_count,
-            "outlier_count": outlier_count,
-            "avg_duration": avg_duration,
+            "enumerator_count": self.enumerator_count,
+            "dont_know_count": self.dont_know_count,
+            "outlier_count": self.outlier_count,
+            "avg_duration": self.avg_duration,
         }

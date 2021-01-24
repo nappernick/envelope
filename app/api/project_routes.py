@@ -19,11 +19,7 @@ project_routes = Blueprint("projects", __name__)
 def all_projects():
     user = db.session.query(User).get(current_user.get_id()).to_dict()
     if user["type_id"] == 1:
-<<<<<<< Updated upstream
-        projects = db.session.query(Project).options(joinedload("surveys")).all()
-=======
         projects = db.session.query(Project).options(.all()
->>>>>>> Stashed changes
     if user["type_id"] == 2:
         projects = db.session.query(Project).filter_by(user_id = user["id"]).all()
     return jsonify([project.to_dict_survey_summary() for project in projects])
