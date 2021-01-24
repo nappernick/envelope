@@ -5,8 +5,8 @@ from faker import Faker
 fake = Faker()
 
 def seed_surveys():
-    surveys = data_processing_for_survey_records("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
-    # surveys = data_processing_for_survey_records("/var/www/app/seeds/seed_survey.csv")
+    # surveys = data_processing_for_survey_records("/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/app_academy/capstone/envelope/app/seeds/seed_survey.csv")
+    surveys = data_processing_for_survey_records("/var/www/app/seeds/seed_survey.csv")
     for survey in surveys.values():
         survey_seed = Survey(
             health_area_id=int(survey["health_area"]),
