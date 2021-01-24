@@ -1,19 +1,33 @@
 div.map__map_and_selector {
+    height: 100%;
     width: 100vw;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-top: 2.5vh;
+    position: relative;
+}
+
+.map__map {
+    height: 78vh;
+    width: 78vh;
+    position: relative;
 }
 
 .map__autosizer.container {
-    height: 78vh;
+    height: 70vh;
     width: 70vw;
+    position: absolute;
+    bottom: 0;
+    margin-left: 30px;
 }
 
 .health_areas__autosizer {
-    width: 21vw;
-    height: 71vh;
+    width: 24vw;
+    height: 78vh;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .map__autosizer.container div.overlays {

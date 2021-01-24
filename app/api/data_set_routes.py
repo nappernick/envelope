@@ -175,11 +175,12 @@ def violin_plot_by_enumerator(dataSetId, surveyField):
 @data_set_routes.route("/projects/<int:projectId>/health-areas/<int:healthAreaId>/map")
 @login_required
 def map_surveys(projectId, healthAreaId):
-    health_area = db.session.query(HealthArea).options(joinedload("surveys")).get(healthAreaId)
+    health_area = db.session.query(HealthArea).options(joinedload("ha_surveys")).get(healthAreaId)
     surveys = health_area.to_dict_full()['surveys']
     meaningful_fields = ["date_time_administered", "duration", "num_dont_know_responses", "num_outlier_data_points", "enumerator_id", "respondent"]
     map_data = {
             "type": "FeatureCollection",
+            "count_surveys": len(surveys),
             "features":  
             [
                     {
@@ -195,14 +196,13 @@ def map_surveys(projectId, healthAreaId):
                     }
             for survey in surveys]
         }
-    print(map_data)
     return jsonify(map_data)
 
 
 @data_set_routes.route("/projects/<int:projectId>/health-areas/<int:healthAreaId>/center")
 @login_required
 def map_survey_center(projectId, healthAreaId):
-    health_area = db.session.query(HealthArea).options(joinedload("surveys")).get(healthAreaId)
+    health_area = db.session.query(HealthArea).options(joinedload("ha_surveys")).get(healthAreaId)
     surveys = health_area.to_dict_full()['surveys']
     lat = {"sum": 0, "count": 0}
     long = {"sum": 0, "count": 0}

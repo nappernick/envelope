@@ -5,23 +5,25 @@ import { areas } from "../../../common/areas"
 import { addProject } from '../../../store/projects';
 import Spinner from '../../Loaders/Spinner';
 import DataSetsListForm from '../ModalComponents/DataSetsListForm';
-import { multiProjectPostUpdate, singleProjectPostUpdate } from '../ProjectUtils';
+import { multiProjectPost, multiProjectPostUpdate, singleProjectPost, singleProjectPostUpdate } from '../ProjectUtils';
 import UserListForm from '../ModalComponents/UserListForm';
-import "./UpdateProject.css"
+import "./ProjectModal.css"
 
-function UpdateProjectModal({ project, closeUpdateProjectModal }) {
+function ProjectModal({ project, closeModal }) {
     const dispatch = useDispatch()
     const dataSets = useSelector(store => store.dataSets)
     const sessUser = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
-    const [selectedUsers, setSelectedUsers] = useState([project.user])
-    const [selectedDataSetId, setSelectedDataSetId] = useState(project.data_set)
-    const [projectName, setProjectName] = useState(project.project_name)
-    const [targetHACount, setTargetHACount] = useState(project.target_health_area_count)
+    const [selectedUsers, setSelectedUsers] = useState(project ? [project.user] : [])
+    const [selectedDataSetId, setSelectedDataSetId] = useState(project ? project.data_set : null)
+    // Fields for project details
+    const [projectName, setProjectName] = useState(project ? project.project_name : "")
+    const [targetHACount, setTargetHACount] = useState(project ? project.target_health_area_count : 0)
+    const [targetSurvCount, setTargetSurvCount] = useState(project ? project.target_surv_count : 0)
+    // Local state for checking duplicate project names / data completeness
     const [disabled, setDisabled] = useState(true)
-    // Local state for checking duplicate project names
     const [projectNames, setProjectNames] = useState([])
     const [dupeName, setDupeName] = useState(false)
     const selectedObj = {
@@ -31,22 +33,38 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
     const dataSetsObj = {
         "dataSets": dataSets,
         "setSelectedDataSetId": setSelectedDataSetId,
-        "projectDataSetId": project.data_set.id
+        "projectDataSetId": project ? project.data_set.id : ''
     }
 
     const handleSubmit = async (e) => {
-        if (selectedUsers.length == 1) {
-            let proj = await singleProjectPostUpdate(project.id, projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors)
-            dispatch(addProject(proj))
+        if (project) {
+            if (selectedUsers.length == 1) {
+                let proj = await singleProjectPostUpdate(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors, project.id)
+                dispatch(addProject(proj))
+            }
+            else {
+                selectedUsers.forEach(async (user) => {
+                    let proj = await multiProjectPostUpdate(projectName, selectedDataSetId, user, targetHACount, setErrors, project.id)
+                    dispatch(addProject(proj))
+                })
+
+            }
+            closeModal()
         }
         else {
-            selectedUsers.forEach(async (user) => {
-                let proj = await multiProjectPostUpdate(project.id, projectName, selectedDataSetId, user, targetHACount, setErrors)
-                dispatch(addProject(proj))
-            })
+            if (selectedUsers.length == 1) {
+                const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors)
+                if (project.project_name === projectName) dispatch(addProject(project))
+            }
+            else {
+                selectedUsers.forEach(async (user) => {
+                    const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, setErrors)
+                    if (project.project_name === projectName) dispatch(addProject(project))
+                })
 
+            }
+            closeModal()
         }
-        closeUpdateProjectModal()
     }
 
     useEffect(() => {
@@ -95,12 +113,12 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
                     ))}
                 </div>
                 <div className={`update_project__header ${disabled ? "" : "complete"}`}>
-                    <p>UPDATE PROJECT</p>
+                    {project ? <p>UPDATE PROJECT</p> : <p>NEW PROJECT</p>}
                 </div>
                 <hr />
                 <div className="update_project_modal__users container">
                     <div className="update_project_modal__users header">
-                        Update User
+                        {project ? "Update Users" : "Users"}
                     </div>
                     <div className="update_projects_modal__users table">
                         {users && users.length > 0 && <UserListForm users={users} selectedObj={selectedObj} />}
@@ -109,16 +127,16 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
                 </div>
                 <div className="update_project_modal__data_sets container">
                     <div className="update_project_modal__data_sets header">
-                        Update Data Set
+                        {project ? "Update Data Set" : "Data Set"}
                     </div>
                     <div className="update_projects_modal__data_sets table">
                         {dataSets && <DataSetsListForm dataSetsObj={dataSetsObj} />}
                         <Spinner areas={areas.dataSetList} />
                     </div>
                 </div>
-                <div className="update_project_modal__project_name container">
+                <div className="update_project_modal__project_name input-container">
                     <div className="update_project_modal__project_name title">
-                        Update Project Name
+                        {project ? "Update Project Name" : "Project Name"}
                     </div>
                     <div className="update_project_modal__project_name input">
                         <input
@@ -129,11 +147,24 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
                         />
                     </div>
                 </div>
-                <div className="update_project_modal__target_ha_count container">
+                <div className="update_project_modal__target_ha_count input-container small">
                     <div className="update_project_modal__target_ha_count title">
-                        Update Health Area Count Target
+                        {project ? "Update Target Health Area Count" : "Target Number of Health Areas"}
                     </div>
                     <div className="update_project_modal__target_ha_count input">
+                        <input
+                            type="number"
+                            className="update_project_modal"
+                            onChange={handleTargetHAChange}
+                            value={targetHACount}
+                        />
+                    </div>
+                </div>
+                <div className="update_project_modal__target_survey_count input-container small">
+                    <div className="update_project_modal__target_survey_count title">
+                        {project ? "Update Target Surveys Per Health Area" : "Target Surveys Per Health Area"}
+                    </div>
+                    <div className="update_project_modal__target_survey_count input">
                         <input
                             type="number"
                             className="update_project_modal"
@@ -146,11 +177,12 @@ function UpdateProjectModal({ project, closeUpdateProjectModal }) {
                     <button
                         disabled={disabled}
                         onClick={handleSubmit}
-                    >Create Project</button>
+                        className={dupeName ? "dupe" : ""}
+                    >{dupeName ? "Name Taken" : project ? "Update Project" : "Create Project"}</button>
                 </div>
             </div>
         </>
     )
 }
 
-export default UpdateProjectModal
+export default ProjectModal

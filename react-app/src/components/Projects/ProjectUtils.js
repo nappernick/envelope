@@ -33,7 +33,7 @@ export const multiProjectPost = async (projectName, dataSetId, user, targetHACou
 }
 
 
-export const singleProjectPostUpdate = async (selectedProjectId, projectName, dataSetId, userId, targetHACount, setErrors) => {
+export const singleProjectPostUpdate = async (projectName, dataSetId, userId, targetHACount, setErrors, selectedProjectId) => {
     const post = await fetch(`/api/projects/${selectedProjectId}`, {
         method: "POST",
         headers: {
@@ -50,7 +50,7 @@ export const singleProjectPostUpdate = async (selectedProjectId, projectName, da
     return project
 }
 
-export const multiProjectPostUpdate = async (selectedProjectId, projectName, dataSetId, user, targetHACount, setErrors) => {
+export const multiProjectPostUpdate = async (projectName, dataSetId, user, targetHACount, setErrors, selectedProjectId) => {
     const post = await fetch(`/api/projects/${selectedProjectId}`, {
         method: "POST",
         headers: {

@@ -4,7 +4,7 @@ import Dropdown from 'rc-dropdown';
 import Menu, { Divider, Item as MenuItem } from 'rc-menu';
 import Modal from "react-modal"
 import NumberFormat from "react-number-format";
-import UpdateProjectModal from '../UpdateProjectModal/UpdateProjectModal';
+import ProjectModal from '../ProjectModal/ProjectModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeProject } from '../../../store/projects';
 import "./ProjectCard.css"
@@ -46,8 +46,7 @@ function ProjectCard({ project }) {
         }
     }
 
-    const closeUpdateProjectModal = () => setShowModal(false)
-    const openUpdateProjectModal = () => setShowModal(true)
+    const closeModal = () => setShowModal(false)
 
     const menuCallback = () => (
         <Menu
@@ -217,12 +216,12 @@ function ProjectCard({ project }) {
             <div className="project_card__update modal">
                 <Modal
                     isOpen={showModal}
-                    onRequestClose={closeUpdateProjectModal}
+                    onRequestClose={closeModal}
                     style={customStyles}
                     closeTimeoutMS={300}
                     contentLabel="Update Project Modal"
                 >
-                    <UpdateProjectModal project={proj} closeUpdateProjectModal={closeUpdateProjectModal} />
+                    <ProjectModal project={proj} closeModal={closeModal} />
                 </Modal>
             </div>
         </div>

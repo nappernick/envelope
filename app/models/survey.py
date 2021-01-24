@@ -66,5 +66,7 @@ class Survey(db.Model):
 
     @classmethod
     def get_health_area_ids(cls, projectId):
-        project_health_areas = db.session.query(Survey).filter_by(project_id = projectId).options(load_only(cls.health_area_id)).distinct(cls.health_area_id).all()
+        project_health_areas = db.session.query(Survey).filter_by(project_id = projectId)\
+            .options(load_only(cls.health_area_id)).distinct(cls.health_area_id).all()
+        print(project_health_areas)
         return [health_area.health_area_id for health_area in project_health_areas]

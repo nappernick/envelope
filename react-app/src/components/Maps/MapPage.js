@@ -19,6 +19,7 @@ function MapPage() {
     const [data, setData] = useState(null);
     const [healthAreas, setHealthAreas] = useState([])
     const [selectedHA, setSelectedHA] = useState(null)
+    const [haSurveyCount, setHaSurveyCount] = useState(0)
     const [spinArea, setSpinArea] = useState(areas.mapButtons)
 
     useEffect(() => {
@@ -36,6 +37,7 @@ function MapPage() {
             let surveys = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/map`)
             let surveysData = await surveys.json()
             setData(surveysData)
+            setHaSurveyCount(surveysData["count_surveys"])
 
             let center = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/center`)
             let centerData = await center.json()
@@ -59,6 +61,14 @@ function MapPage() {
     return (
         <div className="map__map_and_selector container">
             <div className="map__map">
+                <div className="map__selected_ha_survey_count container">
+                    <div className="map__selected_ha_survey_count header">
+                        {selectedHA ?
+                            `Health Area Coverage ${Math.round(haSurveyCount / 24 * 100)}%`
+                            : ""
+                        }
+                    </div>
+                </div>
                 <Map allData={data} viewport={viewport} setViewport={setViewport} />
             </div>
             <div className="map__health_area_selector">

@@ -1,105 +1,104 @@
-div.projects_modal__container {
+div.project_card__update.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 60px 20px;
+}
+
+div.update_project__modal.container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
 }
 
-.projects_modal__header {
+.update_project__modal .update_project_modal__users.container {
+    margin-bottom: 10px;
+}
+
+.update_project__header {
     display: flex;
     justify-content: center;
     width: 340px;
     /* border-bottom: 1px solid #e89313; */
-    margin-bottom: 2.5vh;
+    /* margin-bottom: 1vh; */
     font-weight: 700;
     font-size: 25px;
     color: #e89313;
-
 }
 
-.projects_modal__header.complete {
+.update_project__header.complete {
     color: #83c2c1;
-	transition: color 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
-.projects_modal__container >.container > .header {
+.update_project__modal.container > .container > .header {
     font-size: 17px;
     font-weight: 700;
     border-bottom: 1px solid lightgray;
     margin-bottom: 8px;
 }
 
-.projects_modal__container >.container table {
+.update_project__modal.container > .container table {
     width: 550px;
     border-collapse: collapse;
     margin-bottom: 5px;
 }
 
-.projects_modal__container >.container .list {
+.update_project__modal.container > .container .list {
     text-align: left;
 }
 
-.projects_modal__container >.container .list th {
+.update_project__modal.container >.container .list th {
     font-family: 'Proza Libre', sans-serif;
     font-weight: 800;
 }
 
-.projects_modal__container >.container table th.switch {
+.update_project__modal.container >.container table th.switch {
     text-align: center;
 }
 
-.projects_modal__container >.container .row {
+.update_project__modal.container >.container .row {
     padding: 3px 0px;
 }
 
-.projects_modal__container >.container .row.switch {
+.update_project__modal.container >.container .row.switch {
     display: flex;
     justify-content: center;
 }
 
-.projects_modal__container >.container .projects_modal__project_name.title,
-.projects_modal__container >.container .projects_modal__target_ha_count.title {
-    font-size: 17px;
+
+.update_project__modal.container .input-container {
+    display: flex;
+    width: 550px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+div.update_project__modal.container >.input-container > .title {
+    font-family: 'Nunito', sans-serif;
     font-weight: 700;
-    font-family: "Proza Libre";
+    font-size: 17px;
     padding-right: 10px;
     padding-bottom: 1px;
 }
 
-.projects_modal__container .projects_modal__project_name.container,
-.projects_modal__container .projects_modal__target_ha_count.container {
-    display: flex;
-    width: 70%;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-}
-
-.projects_modal__container >.container .projects_modal__project_name input,
-.projects_modal__container >.container .projects_modal__target_ha_count input {
+.update_project__modal.container >.input-container input {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     padding: 12px 4px 12px 8px;
     /* padding-left: 7px; */
     height: 23px;
     font-size: 14px;
     border-radius: 5px;
-    width: 200px;
+    width: 250px;
 }
 
-.projects_modal__container >.container .projects_modal__target_ha_count.input input {
+.update_project__modal.container >.input-container.small input {
     width: 65px;
 }
 
-.projects_modal__container > .button {
-    margin-top: 30px;
-    position: relative;
-    bottom: 5px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.projects_modal__container > .projects_modal__submit.button > button.dupe {
+div.update_project__modal.container > .button > button.dupe {
     transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
     background-color: #fe4b03;
     border: none;
@@ -128,29 +127,41 @@ div.projects_modal__container {
     }
 }
 
-.projects_modal__container > .button > button:enabled {
+
+.update_project__modal.container > .button {
+    margin-bottom: 30px;
+    margin: 30px 0px;
+    position: relative;
+    /* bottom: 5px; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.update_project__modal.container > .button > button:enabled {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     color: #83c2c1;
 	cursor: pointer;
 	display: block;
 	position: relative;
+    margin-bottom: 30px;
 	border: 2px solid #83c2c1;
-	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+	transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
 
-.projects_modal__container > .button > button:hover:enabled {
+.update_project__modal.container > .button > button:hover:enabled {
     color: #fff;
 	background-color: transparent;
 	text-shadow: two;
 }
 
-.projects_modal__container > .button > button:hover:enabled::before {
+.update_project__modal.container > .button > button:hover:enabled::before {
 	top: 0%;
 	bottom: auto;
 	height: 100%;
 }
 
-.projects_modal__container > .button > button:enabled::before {
+.update_project__modal.container > .button > button:enabled::before {
     display: block;
 	position: absolute;
 	left: 0px;
@@ -161,5 +172,5 @@ div.projects_modal__container {
 	content: '';
 	color: #000 !important;
 	background: #83c2c1;
-	transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+	transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
