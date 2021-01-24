@@ -50,7 +50,7 @@ def post_project():
         pickle_file = pickle.loads(data_set["data_set"])
         surveys = data_processing_for_survey_records(pickle_file)
         for survey in surveys.values():
-            survey_seed = Survey(
+            survey = Survey(
                 health_area_id=int(survey["health_area"]),
                 project_id=project_id,
                 enumerator_id=survey["enumerator_id"],
@@ -63,7 +63,7 @@ def post_project():
                 long=survey["long"],
                 outside_health_zone=False
             ) 
-            db.session.add(survey_seed)
+            db.session.add(survey)
         db.session.commit()
         return project.to_dict_survey_summary()
     return {'errors': validation_errors_to_error_messages(form.errors)}
