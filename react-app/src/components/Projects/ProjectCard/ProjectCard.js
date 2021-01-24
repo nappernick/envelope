@@ -8,7 +8,9 @@ import ProjectModal from '../ProjectModal/ProjectModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeProject } from '../../../store/projects';
 import { decimalToMinSec } from "../../utils"
+import SmallThreeBounce from "../../Loaders/SmallThreeBounce"
 import "./ProjectCard.css"
+import { areas } from '../../../common/areas';
 
 Modal.setAppElement('#root')
 
@@ -34,7 +36,9 @@ const customStyles = {
 
 function ProjectCard({ project }) {
     const user = useSelector(store => store.session.user)
+    const dataSets = useSelector(store => store.dataSets)
     const dispatch = useDispatch()
+    const [projectDataSet, setProjectDataSet] = useState(null)
     const [proj, setProj] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const history = useHistory()
@@ -62,6 +66,13 @@ function ProjectCard({ project }) {
             >Delete Project</MenuItem>
         </Menu>
     );
+
+    useEffect(() => {
+        if (!project) return
+        else dataSets.forEach(dataSet => {
+            if (dataSet.id === project.data_set_id) setProjectDataSet(dataSet)
+        })
+    }, [project, dataSets])
 
     const handleMapClick = (e) => {
         e.preventDefault()
@@ -113,7 +124,13 @@ function ProjectCard({ project }) {
                         Data Set:
                     </div>
                     <div className="project_card__data_set name">
-                        {project.data_set && project.data_set.data_set_name}
+                        {projectDataSet ?
+                            projectDataSet.data_set_name
+                            :
+                            <SmallThreeBounce
+                                areas={areas.dataSetList}
+                            />
+                        }
 
                     </div>
                 </div>

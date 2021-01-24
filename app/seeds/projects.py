@@ -8,6 +8,12 @@ def seed_projects():
         user_id=2,
         target_health_area_count=172,
         target_surv_count=24,
+        survey_count=1884,
+        avg_duration=48.75372434536446,
+        health_area_count=78,
+        enumerator_count=25,
+        dont_know_count=17990,
+        outlier_count=308
     )
 
     db.session.add(project1)

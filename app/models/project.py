@@ -12,9 +12,9 @@ class Project(db.Model):
     enumerator_count = db.Column(db.Integer, nullable=True)
     survey_count = db.Column(db.Integer, nullable=True)
     health_area_count = db.Column(db.Integer, nullable=True)
-    enumerator_count = db.Column(db.Float, nullable=True)
-    outlier_count = db.Column(db.Integer, nullable=True)
+    avg_duration = db.Column(db.Float, nullable=True)
     dont_know_count = db.Column(db.Integer, nullable=True)
+    outlier_count = db.Column(db.Integer, nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -70,23 +70,21 @@ class Project(db.Model):
 
     def to_dict_survey_summary(self):
         surveys = [survey.to_dict() for survey in self.surveys]
-        enumerators = []
         health_areas = []
         health_area_survey_count = {}
         health_area_count = 0
-        enumerator_count = 0
-        dont_know_count = 0
-        outlier_count = 0
-        sum_duration = float()
         for survey in surveys:
             if survey["health_area_id"] not in health_area_survey_count:
                 health_area_survey_count[survey["health_area_id"]] = 1
             if survey["health_area_id"] in health_area_survey_count:
                 health_area_survey_count[survey["health_area_id"]] += 1
+            if survey["health_area_id"] not in health_areas:
+                health_area_count += 1
+                health_areas.append(survey["health_area_id"])
         surv_coverage_total = float()
         for survey_count in health_area_survey_count.values():
             surv_coverage_total += survey_count / self.target_surv_count
-        survey_coverage = surv_coverage_total / len(health_areas)
+        survey_coverage = surv_coverage_total / health_area_count
         return {
             "id": self.id,
             "project_name": self.project_name,
@@ -98,7 +96,6 @@ class Project(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "user": self.user.to_dict(),
-            "data_set": self.data_set.to_dict(),
             "survey_count": self.survey_count, 
             "health_area_count": self.health_area_count,
             "health_area_coverage": self.health_area_count / self.target_health_area_count,

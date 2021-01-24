@@ -61,6 +61,10 @@ div.project_card__container .header {
     align-items: center;
 }
 
+.project_card__data_set.name {
+	transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
 .project_card__map_stats_btns button {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     color: #fbb430;

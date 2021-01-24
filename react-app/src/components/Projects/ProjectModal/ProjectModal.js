@@ -17,7 +17,8 @@ function ProjectModal({ project, closeModal }) {
     const [errors, setErrors] = useState([]);
     const [users, setUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState(project ? [project.user] : [])
-    const [selectedDataSetId, setSelectedDataSetId] = useState(project ? project.data_set : null)
+    const [projectDataSet, setProjectDataSet] = useState(null)
+    const [selectedDataSetId, setSelectedDataSetId] = useState(projectDataSet ? projectDataSet : null)
     // Fields for project details
     const [projectName, setProjectName] = useState(project ? project.project_name : "")
     const [targetHACount, setTargetHACount] = useState(project ? project.target_health_area_count : "")
@@ -33,7 +34,7 @@ function ProjectModal({ project, closeModal }) {
     const dataSetsObj = {
         "dataSets": dataSets,
         "setSelectedDataSetId": setSelectedDataSetId,
-        "projectDataSetId": project ? project.data_set.id : ''
+        "projectDataSetId": project ? project.data_set_id : ''
     }
 
     const handleSubmit = async (e) => {
@@ -44,14 +45,11 @@ function ProjectModal({ project, closeModal }) {
                 let proj = await singleProjectPostUpdate(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors, project.id)
                 dispatch(addProject(proj))
             }
-            else {
-                selectedUsers.forEach(async (user) => {
-                    closeModal()
-                    let proj = await multiProjectPostUpdate(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors, project.id)
-                    dispatch(addProject(proj))
-                })
-
-            }
+            else selectedUsers.forEach(async (user) => {
+                closeModal()
+                let proj = await multiProjectPostUpdate(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors, project.id)
+                dispatch(addProject(proj))
+            })
         }
         // If there is no project, this is a new project modal
         else {
@@ -60,23 +58,25 @@ function ProjectModal({ project, closeModal }) {
                 const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors)
                 if (project.project_name === projectName) dispatch(addProject(project))
             }
-            else {
-                selectedUsers.forEach(async (user) => {
-                    closeModal()
-                    const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors)
-                    if (project.project_name === projectName) dispatch(addProject(project))
-                })
-
-            }
+            else selectedUsers.forEach(async (user) => {
+                closeModal()
+                const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors)
+                if (project.project_name === projectName) dispatch(addProject(project))
+            })
             closeModal()
         }
     }
 
+    // Track input data in local state
+    const handleNameChange = (e) => setProjectName(e.target.value)
+    const handleTargetHAChange = (e) => setTargetHACount(e.target.value)
+    const handleTargetSurvChange = (e) => setTargetSurvCount(e.target.value)
+
+    // Fetch data on page load
     useEffect(() => {
         const fetchUsers = async () => {
             const response = await fetch(`/api/users/${sessUser.id}/clients`);
             const responseData = await response.json();
-            // if (!responseData["errors"]) setUsers(responseData);
             setUsers(responseData);
         }
         trackPromise(fetchUsers(), areas.userList)
@@ -87,19 +87,12 @@ function ProjectModal({ project, closeModal }) {
             })
             setProjectNames(newProjectNames)
         }
+        if (project) dataSets.forEach(dataSet => {
+            if (dataSet.id === project.data_set_id) setProjectDataSet(dataSet)
+        })
     }, []);
 
-    const handleNameChange = (e) => setProjectName(e.target.value)
-    const handleTargetHAChange = (e) => setTargetHACount(e.target.value)
-    const handleTargetSurvChange = (e) => setTargetSurvCount(e.target.value)
-
-
-    useEffect(() => {
-        if (projectName && selectedUsers.length > 0 && selectedDataSetId && targetHACount && targetSurvCount) setDisabled(false)
-        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId || targetHACount == "" || !targetHACount || targetSurvCount == "" || !targetSurvCount) setDisabled(true)
-    }, [projectName, selectedUsers, selectedDataSetId, targetHACount, targetSurvCount])
-    console.log(selectedUsers.length > 0)
-
+    // For tracking if the project name is already taken
     useEffect(() => {
         if (projectNames.indexOf(projectName) > -1) {
             setDupeName(true)
@@ -109,11 +102,11 @@ function ProjectModal({ project, closeModal }) {
         }
     }, [projectName])
 
-    // useEffect(() => {
-    //     if (projectName === "") setDisabled(true)
-    //     if (dupeName === true) setDisabled(true)
-    //     if (dupeName === false && projectNames.length > 0) setDisabled(false)
-    // }, [dupeName, projectName])
+    // For keeping the disabled state of the button accurate to current inputs
+    useEffect(() => {
+        if (projectName && selectedUsers.length > 0 && selectedDataSetId && targetHACount && targetSurvCount) setDisabled(false)
+        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId || targetHACount == "" || !targetHACount || targetSurvCount == "" || !targetSurvCount) setDisabled(true)
+    }, [projectName, selectedUsers, selectedDataSetId, targetHACount, targetSurvCount])
 
     return (
         <>

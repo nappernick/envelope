@@ -11,7 +11,6 @@ function HealthAreaButton({ healthArea, ha_obj, index }) {
     return (
         <>
             <div className="health_areas__button container">
-                {/* <SmallCubeGrid areas={btnSpinArea} /> */}
                 <button
                     onClick={handleClick}
                     className={`health_areas__button ${healthArea.id == selectedHA ? "mod" : ""}`}

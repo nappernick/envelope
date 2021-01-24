@@ -21,7 +21,7 @@ function MapPage() {
     const [healthAreas, setHealthAreas] = useState([])
     const [selectedHA, setSelectedHA] = useState(null)
     const [healthAreaName, setHealthAreaName] = useState('')
-    const [amountColor, setAmountColor] = useState("red")
+    const [amountColor, setAmountColor] = useState("")
     const [haSurveyCount, setHaSurveyCount] = useState(0)
     const [surveyCoveragePercent, setSurveyCoveragePercent] = useState(0)
 
@@ -40,14 +40,14 @@ function MapPage() {
 
     useEffect(() => {
         const fetchMapData = async () => {
-
             let surveys = await fetch(`/api/data/projects/1/health-areas/${selectedHA}/map`)
             let surveysData = await surveys.json()
             // Set the amount for the map header
             if (project && surveysData["count_surveys"]) setSurveyCoveragePercent(parseFloat(surveysData["count_surveys"] / project.target_surv_count * 100).toFixed(2))
-            // Set the percentage's color based on the surveyCoveragePercent
+            // Initialize the percentage's color based on the surveyCoveragePercent
+            if (parseFloat(surveysData["count_surveys"] / project.target_surv_count * 100).toFixed(2) < 80) setAmountColor("red")
+            if (parseFloat(100 > surveysData["count_surveys"] / project.target_surv_count * 100).toFixed(2) >= 80) setAmountColor("yellow")
             if (parseFloat(surveysData["count_surveys"] / project.target_surv_count * 100).toFixed(2) >= 100) setAmountColor("green")
-            if (parseFloat(surveysData["count_surveys"] / project.target_surv_count * 100).toFixed(2) < 100) setAmountColor("red")
             setData(surveysData)
             setHaSurveyCount(surveysData["count_surveys"])
             // Querying for where to center the map based on the Health Area
@@ -74,6 +74,14 @@ function MapPage() {
         })
         if (healthAreas.length) fetchMapData()
     }, [selectedHA]);
+
+    useEffect(() => {
+        // Set the percentage's color based on the surveyCoveragePercent
+        if (!data) return
+        else if (surveyCoveragePercent < 80) setAmountColor("red")
+        else if (surveyCoveragePercent >= 100) setAmountColor("green")
+        else setAmountColor("yellow")
+    }, [data, surveyCoveragePercent])
 
     return (
         <div className="map__map_and_selector container">

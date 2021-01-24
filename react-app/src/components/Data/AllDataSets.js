@@ -95,12 +95,6 @@ function AllDataSets() {
 
     return (
         <div className="data_sets__container" >
-            <div className="data_set__spinnner">
-                <Spinner
-                    areas={areas.dataSetList}
-                />
-            </div>
-
             {dataSets.length ? <div className="data_sets__wrapper">
                 <div className="data_sets__header">
                     <p>ALL DATA SETS</p>
@@ -150,7 +144,7 @@ function AllDataSets() {
                                                 <ThreeBounce
                                                     size={15}
                                                     color="#e98641"
-                                                    duration=".5s"
+                                                    duration=".7s"
                                                 />
                                             </div> :
                                             <div className="data_set__data_set data button" >
@@ -166,7 +160,12 @@ function AllDataSets() {
                     </tbody>
                 </table>
             </div>
-                : ""
+                :
+                <div className="data_set__spinnner">
+                    <Spinner
+                        areas={areas.dataSetList}
+                    />
+                </div>
             }
             <div className="data_set__upload_button">
                 <button className="data_set__upload_button button" onClick={handleUploadClick} >

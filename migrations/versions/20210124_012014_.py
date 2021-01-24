@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f58a9b669754
+Revision ID: 26cae0588639
 Revises: 
-Create Date: 2021-01-23 19:56:36.841494
+Create Date: 2021-01-24 01:20:14.782725
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f58a9b669754'
+revision = '26cae0588639'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,7 @@ def upgrade():
     )
     op.create_index(op.f('ix_data_sets_created_at'), 'data_sets', ['created_at'], unique=False)
     op.create_index(op.f('ix_data_sets_data_set_name'), 'data_sets', ['data_set_name'], unique=True)
+    op.create_index(op.f('ix_data_sets_id'), 'data_sets', ['id'], unique=False)
     op.create_index(op.f('ix_data_sets_updated_at'), 'data_sets', ['updated_at'], unique=False)
     op.create_table('health_areas',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -64,6 +65,12 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('target_health_area_count', sa.Integer(), nullable=False),
     sa.Column('target_surv_count', sa.Integer(), nullable=False),
+    sa.Column('enumerator_count', sa.Integer(), nullable=True),
+    sa.Column('survey_count', sa.Integer(), nullable=True),
+    sa.Column('health_area_count', sa.Integer(), nullable=True),
+    sa.Column('avg_duration', sa.Float(), nullable=True),
+    sa.Column('dont_know_count', sa.Integer(), nullable=True),
+    sa.Column('outlier_count', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.ForeignKeyConstraint(['data_set_id'], ['data_sets.id'], ),
@@ -141,6 +148,7 @@ def downgrade():
     op.drop_table('types')
     op.drop_table('health_areas')
     op.drop_index(op.f('ix_data_sets_updated_at'), table_name='data_sets')
+    op.drop_index(op.f('ix_data_sets_id'), table_name='data_sets')
     op.drop_index(op.f('ix_data_sets_data_set_name'), table_name='data_sets')
     op.drop_index(op.f('ix_data_sets_created_at'), table_name='data_sets')
     op.drop_table('data_sets')

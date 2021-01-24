@@ -15,7 +15,7 @@ project_routes = Blueprint("projects", __name__)
 
 
 @project_routes.route("/")
-@login_required
+# @login_required
 def all_projects():
     user = db.session.query(User).get(current_user.get_id()).to_dict()
     if user["type_id"] == 1:
@@ -62,12 +62,12 @@ def post_project():
             if survey["enumerator_id"] not in enumerators:
                 enumerator_count += 1
                 enumerators.append(survey["enumerator_id"])
-            if survey["health_area_id"] not in health_areas:
+            if survey["health_area"] not in health_areas:
                 health_area_count += 1
-                health_areas.append(survey["health_area_id"])
-            dont_know_count += survey["num_dont_know_responses"]
-            outlier_count += survey["num_outlier_data_points"]
-            sum_duration += survey["duration"]
+                health_areas.append(survey["health_area"])
+            dont_know_count += int(float(str(survey["num_dont_know_responses"])))
+            outlier_count += int(float(str(survey["num_outlier_data_points"])))
+            sum_duration = sum_duration + float(str(survey["duration"]))
             # build the survey records & commit to DB
             survey_seed = Survey(
                 health_area_id=int(survey["health_area"]),
@@ -85,7 +85,7 @@ def post_project():
             db.session.add(survey_seed)
         # Now that all survey records have been built, update the project
         avg_duration = float(sum_duration / len(surveys)) if len(surveys) else 0.00
-        project = db.session.query(Project).get(project_id)
+        project = db.session.query(Project).options(joinedload("surveys")).get(project_id)
         project.survey_count = len(surveys)
         project.health_area_count = health_area_count
         project.enumerator_count = enumerator_count
@@ -94,7 +94,7 @@ def post_project():
         project.avg_duration = avg_duration
         db.session.commit()
 
-        return project.to_dict()
+        return project.to_dict_survey_summary()
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 
@@ -107,8 +107,8 @@ def search_projects():
 @project_routes.route("/<int:id>")
 @login_required
 def project(id):
-    project = db.session.query(Project).get(id)
-    return jsonify(project.to_dict())
+    project = db.session.query(Project).options(joinedload("surveys")).get(id)
+    return jsonify(project.to_dict_survey_summary())
 
 @project_routes.route("/<int:id>", methods=["POST"])
 @login_required

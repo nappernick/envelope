@@ -4,7 +4,7 @@ class DataSet(db.Model):
     __tablename__ = "data_sets"
     id = db.Column(db.Integer, primary_key = True, index=True)
     data_set_name = db.Column(db.String(100), nullable = False, unique = True, index=True)
-    data_set = db.Column(db.LargeBinary, nullable = False, index=True)
+    data_set = db.Column(db.LargeBinary, nullable = False)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), index=True)
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now(), index=True)
 
