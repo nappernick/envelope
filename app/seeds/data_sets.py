@@ -17,7 +17,7 @@ def seed_data_sets():
     )
     db.session.add(data_set1)
     data_set2 = DataSet(
-        data_set_name="RMAC Sub-Saharan Water Access.dta",
+        data_set_name="RMAC Water Access.dta",
         data_set=pickledfile,
     )
     db.session.add(data_set2)

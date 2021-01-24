@@ -37,28 +37,33 @@ function ProjectModal({ project, closeModal }) {
     }
 
     const handleSubmit = async (e) => {
+        // If there is a project, this is an update modal
         if (project) {
             if (selectedUsers.length == 1) {
-                let proj = await singleProjectPostUpdate(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors, project.id)
+                closeModal()
+                let proj = await singleProjectPostUpdate(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors, project.id)
                 dispatch(addProject(proj))
             }
             else {
                 selectedUsers.forEach(async (user) => {
-                    let proj = await multiProjectPostUpdate(projectName, selectedDataSetId, user, targetHACount, setErrors, project.id)
+                    closeModal()
+                    let proj = await multiProjectPostUpdate(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors, project.id)
                     dispatch(addProject(proj))
                 })
 
             }
-            closeModal()
         }
+        // If there is no project, this is a new project modal
         else {
             if (selectedUsers.length == 1) {
-                const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, setErrors)
+                closeModal()
+                const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors)
                 if (project.project_name === projectName) dispatch(addProject(project))
             }
             else {
                 selectedUsers.forEach(async (user) => {
-                    const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, setErrors)
+                    closeModal()
+                    const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors)
                     if (project.project_name === projectName) dispatch(addProject(project))
                 })
 
@@ -86,6 +91,7 @@ function ProjectModal({ project, closeModal }) {
 
     const handleNameChange = (e) => setProjectName(e.target.value)
     const handleTargetHAChange = (e) => setTargetHACount(e.target.value)
+    const handleTargetSurvChange = (e) => setTargetSurvCount(e.target.value)
 
 
     useEffect(() => {
@@ -168,8 +174,8 @@ function ProjectModal({ project, closeModal }) {
                         <input
                             type="number"
                             className="update_project_modal"
-                            onChange={handleTargetHAChange}
-                            value={targetHACount}
+                            onChange={handleTargetSurvChange}
+                            value={targetSurvCount}
                         />
                     </div>
                 </div>

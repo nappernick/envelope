@@ -7,7 +7,7 @@ def seed_projects():
         data_set_id=1,
         user_id=2,
         target_health_area_count=172,
-        taget_surv_count=24,
+        target_surv_count=24,
     )
 
     db.session.add(project1)

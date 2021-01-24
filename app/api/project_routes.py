@@ -84,6 +84,7 @@ def project(id):
 def update_project(id):
     project = db.session.query(Project).options(joinedload("surveys")).get(id)
     req = dict(request.json)
+    print(project)
     project.project_name = req['project_name']
     project.target_health_area_count=req['target_health_area_count']
     project.target_surv_count=req['target_surv_count']

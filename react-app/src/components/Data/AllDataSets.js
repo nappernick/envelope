@@ -12,7 +12,7 @@ import { removeDataSet } from "../../store/data_sets"
 import { areas } from "../../common/areas";
 import { configDate } from "../utils"
 import "./AllDataSets.css"
-import { removeProject } from '../../store/projects';
+import { addProject, removeProject } from '../../store/projects';
 
 Modal.setAppElement('#root')
 
@@ -83,6 +83,12 @@ function AllDataSets() {
             })
             const ds = await post.json()
             if (Object.keys(ds).length) dispatch(addDataSet(ds))
+            projects.forEach((project) => {
+                if (project.data_set_id === dataSet.id) {
+                    project.data_set = ds
+                    dispatch(addProject(project))
+                }
+            })
         }
         postFetch()
     }

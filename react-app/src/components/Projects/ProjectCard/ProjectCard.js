@@ -7,6 +7,7 @@ import NumberFormat from "react-number-format";
 import ProjectModal from '../ProjectModal/ProjectModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeProject } from '../../../store/projects';
+import { decimalToMinSec } from "../../utils"
 import "./ProjectCard.css"
 
 Modal.setAppElement('#root')
@@ -149,17 +150,45 @@ function ProjectCard({ project }) {
                             />}
                     </div>
                 </div>
+                <div className="project_card__survey_coverages container">
+                    <div className="project_card__survey_coverages title">
+                        Survey Coverage:
+                    </div>
+                    <div className="project_card__survey_coverages count">
+                        {project &&
+                            <NumberFormat
+                                value={project.survey_coverage * 100}
+                                displayType={"text"}
+                                decimalScale={0}
+                                suffix={"%"}
+                                renderText={(value) => <div>{value}</div>}
+                            />}
+                    </div>
+                </div>
                 <div className="project_card__health_areas container">
                     <div className="project_card__health_areas title">
-                        Health Area Coverage:
+                        Health Area Count:
                     </div>
                     <div className="project_card__health_areas count">
                         {project &&
                             <NumberFormat
-                                value={project.health_area_count / project.target_health_area_count * 100}
+                                value={project.health_area_count}
                                 displayType={"text"}
-                                decimalScale={2}
-                                fixedDecimalScale={true}
+                                thousandSeparator={true}
+                                renderText={(value) => <div>{value}</div>}
+                            />}
+                    </div>
+                </div>
+                <div className="project_card__health_area_coverage container">
+                    <div className="project_card__health_area_coverage title">
+                        Health Area Coverage:
+                    </div>
+                    <div className="project_card__health_area_coverage count">
+                        {project &&
+                            <NumberFormat
+                                value={project.health_area_coverage * 100}
+                                displayType={"text"}
+                                decimalScale={0}
                                 suffix={"%"}
                                 renderText={(value) => <div>{value}</div>}
                             />}
@@ -170,35 +199,7 @@ function ProjectCard({ project }) {
                         Average Duration:
                     </div>
                     <div className="project_card__duration_avg count">
-                        {project && Math.round(project.avg_duration)}
-                    </div>
-                </div>
-                <div className="project_card__outliers container">
-                    <div className="project_card__outliers title">
-                        Outlier Data Points:
-                    </div>
-                    <div className="project_card__outliers count">
-                        {project &&
-                            <NumberFormat
-                                value={project.outlier_count}
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                renderText={(value) => <div>{value}</div>}
-                            />}
-                    </div>
-                </div>
-                <div className="project_card__dont_knows container">
-                    <div className="project_card__dont_knows title">
-                        Don't Know Responses:
-                    </div>
-                    <div className="project_card__dont_knows count">
-                        {project &&
-                            <NumberFormat
-                                value={project.dont_know_count}
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                renderText={(value) => <div>{value}</div>}
-                            />}
+                        {project && decimalToMinSec(project.avg_duration)}
                     </div>
                 </div>
             </div>
