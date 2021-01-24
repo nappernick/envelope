@@ -9,6 +9,12 @@ class Project(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable = False)
     target_health_area_count = db.Column(db.Integer, nullable = False)
     target_surv_count = db.Column(db.Integer, nullable = False)
+    enumerator_count = db.Column(db.Integer, nullable=True)
+    survey_count = db.Column(db.Integer, nullable=True)
+    health_area_count = db.Column(db.Integer, nullable=True)
+    avg_duration = db.Column(db.Float, nullable=True)
+    outlier_count = db.Column(db.Integer, nullable=True)
+    dont_know_count = db.Column(db.Integer, nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -25,6 +31,12 @@ class Project(db.Model):
             "user_id": self.user_id,
             "target_health_area_count": self.target_health_area_count,
             "target_surv_count": self.target_surv_count,
+            "survey_count": self.survey_count, 
+            "health_area_count": self.health_area_count,
+            "enumerator_count": self.enumerator_count,
+            "dont_know_count": self.dont_know_count,
+            "outlier_count": self.outlier_count,
+            "avg_duration": self.avg_duration,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }
@@ -40,6 +52,12 @@ class Project(db.Model):
             "target_surv_count": self.target_surv_count,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "survey_count": self.survey_count, 
+            "health_area_count": self.health_area_count,
+            "enumerator_count": self.enumerator_count,
+            "dont_know_count": self.dont_know_count,
+            "outlier_count": self.outlier_count,
+            "avg_duration": self.avg_duration,
             "user": self.user.to_dict(),
             "surveys": [survey.to_dict() for survey in self.surveys]
         }
@@ -98,5 +116,5 @@ class Project(db.Model):
             "enumerator_count": enumerator_count,
             "dont_know_count": dont_know_count,
             "outlier_count": outlier_count,
-            "avg_duration": avg_duration
+            "avg_duration": avg_duration,
         }

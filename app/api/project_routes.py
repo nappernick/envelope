@@ -19,7 +19,11 @@ project_routes = Blueprint("projects", __name__)
 def all_projects():
     user = db.session.query(User).get(current_user.get_id()).to_dict()
     if user["type_id"] == 1:
+<<<<<<< Updated upstream
         projects = db.session.query(Project).options(joinedload("surveys")).all()
+=======
+        projects = db.session.query(Project).options(.all()
+>>>>>>> Stashed changes
     if user["type_id"] == 2:
         projects = db.session.query(Project).filter_by(user_id = user["id"]).all()
     return jsonify([project.to_dict_survey_summary() for project in projects])
@@ -49,8 +53,27 @@ def post_project():
         data_set = data_set._asdict()
         pickle_file = pickle.loads(data_set["data_set"])
         surveys = data_processing_for_survey_records(pickle_file)
+        # Lay out the summary fields for projects
+        enumerators = []
+        health_areas = []
+        health_area_count = 0
+        enumerator_count = 0
+        dont_know_count = 0
+        outlier_count = 0
+        sum_duration = float()
+        # as the survey records are built, tabulate summary data for project
         for survey in surveys.values():
-            survey = Survey(
+            if survey["enumerator_id"] not in enumerators:
+                enumerator_count += 1
+                enumerators.append(survey["enumerator_id"])
+            if survey["health_area_id"] not in health_areas:
+                health_area_count += 1
+                health_areas.append(survey["health_area_id"])
+            dont_know_count += survey["num_dont_know_responses"]
+            outlier_count += survey["num_outlier_data_points"]
+            sum_duration += survey["duration"]
+            # build the survey records & commit to DB
+            survey_seed = Survey(
                 health_area_id=int(survey["health_area"]),
                 project_id=project_id,
                 enumerator_id=survey["enumerator_id"],
@@ -63,9 +86,19 @@ def post_project():
                 long=survey["long"],
                 outside_health_zone=False
             ) 
-            db.session.add(survey)
+            db.session.add(survey_seed)
+        # Now that all survey records have been built, update the project
+        avg_duration = float(sum_duration / len(surveys)) if len(surveys) else 0.00
+        project = db.session.query(Project).get(project_id)
+        project.survey_count = len(surveys)
+        project.health_area_count = health_area_count
+        project.enumerator_count = enumerator_count
+        project.dont_know_count = dont_know_count
+        project.outlier_count = outlier_count
+        project.avg_duration = avg_duration
         db.session.commit()
-        return project.to_dict_survey_summary()
+
+        return project.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 
