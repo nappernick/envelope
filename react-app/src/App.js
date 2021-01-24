@@ -35,11 +35,11 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      if (user) dispatch(setAllDataSets())
+      if (user) dispatch(setAllProjects())
     })();
     (async () => {
-      if (user) trackPromise(dispatch(setAllProjects()), areas.projects)
-    })()
+      if (user) dispatch(setAllDataSets())
+    })();
   }, [dispatch, user]);
 
   if (!loaded) {

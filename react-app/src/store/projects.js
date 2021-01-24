@@ -1,3 +1,6 @@
+import { trackPromise } from "react-promise-tracker"
+import { areas } from "../common/areas"
+
 const SET_ALL_PROJECTS = 'project/setAlLProjects'
 const SET_PROJECT = "project/setProject"
 const REMOVE_PROJECT = 'project/removeProject'
@@ -34,10 +37,13 @@ export const removeProject = (id) => async (dispatch) => {
 }
 
 export const setAllProjects = () => async (dispatch) => {
-    const projectsFectch = await fetch("/api/projects/")
-    const projects = await projectsFectch.json()
-    if (projects.length) dispatch(_setAllProjects(projects))
-    // if (projects.length) projects.forEach(project => dispatch(_setProject(project)))
+    const fetchAndDispatchProjects = async () => {
+        const projectsFectch = await fetch("/api/projects/")
+        const projects = await projectsFectch.json()
+        if (projects.length) dispatch(_setAllProjects(projects))
+        return
+    }
+    trackPromise(fetchAndDispatchProjects(), areas.projects)
 }
 
 
