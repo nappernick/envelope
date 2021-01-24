@@ -180,7 +180,7 @@ def map_surveys(projectId, healthAreaId):
     meaningful_fields = ["date_time_administered", "duration", "num_dont_know_responses", "num_outlier_data_points", "enumerator_id", "respondent"]
     map_data = {
             "type": "FeatureCollection",
-            "count_surveys": len(surveys),
+            "count_surveys": len(surveys) / 2,
             "features":  
             [
                     {

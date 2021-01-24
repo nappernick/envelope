@@ -33,3 +33,57 @@ div.map__map_and_selector {
 .map__autosizer.container div.overlays {
     border-radius: 5px;
 }
+
+.health_area_coverage_container {
+    width: 70vw;
+    height: 25px;
+    margin-left: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+	transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.health_area_coverage_header.container {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    min-width: 41vw;
+    width: 51vw;
+    bottom: 0;
+    position: relative;
+}
+
+.health_area_coverage {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color:  #e89313;
+    margin-right: 10px;
+	transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.health_area_coverage.title {
+    position: absolute;
+    left: 0;
+}
+
+.health_area_coverage.amount {
+    position: absolute;
+    right: 0;
+}
+
+.health_area_coverage.amount.red {
+    color:  #fe4b03;
+}
+
+.health_area_coverage.amount.green {
+    color:  #76b4a3;
+}
+
+.health_area_coverage_detail.container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-weight: 500;
+}
