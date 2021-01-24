@@ -169,7 +169,7 @@ function ProjectCard({ project }) {
                 </div>
                 <div className="project_card__survey_coverages container">
                     <div className="project_card__survey_coverages title">
-                        Survey Coverage:
+                        Avg Survey Coverage:
                     </div>
                     <div className="project_card__survey_coverages count">
                         {project &&
