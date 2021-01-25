@@ -98,7 +98,7 @@ function UsersList() {
   return (
     <>
       <div className="users_list__container">
-        <div className="users_list__list_container">
+        <div className="users_list__wrapper">
           <div className="users_list___header">
             <p>User List</p>
           </div>

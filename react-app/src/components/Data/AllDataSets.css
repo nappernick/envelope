@@ -1,10 +1,4 @@
-div.data_sets__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
-}
-
+div.data_sets__container,
 .data_sets__wrapper {
     display: flex;
     flex-direction: column;
@@ -162,12 +156,12 @@ button.data_set__upload_button.button::before {
 button.data_set__upload_button.button::before {
     width: 110%;
     height: 0%;
-  }
+}
 
-  button.data_set__upload_button.button:hover {
-    color: white;
-    transition: all 0.6s ease;
-  }
+button.data_set__upload_button.button:hover {
+color: white;
+transition: all 0.6s ease;
+}
 
 button.data_set__upload_button.button:hover::before {
     height: 110%;

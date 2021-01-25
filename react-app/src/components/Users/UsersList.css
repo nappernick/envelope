@@ -1,24 +1,25 @@
 div.users_list__container,
-.users_list__list_container {
+.users_list__wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100vw;
 }
 
 .users_list___header {
     display: flex;
     justify-content: center;
-    width: 270px;
+    width: 300px;
     border-bottom: 1px solid #e89313;
-    margin-bottom: 3vh;
+    margin-bottom: 5vh;
     font-weight: 700;
-    font-size: 25px;
+    font-size: 30px;
     color: #e89313;
 }
 
 .users_list__list_container table {
-    width: 60vw;
+    width: 80vw;
     border-collapse: collapse;
     margin-bottom: 5px;
 }

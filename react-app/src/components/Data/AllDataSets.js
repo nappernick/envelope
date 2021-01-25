@@ -98,7 +98,7 @@ function AllDataSets() {
             {dataSets.length ? <div className="data_sets__wrapper">
                 <div className="data_sets__header">
                     <p>ALL DATA SETS</p>
-                </div>
+                </div> 
                 <table className="data_sets__table">
                     <thead className="data_set__titles">
                         <tr className="data_set__data_set row">
