@@ -26,7 +26,7 @@ function SingleDataSet({ dataSetObj }) {
             const id = dataSet.id
             setSelectedDataSetId(id)
         }
-    }, [])
+    }, [dataSet, index, projectDataSetId, setSelected, setSelectedDataSetId])
 
     return (
         <>
@@ -41,7 +41,7 @@ function SingleDataSet({ dataSetObj }) {
                     <Switch
                         onChange={handleSwitch}
                         checked={switched}
-                        disabled={selected == index || selected == null ? false : true}
+                        disabled={selected === index || selected === null ? false : true}
                         onColor="#83c2c1"
                         offColor="#dcac63"
                         height={20}

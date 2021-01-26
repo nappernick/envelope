@@ -1,5 +1,4 @@
 import React from 'react'
-import NumberFormat from "react-number-format";
 import { shortConfigDate, decimalToMinSec, dateToLocalTime } from '../utils';
 import "./PopupInfo.css"
 

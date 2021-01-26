@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import Spinner from "../Loaders/Spinner"
 import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
@@ -103,10 +102,8 @@ function UsersList() {
             <p>User List</p>
           </div>
           <div className="users_list__list">
-            <div>
-              <Spinner areas={areas.userList} />
-              {users && users.length > 0 && userComponents}
-            </div>
+            <Spinner areas={areas.userList} />
+            {users && users.length > 0 && userComponents}
           </div>
         </div>
         <div className="users_list__new_user container">

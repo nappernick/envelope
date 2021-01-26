@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import HealthAreaSelector from './HealthAreas/HealthAreaSelector';
@@ -36,7 +36,7 @@ function MapPage() {
         projects.forEach(proj => {
             if (proj.id === parseInt(projectId)) setProject(proj)
         })
-    }, []);
+    }, [projectId, projects, userId]);
 
     useEffect(() => {
         const fetchMapData = async () => {
@@ -73,7 +73,7 @@ function MapPage() {
             if (healthArea.id === parseInt(selectedHA)) setHealthAreaName(healthArea.name)
         })
         if (healthAreas.length) fetchMapData()
-    }, [selectedHA]);
+    }, [selectedHA, healthAreas, project]);
 
     useEffect(() => {
         // Set the percentage's color based on the surveyCoveragePercent

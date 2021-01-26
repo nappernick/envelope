@@ -30,7 +30,7 @@ function FileUploadModal({ file_tools, origFileName }) {
             })
             setDataSetNames(dataSetNames)
         }
-    }, []);
+    }, [dataSets]);
 
     useEffect(() => {
         // logic to jiggle button if name is duplicate & disable if there is 
@@ -45,7 +45,7 @@ function FileUploadModal({ file_tools, origFileName }) {
             setDupeName(false)
             setDisabled(false)
         }
-    }, [fileName])
+    }, [fileName, dataSetNames])
 
     useEffect(() => {
         setFileName(origFileName[0])

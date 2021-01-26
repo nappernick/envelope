@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 function HealthAreaButton({ healthArea, ha_obj, index }) {
     const { setSelectedHA, selectedHA } = ha_obj
@@ -13,7 +13,7 @@ function HealthAreaButton({ healthArea, ha_obj, index }) {
             <div className="health_areas__button container">
                 <button
                     onClick={handleClick}
-                    className={`health_areas__button ${healthArea.id == selectedHA ? "mod" : ""}`}
+                    className={`health_areas__button ${healthArea.id === selectedHA ? "mod" : ""}`}
                 >
                     {healthArea.name}
                 </button>

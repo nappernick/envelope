@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ViolinPlot, BoxPlot } from '@vx/stats';
 import { LinearGradient } from '@vx/gradient';
 import { scaleBand, scaleLinear } from '@vx/scale';
-import { withTooltip, Tooltip, defaultStyles as defaultTooltipStyles } from '@vx/tooltip';
-import { WithTooltipProvidedProps } from '@vx/tooltip/lib/enhancers/withTooltip';
+// import { withTooltip, Tooltip, defaultStyles as defaultTooltipStyles } from '@vx/tooltip';
+// import { WithTooltipProvidedProps } from '@vx/tooltip/lib/enhancers/withTooltip';
 import { PatternLines } from '@vx/pattern';
 import { useParams } from 'react-router-dom';
 import AutoSizer from "react-virtualized-auto-sizer";
 
 function Violinplot({ statsField, h, w }) {
-    let params = useParams()
-    let { userId, projectId, statsString } = useParams()
+    let { projectId, statsString } = useParams()
     const [dataSetId, setDataSetId] = useState(0)
     const [boxPlotData, setBoxPlotData] = useState([])
     const [violinPlotData, setViolinPlotData] = useState()
@@ -22,8 +21,8 @@ function Violinplot({ statsField, h, w }) {
             if (resJson.data_set_id) setDataSetId(resJson.data_set_id)
         }
         fetchDataSetId()
-    }, [])
-    
+    }, [projectId])
+
     useEffect(() => {
         if (!dataSetId) return
         const fetchStatsData = async () => {
@@ -37,7 +36,7 @@ function Violinplot({ statsField, h, w }) {
             }
         }
         fetchStatsData()
-    }, [dataSetId])
+    }, [dataSetId, projectId, statsField, statsString])
 
     return (
         <AutoSizer>

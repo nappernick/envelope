@@ -3,7 +3,6 @@ import SingleDataSet from './SingleDataSet'
 
 function DataSetsListForm({ dataSetsObj }) {
     const { dataSets, setSelectedDataSetId, projectDataSetId } = dataSetsObj
-    const [isSelected, setIsSelcted] = useState(null)
     const [selected, setSelected] = useState(null)
 
     return (

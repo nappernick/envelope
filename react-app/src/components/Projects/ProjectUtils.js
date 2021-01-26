@@ -70,17 +70,3 @@ export const multiProjectPostUpdate = async (projectName, dataSetId, user, targe
     const project = await post.json()
     return project
 }
-
-export const timeDecimaltoTime = (timeDecimal) => {
-    // turning a decimal into readable time
-    let timeStr = timeDecimal.toString()
-    const firstArr = timeStr.split(".")
-    if (firstArr[0].length > 2) {
-        firstArr = [
-            firstArr[0].slice(0, firstArr[0].length - 3),
-            firstArr[0].slice(firstArr[0].length - 3, firstArr[0].length - 1),
-            firstArr[1]
-        ]
-    }
-    console.log(firstArr)
-}

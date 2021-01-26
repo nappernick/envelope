@@ -4,8 +4,8 @@ export const configDate = (date) => {
     // Fri, 15 Jan 2021 13:24:45 GMT
     const [day, numDate, month, year, time, timeZone] = dateArr
     const timeArr = time.split(":")
-    const [hour, minute, second] = timeArr
-    let correctedHour = hour - 4
+    const [hour, minute,] = timeArr
+    let correctedHour = hour
     let newHour = correctedHour > 12 ? correctedHour - 12 : correctedHour
     let newDate = `${day} ${month} ${numDate}th ${year} at ${newHour}:${minute} ${correctedHour > 12 ? "PM" : "AM"}`
     return newDate
@@ -26,8 +26,8 @@ export const shortConfigDate = (date) => {
 export const dateToLocalTime = (date) => {
     if (!date) return
     let dateArr = date.split(" ")
-    const [, , , , time, timeZone] = dateArr
-    const [hour, minute, second] = time.split(":")
+    const [, , , , time,] = dateArr
+    const [hour, minute,] = time.split(":")
     let newHour = hour > 12 ? hour - 12 : hour
     let newTime = `${newHour}:${minute} ${hour > 12 ? "PM" : "AM"}`
     return newTime

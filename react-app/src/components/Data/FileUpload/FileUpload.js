@@ -6,9 +6,6 @@ import axios from "axios"
 import { addDataSet } from "../../../store/data_sets"
 import FileUploadModal from './FileUploadModal'
 import { useDebounce } from 'use-debounce';
-import Spinner from '../../Loaders/Spinner'
-import { areas } from '../../../common/areas'
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker'
 import "./FileUpload.css"
 import { useHistory } from 'react-router-dom'
 

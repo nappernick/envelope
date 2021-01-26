@@ -1,6 +1,9 @@
 import os
+import csv
 import zipfile
 import pickle
+import tempfile
+import pysurveycto
 import pandas as pd
 import numpy as np 
 from datetime import datetime
@@ -18,7 +21,6 @@ data_set_routes = Blueprint('data', __name__)
 def data():
     curr_user = current_user.to_dict()
     if curr_user["type_id"] == 1: 
-        print("_____IN DATA SET FETCH")
         data = db.session.query(DataSet).all()
         return jsonify([data_set.to_dict() for data_set in data])
     else:
@@ -29,18 +31,14 @@ def data():
 def data_file_upload():
     file = request.files['myFile']
     file_name = file.filename
-    print(file_name)
     file_name_list = file.filename.split(".")
     file_like_object = file.stream._file
     if file_name_list[len(file_name_list)-1] == "dta":
-        print("__________AT DTA")
         data = pd.io.stata.read_stata(file)
         csv_file = data.to_csv()
-        # csv_file = csv_file.decode("utf-8")
         file_final = pickle.dumps(csv_file)
 
     elif file_name_list[len(file_name_list)-1] == "zip":
-        print("_____AT ZIP")
         zipfile_ob = zipfile.ZipFile(file_like_object)
         file_names = zipfile_ob.namelist()
         file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
@@ -49,7 +47,6 @@ def data_file_upload():
         file_final = pickle.dumps(file_final)
 
     elif file_name_list[len(file_name_list)-1] == "csv":
-        print("_____AT CSV")
         csv_file=file.read()
         file_final = pickle.dumps(csv_file)
     else :
@@ -82,13 +79,10 @@ def delete_data_set(dataSetId):
     return { dataSetId: "Successfully deleted" }
 
 
-
-
 @data_set_routes.route('/<int:dataSetId>/projects/<int:projectId>/violinplot/<surveyField>')
 @login_required
 def violin_plot(dataSetId, projectId, surveyField):
     curr_user = current_user.to_dict()
-    print("______ CURR USER",type(curr_user["type_id"]))
     if curr_user["type_id"] == 1:
         surveys_query = db.session.query(DataSet.id,\
             Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
@@ -108,11 +102,7 @@ def violin_plot(dataSetId, projectId, surveyField):
     result_obj = {}
     values_list = []
     outliers = []
-    # print("_______ SURVEYS", len(surveys))
     list_of_dict_survey_values = [dict(survey)[f"surveys_{surveyField}"] for survey in surveys]
-    # list_of_dict_survey_values = [survey.to_dict() for survey in surveys]
-    # print("_________ NUM OF VALUES", len(list_of_dict_survey_values))
-    # return
     for value in list_of_dict_survey_values:
         values_list.append(int(value))
         if int(value) in result_obj:
@@ -132,7 +122,6 @@ def violin_plot(dataSetId, projectId, surveyField):
     final_obj["data_for_box_plot"] = {}
     final_obj["data_for_box_plot"]["value_count_pairs"] = result_obj
     final_obj["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
-    # final_obj['values'] = values_list
     final_obj["data_for_box_plot"]["min"] = min(values_list)
     final_obj["data_for_box_plot"]["max"] = max(values_list)
     final_obj["data_for_box_plot"]["median"] = np.median(values_list)
@@ -141,7 +130,6 @@ def violin_plot(dataSetId, projectId, surveyField):
     final_obj["data_for_box_plot"]["first_quartile"] = q1
     final_obj["data_for_box_plot"]["third_quartile"] = q3
     final_obj["data_for_box_plot"]["outliers"] = outliers
-    # return jsonify([{"value": key, "count": value} for key, value in result_list.items()])
     return jsonify(final_obj)
         
 
@@ -238,3 +226,20 @@ def project_health_areas(projectId,dataSetId):
     health_areas = HealthArea.class_to_dict()
     ha_names = [{"name": health_areas[ha_id], "id": ha_id} for ha_id in health_area_ids]
     return jsonify(ha_names)
+
+@data_set_routes.route("/survey-cto")
+# @login_required
+def survey_cto_api():
+    scto = pysurveycto.SurveyCTOObject('envelope', 'nickfmatthews@gmail.com', 'Envelope-VisX')
+    raw = scto.get_form_data('NORC-IGA-Endline-Menage')
+    # tp = tempfile.NamedTemporaryFile()
+    # tp.write(raw.encode("utf-8"))
+    # with open(tp.name, newline="\n", mode='r') as f:
+    #     df = pd.read_csv(f, header = 0, encoding='latin-1')
+    # tp.close()
+    # return jsonify([row for row in df])
+
+    # This option gives us a list of lists, where every sublist contains column/row values, but weirdly formatted
+    file_it = raw.split("\n")
+    reader = csv.reader(file_it, delimiter=",")
+    return jsonify([row for row in reader])

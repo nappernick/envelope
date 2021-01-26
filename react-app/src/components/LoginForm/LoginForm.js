@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { login } from '../../store/session';
-import dataImg from "./undraw_Data_re_80ws.svg"
 import bigLogo from "./bigLogo.png"
 import "./LoginForm.css"
 

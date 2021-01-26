@@ -9,6 +9,7 @@
 .projects__scroll.container {
     height: 63vh;
     /* width: 27vw; */
+    min-width: 370px;
     width: 87vw;
     max-width: 87vw;
     display: flex;

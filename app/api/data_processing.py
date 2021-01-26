@@ -22,7 +22,6 @@ def data_processing_for_survey_records(csv_file):
     if isinstance(csv_file, list):
         return process_data_for_reader(csv_file)
     if "\n" in csv_file:
-        print("______HERE IN IF")
         file_it = csv_file.split("\n")
         reader = csv.reader(file_it, delimiter=",")
         return process_data_for_reader(reader)

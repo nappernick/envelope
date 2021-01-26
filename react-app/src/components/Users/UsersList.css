@@ -1,4 +1,3 @@
-div.users_list__container,
 .users_list__wrapper {
     display: flex;
     flex-direction: column;
@@ -18,27 +17,32 @@ div.users_list__container,
     color: #e89313;
 }
 
-.users_list__list_container table {
-    width: 80vw;
+.users_list__list {
+    display: flex;
+    justify-content: center;
+}
+
+.users_list__list table {
+    width: 70vw;
     border-collapse: collapse;
     margin-bottom: 5px;
 }
 
-.users_list__list_container th {
+.users_list__titles th {
     text-align: left;
 }
 
-.users_list__list_container th.button {
+.users_list__titles th.button {
     text-align: center;
 }
 
-.users_list__list_container tr {
+.users_list__user tr {
     font-size: 15px;
     height: 30px;
 }
 
 .users_list__container tr td.email {
-    width: auto;
+    width: 300px;
 }
 
 .users_list__container td.username > a {

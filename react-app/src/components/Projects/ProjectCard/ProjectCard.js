@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Dropdown from 'rc-dropdown';
-import Menu, { Divider, Item as MenuItem } from 'rc-menu';
+import Menu, { Item as MenuItem } from 'rc-menu';
 import Modal from "react-modal"
 import NumberFormat from "react-number-format";
 import ProjectModal from '../ProjectModal/ProjectModal';
@@ -43,30 +43,30 @@ function ProjectCard({ project }) {
     const [showModal, setShowModal] = useState(false)
     const history = useHistory()
 
-
+    const closeModal = () => setShowModal(false)
+    
+    // Deleting projects
     const onSelect = ({ key }) => {
-        if (key === "2") {
+        if (key === "1") {
             dispatch(removeProject(project.id))
             fetch(`/api/projects/${project.id}`, { method: "DELETE" })
         }
     }
 
-    const closeModal = () => setShowModal(false)
-
+    // Menu dropdown for deletion
     const menuCallback = () => (
         <Menu
             onClick={onSelect}
             selectable={false}
         >
-            {/* <MenuItem style={{ cursor: "pointer" }} key="3">Open Project</MenuItem>
-            <Divider /> */}
             <MenuItem
                 style={{ cursor: "pointer" }}
-                key="2"
+                key="1"
             >Delete Project</MenuItem>
         </Menu>
     );
-
+    
+    // Set the appropriate dataset for project to local state
     useEffect(() => {
         if (!project) return
         else dataSets.forEach(dataSet => {

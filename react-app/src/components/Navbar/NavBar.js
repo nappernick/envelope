@@ -1,18 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Redirect, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Select from "react-select";
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
 import LogoutButton from './LogoutButton';
-import { AdminBurgMenu } from "./BurgerMenus/BurgerMenus"
 import 'rc-dropdown/assets/index.css';
 import "./NavBar.css"
 import logo from "./envelopeLogo.png"
 
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    background: '#fff',
+    borderColor: '#9e9e9e',
+    minHeight: '30px',
+    height: '30px',
+    boxShadow: state.isFocused ? null : null,
+  }),
+
+  valueContainer: (provided, state) => ({
+    ...provided,
+    height: '30px',
+    padding: '0 6px'
+  }),
+
+  input: (provided, state) => ({
+    ...provided,
+    margin: '0px',
+  }),
+  indicatorSeparator: state => ({
+    display: 'none',
+  }),
+  indicatorsContainer: (provided, state) => ({
+    ...provided,
+    height: '30px',
+  }),
+}
 
 const NavBar = () => {
-  const dispatch = useDispatch()
   const history = useHistory()
   const [projects, setProjects] = useState([])
   const [path, setPath] = useState("")
@@ -52,6 +78,7 @@ const NavBar = () => {
         </div>}
         <div className="navbar__search">
           <Select
+            styles={customStyles}
             options={projects}
             isSearchable={true}
             theme={theme => ({
@@ -59,8 +86,8 @@ const NavBar = () => {
               borderRadius: 5,
               colors: {
                 ...theme.colors,
-                primary: "#edbb43",
-                primary25: "#ffac54",
+                primary: "#fbb430",
+                primary25: "#fbb430",
                 // primary50: "#e98641"
               }
             })}

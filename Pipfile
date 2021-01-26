@@ -31,6 +31,8 @@ numpy = "*"
 pandas = "*"
 pyarrow = "*"
 faker = "*"
+pysurveycto = "*"
+fsspec = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"

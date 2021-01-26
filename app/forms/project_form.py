@@ -5,7 +5,6 @@ from app.models import db, Project
 
 
 def project_name_unique(form, field):
-    print("Checking if project name already exists", field.data)
     name = field.data
     project = db.session.query(Project).filter(Project.project_name == name).first()
     if project:

@@ -35,7 +35,6 @@ def login():
     Logs a user in
     """
     form = LoginForm()
-    print("____________REQUEST JSON____________", request.get_json())
     # Get the csrf_token from the request cookie and put it into the
     # form manually to validate_on_submit can be used
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -59,11 +58,10 @@ def logout():
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
     """
-    Creates a new user and logs them in
+    Creates a new user, does not log them in
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print(form.data)
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],

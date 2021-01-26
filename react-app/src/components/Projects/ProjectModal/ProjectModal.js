@@ -27,6 +27,7 @@ function ProjectModal({ project, closeModal }) {
     const [disabled, setDisabled] = useState(true)
     const [projectNames, setProjectNames] = useState([])
     const [dupeName, setDupeName] = useState(false)
+    // Objects for efficiently passing data to components
     const selectedObj = {
         "selectedUsers": selectedUsers,
         "setSelectedUsers": setSelectedUsers
@@ -61,7 +62,8 @@ function ProjectModal({ project, closeModal }) {
             else selectedUsers.forEach(async (user) => {
                 closeModal()
                 const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors)
-                if (project.project_name === projectName) dispatch(addProject(project))
+                // Since there is text added for multiproject posts, need to strip name down to original
+                if (project.project_name.split(" ")[0] === projectName) dispatch(addProject(project))
             })
             closeModal()
         }
@@ -80,6 +82,7 @@ function ProjectModal({ project, closeModal }) {
             setUsers(responseData);
         }
         trackPromise(fetchUsers(), areas.userList)
+        // Once projects are loaded build list of project names for duplicate check
         if (projects) {
             const newProjectNames = []
             projects.forEach(project => {
@@ -125,8 +128,8 @@ function ProjectModal({ project, closeModal }) {
                         {project ? "Update Users" : "Users"}
                     </div>
                     <div className="update_projects_modal__users table">
-                        {users && users.length > 0 && <UserListForm users={users} selectedObj={selectedObj} />}
-                        <Spinner areas={areas.userList} />
+                        {users ? users.length > 0 && <UserListForm users={users} selectedObj={selectedObj} /> :
+                            <Spinner areas={areas.userList} />}
                     </div>
                 </div>
                 <div className="update_project_modal__data_sets container">
@@ -134,8 +137,8 @@ function ProjectModal({ project, closeModal }) {
                         {project ? "Update Data Set" : "Data Set"}
                     </div>
                     <div className="update_projects_modal__data_sets table">
-                        {dataSets && <DataSetsListForm dataSetsObj={dataSetsObj} />}
-                        <Spinner areas={areas.dataSetList} />
+                        {dataSets ? <DataSetsListForm dataSetsObj={dataSetsObj} /> :
+                            <Spinner areas={areas.dataSetList} />}
                     </div>
                 </div>
                 <div className="update_project_modal__project_name input-container">

@@ -2,7 +2,7 @@ import React from 'react'
 
 function ProjectDetail() {
     return (
-        <div>
+        <div className="project_detail__container">
             
         </div>
     )

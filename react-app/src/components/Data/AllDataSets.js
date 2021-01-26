@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useState } from 'react'
 import Modal from "react-modal"
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { usePromiseTracker } from "react-promise-tracker";
 import { ThreeBounce } from "better-react-spinkit"
 import { trackPromise } from 'react-promise-tracker';
@@ -63,6 +63,7 @@ function AllDataSets() {
             if (!res.errors) dispatch(removeDataSet(id))
         }
         trackPromise(deleteFetch(), areas.deleteDS)
+        // Removing all associated projects from the store
         projects.forEach(project => {
             if (project.data_set_id === id) {
                 dispatch(removeProject(project.id))
@@ -82,7 +83,9 @@ function AllDataSets() {
                 body: JSON.stringify({ ...dataSet })
             })
             const ds = await post.json()
+            // If the fetch was successful, dispatch a new dataset to store
             if (Object.keys(ds).length) dispatch(addDataSet(ds))
+            // Update all the references to the dataset on projects
             projects.forEach((project) => {
                 if (project.data_set_id === dataSet.id) {
                     project.data_set = ds
@@ -98,7 +101,7 @@ function AllDataSets() {
             {dataSets.length ? <div className="data_sets__wrapper">
                 <div className="data_sets__header">
                     <p>ALL DATA SETS</p>
-                </div> 
+                </div>
                 <table className="data_sets__table">
                     <thead className="data_set__titles">
                         <tr className="data_set__data_set row">
@@ -127,7 +130,6 @@ function AllDataSets() {
                                         {dataSet.data_set_name}
                                     </td>
                                     <td className="data_set__data_set data">
-                                        {/* {dataSet.created_at} */}
                                         {configDate(dataSet.created_at)}
                                     </td>
                                     <td className="data_set__data_set data">

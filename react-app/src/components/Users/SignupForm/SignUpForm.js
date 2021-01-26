@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { signup } from '../../../store/session';
 import "./SignupForm.css"
 
 const SignUpForm = ({ closeModal, setUsers, users }) => {
-  const dispatch = useDispatch()
-  const sessionUser = useSelector(state => state.session.user)
   const [errors, setErrors] = useState([]);
   const [types, setTypes] = useState([])
   const [typeId, setTypeId] = useState(0)
@@ -80,7 +76,7 @@ const SignUpForm = ({ closeModal, setUsers, users }) => {
 
   useEffect(() => {
     if (username && firstName && lastName && email && password && repeatPassword && password === repeatPassword) setDisabled(false)
-    if (!username || !firstName || !lastName || !email || !password || !repeatPassword || password != repeatPassword) setDisabled(true)
+    if (!username || !firstName || !lastName || !email || !password || !repeatPassword || password !== repeatPassword) setDisabled(true)
   }, [username, firstName, lastName, email, password, repeatPassword])
 
   return (

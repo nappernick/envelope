@@ -39,6 +39,7 @@ function AllProjects() {
     const projects = useSelector(store => store.projects)
     const [viewSet, setViewSet] = useState('')
     const [showModal, setShowModal] = useState(false);
+    // Created for inline use of promise state tracking & loader
     const { promiseInProgress } = usePromiseTracker({
         area: "projects-area",
         delay: 0,
@@ -48,6 +49,10 @@ function AllProjects() {
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
+    // The List package creates a number of items according to the itemCount field 
+    // passed into the component - the Row is what each item will be constituted of
+    // but we cannot pass in individual projects, so must use the index to access
+    // the projects array from Redux store
     const Row = ({ index, style, data }) => {
         let { projects } = data
         return (
@@ -61,11 +66,13 @@ function AllProjects() {
         )
     }
 
+    // For CSS - set classes according to the number of projects, so the 
+    // project cards are centered
     useEffect(() => {
         if (!projects) return
-        else if (projects.length == 1) setViewSet("one")
-        else if (projects.length == 2) setViewSet("two")
-        else if (projects.length == 3) setViewSet("three")
+        else if (projects.length === 1) setViewSet("one")
+        else if (projects.length === 2) setViewSet("two")
+        else if (projects.length === 3) setViewSet("three")
     }, [projects])
     return (
         <div className="projects__page container">

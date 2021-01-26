@@ -34,6 +34,9 @@
     margin-right: 1px;
 }
 
+.navbar__search_bar {
+    height: 50px;
+}
 
 .css-2b097c-container, input:focus{
     outline: none;
@@ -47,7 +50,8 @@
 }
 
 .navbar__link,
-.navbar__link > a {
+.navbar__link > a,
+.navbar__user {
     color: white;
     display: flex;
     justify-content: space-around;
