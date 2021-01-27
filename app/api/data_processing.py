@@ -25,6 +25,13 @@ def data_processing_for_survey_records(csv_file):
         file_it = csv_file.split("\n")
         reader = csv.reader(file_it, delimiter=",")
         return process_data_for_reader(reader)
+    if isinstance(csv_file, pd.DataFrame):
+        tp = tempfile.NamedTemporaryFile()
+        tp.write(raw.encode("utf-8"))
+        with open(tp.name, newline="\n", mode='r') as f:
+            df = pd.read_csv(f, header = 0, encoding='latin-1')
+        tp.close()
+
     else: 
         with open(csv_file, newline="", mode='r') as f:
             reader = csv.reader(f, delimiter=",")
@@ -39,12 +46,15 @@ def process_data_for_reader(reader):
     for row in reader:
         if len(row) == 0:
             continue
-        if row[0] == '':
+        if row[0] == '' or row[0] == 'SubmissionDate':
             for value in headings:
                 target_indices.append(row.index(value))
             continue
         if row[11] not in health_areas:
             health_areas.append(row[11])
+        print("______ROW", row)
+        print("______ROW INDEX", row.index)
+        print(target_indices)
         column_data[row[0]] = {
             "date_time_administered": f'{row[target_indices[0]]} {row[target_indices[1]]}',
             "health_area": health_areas.index(row[target_indices[2]])+1, # index value of row[target_indices[2]] in health_areas
@@ -56,6 +66,17 @@ def process_data_for_reader(reader):
             "num_outlier_data_points": row[target_indices[8]]
         }
     return column_data
+
+def dataframe_processing_for_survey_records(df):
+    headings_df = pd.DataFrame(["today_date", "start_tracking_time", "q9","q12", "q5latitude", "q5longitude", "duration_itw", "dk_total", "int_outlier_total"])
+    target_columns_df = pd.DataFrame(["date_time_administered","", "health_area","enumerator_id", "lat", "long", "duration", "num_outlier_data_points", "int_outlier_total", "row_index"])
+    target_indices_df = pd.DataFrame([])
+    column_data_df = pd.DataFrame({})
+    health_areas_df = pd.DataFrame([])
+    headers = df.head
+    for index,row in df.iterrows():
+        return
+
 
 def data_processing_for_health_areas(csvf):
     with open(csvf) as csvfile:

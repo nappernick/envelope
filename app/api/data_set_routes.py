@@ -12,7 +12,7 @@ from flask_login import login_required, current_user
 from app.models import db, DataSet, HealthArea, Survey, Project
 from .auth_routes import authenticate
 from sqlalchemy.orm import joinedload
-# from .data_processing import data_processing
+from .data_processing import data_processing_for_survey_records, process_data_for_reader
 
 data_set_routes = Blueprint('data', __name__)
 
@@ -29,7 +29,15 @@ def data():
 @data_set_routes.route("/upload", methods=['POST'])
 @login_required
 def data_file_upload():
-    file = request.files['myFile']
+    file = request.files['data-set']
+    if (file):
+        async_ds_post(file)
+        return {"success": "Data-set upload successful"}, 200
+    else:
+        return {"errors": ["Files were not successfully passed to the API."]}, 500
+
+# Helper function to make the data-set upload with the fronend asynchronous for polling
+def async_ds_post(file):
     file_name = file.filename
     file_name_list = file.filename.split(".")
     file_like_object = file.stream._file
@@ -57,8 +65,6 @@ def data_file_upload():
     )
     db.session.add(data_set)
     db.session.commit()
-    return jsonify(data_set.to_dict())
-
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
 @login_required
@@ -232,14 +238,11 @@ def project_health_areas(projectId,dataSetId):
 def survey_cto_api():
     scto = pysurveycto.SurveyCTOObject('envelope', 'nickfmatthews@gmail.com', 'Envelope-VisX')
     raw = scto.get_form_data('NORC-IGA-Endline-Menage')
-    # tp = tempfile.NamedTemporaryFile()
-    # tp.write(raw.encode("utf-8"))
-    # with open(tp.name, newline="\n", mode='r') as f:
-    #     df = pd.read_csv(f, header = 0, encoding='latin-1')
-    # tp.close()
-    # return jsonify([row for row in df])
-
-    # This option gives us a list of lists, where every sublist contains column/row values, but weirdly formatted
-    file_it = raw.split("\n")
-    reader = csv.reader(file_it, delimiter=",")
-    return jsonify([row for row in reader])
+    final_file = pickle.dumps(raw)
+    data_set = DataSet(
+        data_set_name='NORC-IGA-Endline-Menage(API).csv',
+        data_set=final_file
+    )
+    db.session.add(data_set)
+    db.session.commit()
+    return data_set.to_dict()
