@@ -6,5 +6,6 @@ export const areas = {
     dataSetList: "data-set-list-area",
     deleteDS: "delete-data-set",
     uploadDS: "upload-data-set",
-    projectCard: "project-card-area"
+    projectCard: "project-card-area",
+    deleteProject: "delete-project"
 }

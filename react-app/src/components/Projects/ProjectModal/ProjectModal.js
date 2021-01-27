@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { trackPromise } from 'react-promise-tracker';
 import { useDispatch, useSelector } from 'react-redux';
 import { areas } from "../../../common/areas"
-import { addProject } from '../../../store/projects';
+import { addProject, removeProject } from '../../../store/projects';
 import Spinner from '../../Loaders/Spinner';
 import DataSetsListForm from '../ModalComponents/DataSetsListForm';
 import { multiProjectPost, multiProjectPostUpdate, singleProjectPost, singleProjectPostUpdate } from '../ProjectUtils';
 import UserListForm from '../ModalComponents/UserListForm';
 import "./ProjectModal.css"
+import { useInterval } from '../../utils';
 
 function ProjectModal({ project, closeModal }) {
     const dispatch = useDispatch()
@@ -42,12 +43,15 @@ function ProjectModal({ project, closeModal }) {
         // If there is a project, this is an update modal
         if (project) {
             if (selectedUsers.length == 1) {
+                // Since project update is so quick, we don't implement polling
                 closeModal()
+                dispatch(removeProject(project.id))
                 let proj = await singleProjectPostUpdate(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors, project.id)
                 dispatch(addProject(proj))
             }
             else selectedUsers.forEach(async (user) => {
                 closeModal()
+                dispatch(removeProject(project.id))
                 let proj = await multiProjectPostUpdate(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors, project.id)
                 dispatch(addProject(proj))
             })
@@ -56,18 +60,18 @@ function ProjectModal({ project, closeModal }) {
         else {
             if (selectedUsers.length == 1) {
                 closeModal()
-                const project = await singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors)
-                if (project.project_name === projectName) dispatch(addProject(project))
+                // Polling approach: because new projects are so expensive to create, we don't await the post & dispatch
+                // The dispatch is on AllProjects inside of a useInterval
+                singleProjectPost(projectName, selectedDataSetId, selectedUsers[0]["id"], targetHACount, targetSurvCount, setErrors)
             }
             else selectedUsers.forEach(async (user) => {
                 closeModal()
-                const project = await multiProjectPost(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors)
-                // Since there is text added for multiproject posts, need to strip name down to original
-                if (project.project_name.split(" ")[0] === projectName) dispatch(addProject(project))
+                multiProjectPost(projectName, selectedDataSetId, user, targetHACount, targetSurvCount, setErrors)
             })
             closeModal()
         }
     }
+
 
     // Track input data in local state
     const handleNameChange = (e) => setProjectName(e.target.value)

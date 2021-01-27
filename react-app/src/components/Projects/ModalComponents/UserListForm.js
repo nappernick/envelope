@@ -22,7 +22,7 @@ function UserListForm({ users, selectedObj }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => <SingleUserForm user={user} selectedObj={selectedObj} />)}
+                    {users.map((user) => <SingleUserForm id={user.id} user={user} selectedObj={selectedObj} />)}
                 </tbody>
             </table>
         </ >

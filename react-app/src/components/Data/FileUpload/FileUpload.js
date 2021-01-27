@@ -56,14 +56,11 @@ function FileUpload() {
             let new_file_name = `${fileName}.${fileExt}`
             const formData = new FormData();
             formData.append(
-                "myFile",
+                "data-set",
                 file,
                 new_file_name
             );
-            let dsJSON = await axios.post("/api/data/upload", formData);
-            let dataSet = dsJSON.data
-            dispatch(addDataSet(dataSet))
-            setKey(null)
+            axios.post("/api/data/upload", formData);
         }
         fileUpload()
         return history.push("/data-sets")

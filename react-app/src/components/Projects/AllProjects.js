@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { FixedSizeList as List } from 'react-window';
-import { areas } from "../../common/areas";
 import ProjectCard from './ProjectCard/ProjectCard'
 import Spinner from '../Loaders/Spinner';
 import Modal from "react-modal"
+import _ from "lodash"
 import AutoSizer from "react-virtualized-auto-sizer";
-import "./Projects.css"
+import { areas } from "../../common/areas";
 import { usePromiseTracker } from 'react-promise-tracker';
 import UpdateProjectModal from './ProjectModal/ProjectModal';
+import { useInterval } from '../utils';
+import { addProject } from '../../store/projects';
+import "./Projects.css"
 
 Modal.setAppElement('#root')
 
@@ -35,13 +38,14 @@ const customStyles = {
 // box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px
 
 function AllProjects() {
+    const dispatch = useDispatch()
     const user = useSelector(store => store.session.user)
     const projects = useSelector(store => store.projects)
     const [viewSet, setViewSet] = useState('')
     const [showModal, setShowModal] = useState(false);
     // Created for inline use of promise state tracking & loader
     const { promiseInProgress } = usePromiseTracker({
-        area: "projects-area",
+        area: "delete-project",
         delay: 0,
     });
 
@@ -66,6 +70,25 @@ function AllProjects() {
         )
     }
 
+    // Setting up & running polling
+    useInterval(async () => {
+        if (promiseInProgress) return
+        console.log("Running check for projects...")
+        let projectsFetch = await fetch("/api/projects/")
+        if (projectsFetch.status === 200) projectsFetch = await projectsFetch.json()
+        if (!projectsFetch.length) return
+        if (_.isEqual(projectsFetch, projects)) return
+        else {
+            projectsFetch.forEach(proj => {
+                let found = false
+                for (let i = 0; i < projects.length; i++) {
+                    if (projects[i].project_name === proj.project_name) return found = true
+                }
+                if (!found) dispatch(addProject(proj))
+            })
+        }
+    }, 5000)
+
     // For CSS - set classes according to the number of projects, so the 
     // project cards are centered
     useEffect(() => {
@@ -80,7 +103,7 @@ function AllProjects() {
                 <p>ALL PROJECTS</p>
             </div>
             <div className={`projects__scroll container ${viewSet}`} >
-                {promiseInProgress ? <Spinner areas={areas.projects} /> :
+                {!projects.length ? <Spinner areas={areas.projects} /> :
                     <AutoSizer>
                         {({ height, width }) => (
                             <List

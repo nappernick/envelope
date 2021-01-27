@@ -5,14 +5,15 @@ import { useHistory } from 'react-router-dom';
 import { usePromiseTracker } from "react-promise-tracker";
 import { ThreeBounce } from "better-react-spinkit"
 import { trackPromise } from 'react-promise-tracker';
+import _ from "lodash"
 import Spinner from '../Loaders/Spinner';
 import UpdateDataSetModal from './UpdateDataSetModal/UpdateDataSetModal';
 import { addDataSet } from "../../store/data_sets"
 import { removeDataSet } from "../../store/data_sets"
 import { areas } from "../../common/areas";
-import { configDate } from "../utils"
-import "./AllDataSets.css"
+import { configDate, useInterval } from "../utils"
 import { addProject, removeProject } from '../../store/projects';
+import "./AllDataSets.css"
 
 Modal.setAppElement('#root')
 
@@ -45,6 +46,7 @@ function AllDataSets() {
         area: "delete-data-set",
         delay: 0,
     });
+
     const openModal = (e, dataSet) => {
         e.preventDefault()
         setShowModal(true)
@@ -95,6 +97,25 @@ function AllDataSets() {
         }
         postFetch()
     }
+
+    // Setting up & running polling
+    useInterval(async () => {
+        if (promiseInProgress) return
+        console.log("Running check for data sets...")
+        let dataSetsFetch = await fetch("/api/data/data-sets")
+        if (dataSetsFetch.status === 200) dataSetsFetch = await dataSetsFetch.json()
+        if (!dataSetsFetch.length) return
+        if (_.isEqual(dataSetsFetch, dataSets)) return
+        else {
+            dataSetsFetch.forEach(ds => {
+                let found = false
+                for (let i = 0; i < dataSets.length; i++) {
+                    if (dataSets[i].data_set_name === ds.data_set_name) return found = true
+                }
+                if (!found) dispatch(addDataSet(ds))
+            })
+        }
+    }, 30000)
 
     return (
         <div className="data_sets__container" >

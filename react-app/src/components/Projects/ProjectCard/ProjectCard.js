@@ -11,6 +11,7 @@ import { decimalToMinSec } from "../../utils"
 import SmallThreeBounce from "../../Loaders/SmallThreeBounce"
 import "./ProjectCard.css"
 import { areas } from '../../../common/areas';
+import { trackPromise } from 'react-promise-tracker';
 
 Modal.setAppElement('#root')
 
@@ -44,12 +45,12 @@ function ProjectCard({ project }) {
     const history = useHistory()
 
     const closeModal = () => setShowModal(false)
-    
+
     // Deleting projects
     const onSelect = ({ key }) => {
         if (key === "1") {
             dispatch(removeProject(project.id))
-            fetch(`/api/projects/${project.id}`, { method: "DELETE" })
+            trackPromise(fetch(`/api/projects/${project.id}`, { method: "DELETE" }), areas.deleteProject)
         }
     }
 
@@ -65,7 +66,7 @@ function ProjectCard({ project }) {
             >Delete Project</MenuItem>
         </Menu>
     );
-    
+
     // Set the appropriate dataset for project to local state
     useEffect(() => {
         if (!project) return
