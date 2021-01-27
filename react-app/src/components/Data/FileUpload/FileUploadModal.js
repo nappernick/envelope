@@ -19,7 +19,7 @@ function FileUploadModal({ file_tools, origFileName }) {
     const handleUpload = (e) => {
         e.preventDefault()
         onFileUpload(e)
-        closeModal()
+        // closeModal()
     }
 
     useEffect(() => {
