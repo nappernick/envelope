@@ -19,7 +19,8 @@ div.data_sets__container,
 
 
 .data_sets__container table {
-    width: 80vw;
+    width: 90vw;
+    max-width: 90vw;
     border-collapse: collapse;
     margin-bottom: 5px;
 }
@@ -35,6 +36,10 @@ div.data_sets__container,
 .data_sets__container tr {
     font-size: 15px;
     height: 38px;
+}
+
+.data_set__data_set .data {
+    padding-right: 10px;
 }
 
 .data_set__spinnner {

@@ -4,13 +4,11 @@ import zipfile
 import pickle
 import tempfile
 import pysurveycto
-import contextvars
 import threading
 import pandas as pd
 import numpy as np 
 from io import BytesIO
 from datetime import datetime
-from contextlib import contextmanager
 from flask import Flask, Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import db, DataSet, HealthArea, Survey, Project
@@ -18,15 +16,7 @@ from .auth_routes import authenticate
 from sqlalchemy.orm import joinedload
 from .data_processing import data_processing_for_survey_records, process_data_for_reader
 
-# def create_app():
-#     app = Flask(__name__)
-#     db.init_app(app)
-#     return app
-
-
 data_set_routes = Blueprint('data', __name__)
-ds = contextvars.ContextVar('ds')
-
 
 @data_set_routes.route('/data-sets')
 @login_required
@@ -38,49 +28,17 @@ def data():
     else:
         return {'errors': ['Unauthorized']}, 401
 
-# @data_set_routes.route("/upload", methods=['POST'])
-# @login_required
-# def data_file_upload():
-#     file = request.files['data-set']
-#     file_name = file.filename
-#     file_name_list = file.filename.split(".")
-#     file_like_object = file.stream._file
-#     print(file_like_object)
-#     return jsonify("stuff")
-#     if file_name_list[len(file_name_list)-1] == "dta":
-#         data = pd.io.stata.read_stata(file)
-#         csv_file = data.to_csv()
-#         file_final = pickle.dumps(csv_file)
-
-#     elif file_name_list[len(file_name_list)-1] == "zip":
-#         file = file.read()
-#         zipfile_ob = zipfile.ZipFile(file_like_object)
-#         file_names = zipfile_ob.namelist()
-#         file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
-#         files = [zipfile_ob.open(name).read() for name in file_names]
-#         file_final = files[0].decode("utf-8")
-#         file_final = pickle.dumps(file_final)
-
-#     elif file_name_list[len(file_name_list)-1] == "csv":
-#         csv_file=file.read()
-#         file_final = pickle.dumps(csv_file)
-#     else :
-#         return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
-#     data_set = DataSet(
-#         data_set_name=file_name,
-#         data_set=file_final
-#     )
-#     db.session.add(data_set)
-#     db.session.commit()
-
+# The quick 
 @data_set_routes.route("/upload", methods=['POST'])
 @login_required
 def data_file_upload():
     file = request.files['data-set']
-    if (request.files['data-set']):
+    print(file.content_type)
+    types = ["application/zip", "text/csv", "application/octet-stream"]
+    if (file and file.content_type in types):
         post_ds = threading.Thread(target = async_ds_post, args=[file])
         post_ds.start()
-        return jsonify("success")
+        return jsonify("Successful file upload.")
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
 
@@ -90,7 +48,6 @@ def async_ds_post(file):
     with app.app_context():
         file_name = file.filename
         file_name_list = file.filename.split(".")
-        # print(file_like_object)
         if file_name_list[len(file_name_list)-1] == "dta":
             data = pd.io.stata.read_stata(file)
             csv_file = data.to_csv()
@@ -115,8 +72,6 @@ def async_ds_post(file):
             data_set_name=file_name,
             data_set=file_final
         )
-        # print(data_set.to_dict())
-        # print(file_final)
         db.session.add(data_set)
         db.session.commit()
 

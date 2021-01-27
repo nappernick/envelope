@@ -1,4 +1,5 @@
 import pickle
+import threading
 from faker import Faker
 from datetime import datetime
 from flask import Blueprint, jsonify, session, request
@@ -30,72 +31,75 @@ def post_project():
     form = ProjectForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        async_post(form)
+        post_project = threading.Thread(target = async_post, args=[form])
+        post_project.start()
         return {"success": "Post was successful"}
     return {'errors': validation_errors_to_error_messages(form.errors)}
 
 # Allow the post request to be truly asynchronous, by closing the connection & running record creation here
 def async_post(form):
-    project = Project(
-        project_name=form.data['project_name'],
-        data_set_id=form.data['data_set_id'],
-        user_id=form.data['user_id'],
-        target_health_area_count=form.data['target_health_area_count'],
-        target_surv_count=form.data['target_surv_count'],
-        created_at=datetime.now(),
-        updated_at=datetime.now()
-    )
-    db.session.add(project)
-    db.session.commit()
-    project_id = project.id
-    data_set = db.session.query(DataSet.data_set).filter(DataSet.id==form.data['data_set_id']).first()
-    data_set = data_set._asdict()
-    pickle_file = pickle.loads(data_set["data_set"])
-    surveys = data_processing_for_survey_records(pickle_file)
-    # Lay out the summary fields for projects
-    enumerators = []
-    health_areas = []
-    health_area_count = 0
-    enumerator_count = 0
-    dont_know_count = 0
-    outlier_count = 0
-    sum_duration = float()
-    # as the survey records are built, tabulate summary data for project
-    for survey in surveys.values():
-        if survey["enumerator_id"] not in enumerators:
-            enumerator_count += 1
-            enumerators.append(survey["enumerator_id"])
-        if survey["health_area"] not in health_areas:
-            health_area_count += 1
-            health_areas.append(survey["health_area"])
-        dont_know_count += int(float(str(survey["num_dont_know_responses"])))
-        outlier_count += int(float(str(survey["num_outlier_data_points"])))
-        sum_duration = sum_duration + float(str(survey["duration"]))
-        # build the survey records & commit to DB
-        survey_seed = Survey(
-            health_area_id=int(survey["health_area"]),
-            project_id=project_id,
-            enumerator_id=survey["enumerator_id"],
-            date_time_administered=survey["date_time_administered"],
-            duration=survey["duration"],
-            respondent=fake.name(),
-            num_outlier_data_points=int(float(str(survey["num_outlier_data_points"]))),
-            num_dont_know_responses=int(float(str(survey["num_dont_know_responses"]))),
-            lat=survey["lat"],
-            long=survey["long"],
-            outside_health_zone=False
-        ) 
-        db.session.add(survey_seed)
-    # Now that all survey records have been built, update the project
-    avg_duration = float(sum_duration / len(surveys)) if len(surveys) else 0.00
-    project = db.session.query(Project).options(joinedload("surveys")).get(project_id)
-    project.survey_count = len(surveys)
-    project.health_area_count = health_area_count
-    project.enumerator_count = enumerator_count
-    project.dont_know_count = dont_know_count
-    project.outlier_count = outlier_count
-    project.avg_duration = avg_duration
-    db.session.commit()
+    from app import app, db
+    with app.app_context():
+        project = Project(
+            project_name=form.data['project_name'],
+            data_set_id=form.data['data_set_id'],
+            user_id=form.data['user_id'],
+            target_health_area_count=form.data['target_health_area_count'],
+            target_surv_count=form.data['target_surv_count'],
+            created_at=datetime.now(),
+            updated_at=datetime.now()
+        )
+        db.session.add(project)
+        db.session.commit()
+        project_id = project.id
+        data_set = db.session.query(DataSet.data_set).filter(DataSet.id==form.data['data_set_id']).first()
+        data_set = data_set._asdict()
+        pickle_file = pickle.loads(data_set["data_set"])
+        surveys = data_processing_for_survey_records(pickle_file)
+        # Lay out the summary fields for projects
+        enumerators = []
+        health_areas = []
+        health_area_count = 0
+        enumerator_count = 0
+        dont_know_count = 0
+        outlier_count = 0
+        sum_duration = float()
+        # as the survey records are built, tabulate summary data for project
+        for survey in surveys.values():
+            if survey["enumerator_id"] not in enumerators:
+                enumerator_count += 1
+                enumerators.append(survey["enumerator_id"])
+            if survey["health_area"] not in health_areas:
+                health_area_count += 1
+                health_areas.append(survey["health_area"])
+            dont_know_count += int(float(str(survey["num_dont_know_responses"])))
+            outlier_count += int(float(str(survey["num_outlier_data_points"])))
+            sum_duration = sum_duration + float(str(survey["duration"]))
+            # build the survey records & commit to DB
+            survey_seed = Survey(
+                health_area_id=int(survey["health_area"]),
+                project_id=project_id,
+                enumerator_id=survey["enumerator_id"],
+                date_time_administered=survey["date_time_administered"],
+                duration=survey["duration"],
+                respondent=fake.name(),
+                num_outlier_data_points=int(float(str(survey["num_outlier_data_points"]))),
+                num_dont_know_responses=int(float(str(survey["num_dont_know_responses"]))),
+                lat=survey["lat"],
+                long=survey["long"],
+                outside_health_zone=False
+            ) 
+            db.session.add(survey_seed)
+        # Now that all survey records have been built, update the project
+        avg_duration = float(sum_duration / len(surveys)) if len(surveys) else 0.00
+        project = db.session.query(Project).options(joinedload("surveys")).get(project_id)
+        project.survey_count = len(surveys)
+        project.health_area_count = health_area_count
+        project.enumerator_count = enumerator_count
+        project.dont_know_count = dont_know_count
+        project.outlier_count = outlier_count
+        project.avg_duration = avg_duration
+        db.session.commit()
 
 # Specifically for returning values related to projects for search
 @project_routes.route("/search")

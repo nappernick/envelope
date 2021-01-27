@@ -16,6 +16,7 @@ const customStyles = {
     borderColor: '#9e9e9e',
     minHeight: '30px',
     height: '30px',
+    width: "350px",
     boxShadow: state.isFocused ? null : null,
   }),
 
