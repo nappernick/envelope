@@ -179,7 +179,7 @@ def violin_plot_by_enumerator(dataSetId, surveyField):
 @login_required
 def map_surveys(projectId, healthAreaId):
     health_area = db.session.query(HealthArea).options(joinedload("ha_surveys")).get(healthAreaId)
-    surveys = health_area.to_dict_full()['surveys']
+    surveys = health_area.to_dict_full_for_project(projectId)['surveys']
     meaningful_fields = ["date_time_administered", "duration", "num_dont_know_responses", "num_outlier_data_points", "enumerator_id", "respondent"]
     map_data = {
             "type": "FeatureCollection",

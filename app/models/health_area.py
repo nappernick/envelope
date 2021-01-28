@@ -20,6 +20,13 @@ class HealthArea(db.Model):
             "surveys": [survey.to_dict() for survey in self.ha_surveys]
         }
 
+    def to_dict_full_for_project(self, project_id):
+        return {
+            "id": self.id,
+            "health_area": self.health_area,
+            "surveys": [survey.to_dict() for survey in self.ha_surveys if survey.project_id == project_id]
+        }
+
     @classmethod
     def class_to_dict(cls):
         ha_dict = {}
