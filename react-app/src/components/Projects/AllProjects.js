@@ -97,6 +97,27 @@ function AllProjects() {
         else if (projects.length === 2) setViewSet("two")
         else if (projects.length === 3) setViewSet("three")
     }, [projects])
+
+    // Fetch project data when a user returns to the projects page, but not 
+    // when the app is doing it's first load(already fetching then)
+    useEffect(() => {
+        const initialFetch = async () => {
+            let projectsFetch = await fetch("/api/projects/")
+            if (projectsFetch.status === 200) projectsFetch = await projectsFetch.json()
+            if (!projectsFetch.length) return
+            if (_.isEqual(projectsFetch, projects)) return
+            else {
+                projectsFetch.forEach(proj => {
+                    let found = false
+                    for (let i = 0; i < projects.length; i++) {
+                        if (projects[i].project_name === proj.project_name) return found = true
+                    }
+                    if (!found) dispatch(addProject(proj))
+                })
+            }
+        }
+        if (projects.length) initialFetch()
+    }, [])
     return (
         <div className="projects__page container">
             <div className="projects__header">
