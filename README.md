@@ -1,77 +1,164 @@
 # Envelope - non-profit data processing, visualizations, and multi-location mapping
 
-## V1
-### Three types of users: 
- - Admin user with access to all data sets & reports (not direct data access, but the data necessary to render reports)
- - Client users with access to their specific data sets & reports
- - Low bandwidth (LB) users who need very limited data / functionality
-### Admin Tools:
-- All Projects View
-    - On login users infinite scroll of all the active projects, displayed in card formt, with highlights of their overall statistics, from who the project owner is (Client users), to the number of surveys included and data points of interest
-    - From this view the admin can update, create, copy, and delete current projects
-    - Beneath each project is a link to view statistical visualizations for the surveys in the project, or render a MapBox map of surveys by health area
-    - Utilizes an initial fetch, transferred to Redux store, with infinite scroll built on an autosizer & react-window
-- New Project Creation
-    - TBW
-- Update Projects (implicit creation)
-    - TBW
-- Data Sets View
-    - Users first see a table of the datasets currently in the database, including basic details, and buttons to edit & delete dataset
-    - At the bottom of the page users can find a button to upload a new data set, which will take them to a new page with a dropzone that will accept only three file types: .csv, .dta, and .csv.zip
-    - Once a file has been uploaded, users will be prompted to choose a name and confirm the upload, at which point the file is pushed to the backend, file structure is normalized to a .csv string, and written into the database
-- Users View
-Users view: 
-    - A view allowing admin to see all current clients & LB users
-    - Button to add new user - a modal to create a new user, with type (admin, client, LB), email, password, etc
-### Reporting:
-- A violin plot able to display data on interview duration, don't know responses, integer outlier data points, and distance outliers
-    - Render all four versions of the violin in one page, with navlink titles allowing the user to click a report title and render the plot on it's own page
-- Render a MapBox map with an infinite scroll set of health areas, which when clicked will zoom the map & display that set of surveys as icons. :
-    - time stamp of the survey
-    - the surveyor code
-    - respondent name
-    - length of the survey
-    - number of outlier data points & "Don't know"'s
-### CRUD
-  - A data review form to mark data points that fall 2 standard deviations outside the mean as either plausible or implausible
-    * once completed, alow admin to add that data to a LB user, so they can update the data with field reps
-  - Upload Stata data & generate a set of reports automatically
-  - TBW
+<img src="./react-app/src/assets/logo.png" />
 
-## Routes (NEEDS REWRITE)
- - User auth
-     - Login Post (/auth/login)
-     - New user Post (/auth/new-user)
- - Users
-     - Users get (/api/users/<< userId >>/users)
- - Data sets:
-     - Route to get all datasets (/api/data)
-     - Route for specific reports
-          - Violin-plot (/api/user/<< userId >>/data/<< datasetId >>/violinplot/<< field_string >> - field_string referring to the field on the survey datatable that you want to run the plot on, i.e. length, )
-          - Menage (/api/user/<< userId >>/data/<< datasetId >>/menageplot/<id=3>) (**V2**)
-          - Bar chart (/api/user/<< userId >>/data/<< datasetId >>/barchart/<id=1>) (**V2**)
-     - Post route for new data upload (/api/user/<< userId >>/data)
-         - Very complicated, needs to parse data input into datasets (easy), enumerators table, surveys table, problem_survey_responses table (**V2**)
-     - Put route for LB user data updates (/api/user/<< userId >>)
-     - Put route for admin data approval (maybe)
-  - Mapbox:
-      - Route to get specific surveyor's data from a specific survey (api/data/<< datasetId >>/enumerator/<< enumeratorId >>/map)
- 
-## Schema
-![](https://github.com/nappernick/envelope/blob/master/wiki_readme_resources/envelop_db_schema.png?raw=true)
-## Python Analysis (
- - TBW
+**Envelope** is a full-stack application for non-profits to analyze large datasets & build reporting for external partners that feature interactive mapping & beautiful visualizations.
+
+## Check it out
+Wanna see it in action? [Click here & use the demo login button](https://envelope-visx.herokuapp.com)
 
 ## Technologies
-- Python
-- Pandas
-- React
-- Flask
-- Postgres
-- SQLAlchmey
-- ChartJS (https://github.com/datavisyn/chartjs-chart-box-and-violin-plot or https://github.com/sgratzl/chartjs-chart-boxplot)
-- React Modals
-- Mapbox GL JS API
+<h5>Font End</h5>
+<a href="#"><img alt="CSS" src="https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white" /></a>
+<a href="https://reactjs.org/"><img alt="React" src="https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=React&logoColor=black" /></a>
+<a href="https://redux.js.org/"><img alt="Redux" src="https://img.shields.io/badge/-Redux-764ABC?style=flat-square&logo=Redux&logoColor=white" /></a>
+<a href="https://https://reactrouter.com//"><img alt="React Router" src="https://img.shields.io/badge/-React%20Router-CA4245?style=flat-square&logo=React-Router&logoColor=white" /></a>
+<a href="https://www.mapbox.com///"><img alt="Mapbox" src="https://img.shields.io/badge/-Mapbox-000000?style=flat-square&logo=Mapbox&logoColor=white" /></a>
+<h5>Back End</h5>
+<a href="https://flask.palletsprojects.com/en/1.1.x/"><img alt="Flask" src="https://img.shields.io/badge/-Flask-000000?style=flat-square&logo=Flask&logoColor=white" /></a>
+<a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=Python&logoColor=white&" /></a>
+<a href="https://pandas.pydata.org/"><img alt="Pandas" src="https://img.shields.io/badge/-Pandas-150458?style=flat-square&logo=pandas&logoColor=white" /></a>
+<a href="https://numpy.org/"><img alt="NumPy" src="https://img.shields.io/badge/-NumPy-150458?style=flat-square&logo=NumPy&logoColor=white" /></a>
+<a href="https://www.postgresql.org/"><img alt="PostgreSQL" src="https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=PostgreSQL&logoColor=white" /></a>
+<h5>Deployment and Package Management</h5>
+<a href="https://heroku.com/"><img alt="Heroku" src="https://img.shields.io/badge/-Heroku-430098?style=flat-square&logo=Heroku&logoColor=white" /></a>
+<a href="https://docker.com/"><img alt="Docker" src="https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=Docker&logoColor=white" /></a>
+<a href="#"><img alt="git" src="https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white" /></a>
+<a href="https://www.npmjs.com/"><img alt="npm" src="https://img.shields.io/badge/-NPM-CB3837?style=flat-square&logo=npm&logoColor=white" /></a>
+
+
+## Usage
+
+### Development
+
+Want to contribute?
+
+To fix a bug or add a feature, follow these steps:
+
+- Fork the repository
+- Create a new branch with `git checkout -b feature-branch-name`
+- Make appropriate changes to the files and push back to github
+- Create a Pull Request
+   - Use a clear and descriptive title for the issue to identify the suggestion.
+   - Include any relevant issue numbers in the PR body, not the title.
+   - Provide a comprehensive description of all changes made.
+
+#### Setting Up and Starting a Local Server
+
+1. Clone this repository (only this branch)
+
+   ```bash
+   git clone https://github.com/nappernick/envelope.git
+   ```
+
+2. Install dependencies
+
+      ```bash
+      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
+      ```
+
+3. Create a **.env** file based on the example with proper settings for your
+   development environment
+4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+
+5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+
+   ```bash
+   pipenv shell
+   ```
+
+   ```bash
+   flask db upgrade
+   ```
+
+   ```bash
+   flask seed all
+   ```
+
+   ```bash
+   flask run
+   ```
+
+6. To run the React App in development, in a separate terminal:
+
+   ```
+   cd client
+   ```
+
+   ```
+   npm install
+   ```
+
+   ```
+   npm start
+   ```
+
+***
+*IMPORTANT!*
+   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
+   You can do this by running:
+
+   ```bash
+   pipenv lock -r > requirements.txt
+   ```
+
+*ALSO IMPORTANT!*
+   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
+   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
+***
+
+### Deployment to Heroku
+
+1. Create a new project on Heroku
+2. Under Resources click "Find more add-ons" and add the add on called "Heroku Postgres"
+3. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)
+4. Run
+
+   ```bash
+   heroku login
+   ```
+
+5. Login to the heroku container registry
+
+   ```bash
+   heroku container:login
+   ```
+
+6. Update the `REACT_APP_BASE_URL` variable in the Dockerfile.
+   This should be the full URL of your Heroku app: i.e. "https://flask-react-aa.herokuapp.com"
+7. Push your docker container to heroku from the root directory of your project.
+   This will build the dockerfile and push the image to your heroku container registry
+
+   ```bash
+   heroku container:push web -a {NAME_OF_HEROKU_APP}
+   ```
+
+8. Release your docker container to heroku
+
+   ```bash
+   heroku container:release web -a {NAME_OF_HEROKU_APP}
+   ```
+
+9. set up your database:
+
+   ```bash
+   heroku run -a {NAME_OF_HEROKU_APP} flask db upgrade
+   heroku run -a {NAME_OF_HEROKU_APP} flask seed all
+   ```
+
+10. Under Settings find "Config Vars" and add any additional/secret .env variables.
+
+
+### Bug / Feature Request
+
+We love squashing bugs! If you find one, let our exterminators know by opening an issue [here](https://github.com/nappernick/envelope/issues). Be sure to be clear in the description of the bug (i.e. what was input into the field that caused the bug). Screenshots or recordings greatly help!
+
+If you'd like to request a new feature open up an issue [here](https://github.com/nappernick/envelope/issues). This project was created as part of [App Academy's](https://www.appacademy.io/) coursework, but we love dreaming up of ways to improve our work.
+
+
+## Built By
+
+[Nick Matthews](https://github.com/nappernick)
 
 
 # V2
