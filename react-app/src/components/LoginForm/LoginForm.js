@@ -12,6 +12,24 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const demoLogin = async (e) => {
+    // setEmail("demo@aa.io")
+    // setPassword("password")
+    // onLogin(e)
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "email": "demo@aa.io",
+        "password": "password"
+      })
+    });
+    const res = await response.json()
+    dispatch(login(res))
+  }
+
   const onLogin = async (e) => {
     e.preventDefault();
     setErrors([]);
@@ -93,6 +111,12 @@ const LoginForm = () => {
             </div>
             <div className="login_form__button button">
               <button type="submit">Login</button>
+            </div>
+            <div className="login_form__button button">
+              <button
+                type="submit"
+                onClick={demoLogin}
+              >Demo Login</button>
             </div>
           </div>
         </form>
