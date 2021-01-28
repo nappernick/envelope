@@ -13,21 +13,9 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const demoLogin = async (e) => {
-    // setEmail("demo@aa.io")
-    // setPassword("password")
-    // onLogin(e)
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "email": "demo@aa.io",
-        "password": "password"
-      })
-    });
-    const res = await response.json()
-    dispatch(login(res))
+    setEmail("demo@aa.io")
+    setPassword("password")
+    onLogin(e)
   }
 
   const onLogin = async (e) => {
