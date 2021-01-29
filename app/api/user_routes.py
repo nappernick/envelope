@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
 from flask_login import login_required
 from app.models import db, User, Type
-from app.forms import SignUpForm
+from app.forms import UpdateUserForm
 from .auth_routes import authenticate, validation_errors_to_error_messages
 
 user_routes = Blueprint('users', __name__)
@@ -42,9 +42,10 @@ def user_delete(id):
 @login_required
 def user_update(id):
     user = User.query.options(joinedload("type")).get(id)
-    form = SignUpForm()
+    form = UpdateUserForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        print("_______ FORM DATA",form.data)
         user.username=form.data['username'],
         user.email=form.data['email'],
         user.hashed_password=generate_password_hash(form.password.data),

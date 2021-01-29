@@ -36,7 +36,8 @@ const SignUpForm = ({ closeModal, setUsers, users, user }) => {
         }),
       });
       const res = await response.json()
-      if (res.data && res.data.errors) return setErrors(res.data.errors)
+      console.log(res)
+      if (res && res.errors) return setErrors(res.errors)
       else {
         const usersCopy = users.filter(el => el.id !== res.id)
         usersCopy.push(res)

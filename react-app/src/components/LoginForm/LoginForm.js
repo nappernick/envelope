@@ -13,25 +13,24 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const demoLogin = async (e) => {
-    setEmail("demo@aa.io")
-    setPassword("password")
-    onLogin(e)
+    onLogin(e, "demo@aa.io", "password")
   }
 
-  const onLogin = async (e) => {
+  const onLogin = async (e, em, pw) => {
     e.preventDefault();
-    setErrors([]);
+    // setErrors([]);
     const response = await fetch('/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email,
-        password
+        "email": em ? em : email,
+        "password": pw ? pw : password
       })
     });
     const res = await response.json()
+    console.log(email)
     if (res["errors"]) setErrors(res["errors"])
     else dispatch(login(res))
   };
