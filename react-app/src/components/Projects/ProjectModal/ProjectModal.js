@@ -8,7 +8,6 @@ import DataSetsListForm from '../ModalComponents/DataSetsListForm';
 import { multiProjectPost, multiProjectPostUpdate, singleProjectPost, singleProjectPostUpdate } from '../ProjectUtils';
 import UserListForm from '../ModalComponents/UserListForm';
 import "./ProjectModal.css"
-import { useInterval } from '../../utils';
 
 function ProjectModal({ project, closeModal }) {
     const dispatch = useDispatch()
@@ -40,6 +39,8 @@ function ProjectModal({ project, closeModal }) {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
+        setErrors([]);
         // If there is a project, this is an update modal
         if (project) {
             if (selectedUsers.length == 1) {

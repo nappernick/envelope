@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../Loaders/Spinner"
-import { trackPromise } from "react-promise-tracker";
 import { areas } from "../../common/areas";
 import Modal from "react-modal"
-import SignUpForm from "./SignupForm/SignUpForm";
+import SignUpForm from "./SignupForm/SignUpFormModal";
+import { removeProject } from "../../store/projects";
 import "./UsersList.css"
+import ThreeBounce from "better-react-spinkit/dist/ThreeBounce";
 
 Modal.setAppElement('#root')
 
 const customStyles = {
   content: {
     top: '50%',
-    left: '70%',
-    right: '40%',
+    left: '71.5%',
+    right: 'auto',
+    width: "550px",
     bottom: 'auto',
     height: "75%",
     marginRight: '-50%',
@@ -30,11 +34,46 @@ const customStyles = {
 
 
 function UsersList() {
+  const dispatch = useDispatch()
+  const projects = useSelector(store => store.projects)
+  const [user, setUser] = useState(null)
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const { promiseInProgress } = usePromiseTracker({
+    area: "delete-data-set",
+    delay: 0,
+  });
 
-  const openModal = () => setShowModal(true)
-  const closeModal = () => setShowModal(false)
+  const handleDelete = (e, id) => {
+    e.preventDefault()
+    const deleteFetch = async () => {
+      let post = await fetch(`/api/users/${id}`, {
+        method: "DELETE"
+      })
+      const res = await post.json()
+      if (!res.errors) {
+        const newUsers = users.filter(el => el.id !== id)
+        setUsers(newUsers)
+      }
+    }
+    trackPromise(deleteFetch(), areas.deleteDS)
+    // Removing all associated projects from the store
+    projects.forEach(project => {
+      if (project.user_id === id) {
+        dispatch(removeProject(project.id))
+        fetch(`/api/projects/${project.id}`, { method: "DELETE" })
+      }
+    })
+  }
+
+  const openModal = (user) => {
+    setShowModal(true)
+    setUser(user)
+  }
+  const closeModal = () => {
+    setShowModal(false)
+    setUser(null)
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -64,6 +103,12 @@ function UsersList() {
           <th className="users_list__user header">
             Type
           </th>
+          <th className="users_list__user header button">
+            Update
+          </th>
+          <th className="users_list__user header button">
+            Delete
+          </th>
         </tr>
       </thead>
       <tbody className="users_list__rows">
@@ -85,6 +130,26 @@ function UsersList() {
               </td>
               <td className="users_list__user data">
                 {user.type}
+              </td>
+              <td className="users_list__user button">
+                <div className="users_list__user data button" >
+                  <button className="users_list__user button" onClick={(e) => openModal(user)} >Update</button>
+                </div>
+              </td>
+              <td className="users_list__user button">
+                {promiseInProgress ?
+                  <div className="spinner">
+                    <ThreeBounce
+                      size={15}
+                      color="#e98641"
+                      duration=".7s"
+                    />
+                  </div> :
+                  <div className="users_list__user data button" >
+                    <button className="users_list__user delete"
+                      onClick={(e) => handleDelete(e, user.id)}
+                    >Delete</button>
+                  </div>}
               </td>
             </tr>
           )
@@ -118,7 +183,7 @@ function UsersList() {
               closeTimeoutMS={300}
               contentLabel="New User Upload Modal"
             >
-              <SignUpForm closeModal={closeModal} users={users} setUsers={setUsers} />
+              <SignUpForm closeModal={closeModal} users={users} setUsers={setUsers} user={user} />
             </Modal>
           </div>
         </div>

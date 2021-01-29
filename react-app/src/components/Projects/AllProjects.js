@@ -158,7 +158,7 @@ function AllProjects() {
                         style={customStyles}
                         closeTimeoutMS={300}
                         contentLabel="New Project Upload Modal"
-                    >
+                    > 
                         <UpdateProjectModal
                             closeModal={closeModal}
                         />

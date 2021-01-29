@@ -4,7 +4,7 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 400px;
+    width: 450px;
 }
 
 
@@ -13,7 +13,7 @@ form {
     justify-content: center;
     width: 310px;
     border-bottom: 1px solid #e89313;
-    margin-bottom: 2.5vh;
+    margin-bottom: 2.8vh;
     font-weight: 700;
     font-size: 30px;
     color: #e89313;
@@ -38,7 +38,7 @@ form {
     height: 23px;
     font-size: 16px;
     border-radius: 5px;
-    width: 200px;
+    width: 250px;
 }
 
 .signup_form__field > .signup_form__input.select {
