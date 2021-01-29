@@ -115,7 +115,7 @@ function AllDataSets() {
                 if (!found) dispatch(addDataSet(ds))
             })
         }
-    }, 30000)
+    }, 10000)
 
     return (
         <div className="data_sets__container" >

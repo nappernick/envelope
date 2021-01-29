@@ -87,7 +87,7 @@ function AllProjects() {
                 if (!found) dispatch(addProject(proj))
             })
         }
-    }, 5000)
+    }, 10000)
 
     // For CSS - set classes according to the number of projects, so the 
     // project cards are centered
@@ -158,7 +158,7 @@ function AllProjects() {
                         style={customStyles}
                         closeTimeoutMS={300}
                         contentLabel="New Project Upload Modal"
-                    > 
+                    >
                         <UpdateProjectModal
                             closeModal={closeModal}
                         />
