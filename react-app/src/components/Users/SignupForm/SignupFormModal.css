@@ -13,10 +13,15 @@ form {
     justify-content: center;
     width: 310px;
     border-bottom: 1px solid #e89313;
-    margin-bottom: 2.8vh;
+    margin-bottom: 3vh;
     font-weight: 700;
     font-size: 30px;
     color: #e89313;
+}
+
+.signup_form__field {
+    display: flex;
+    align-items: center;
 }
 
 .signup_form__field.field {
@@ -44,11 +49,11 @@ form {
 .signup_form__field > .signup_form__input.select {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border: none;
-    width: 200px;
+    width: 250px;
 }
 
 .signup_form__submit.button > button {
-    margin-top: 10px;
+    margin-top: 20px;
     position: relative;
     display: flex;
     justify-content: space-around;

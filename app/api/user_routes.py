@@ -5,7 +5,7 @@ from sqlalchemy.orm import joinedload
 from flask_login import login_required
 from app.models import db, User, Type
 from app.forms import SignUpForm
-from .auth_routes import authenticate
+from .auth_routes import authenticate, validation_errors_to_error_messages
 
 user_routes = Blueprint('users', __name__)
 
