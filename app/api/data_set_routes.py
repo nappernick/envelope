@@ -243,7 +243,7 @@ def project_health_areas(projectId,dataSetId):
     return jsonify(ha_names)
 
 @data_set_routes.route("/survey-cto")
-# @login_required
+@login_required
 def survey_cto_api():
     scto = pysurveycto.SurveyCTOObject('envelope', 'nickfmatthews@gmail.com', 'Envelope-VisX')
     raw = scto.get_form_data('NORC-IGA-Endline-Menage')
