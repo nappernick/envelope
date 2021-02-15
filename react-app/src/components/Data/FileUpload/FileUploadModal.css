@@ -123,5 +123,6 @@ transition: all 0.6s ease;
 }
 
 .upload_modal__upload.button > button:hover:enabled::before {
-    height: 110%;
+    height: 130%;
+    overflow: hidden;
 }
