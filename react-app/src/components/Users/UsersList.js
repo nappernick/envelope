@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../Loaders/Spinner"
 import { areas } from "../../common/areas";
 import Modal from "react-modal"
-import SignUpForm from "./SignupForm/SignUpFormModal";
+import SignUpForm from "../Auth/SignupForm/SignUpFormModal";
 import { removeProject } from "../../store/projects";
 import "./UsersList.css"
 import ThreeBounce from "better-react-spinkit/dist/ThreeBounce";

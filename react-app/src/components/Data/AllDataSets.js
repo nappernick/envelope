@@ -11,7 +11,7 @@ import UpdateDataSetModal from './UpdateDataSetModal/UpdateDataSetModal';
 import { addDataSet } from "../../store/data_sets"
 import { removeDataSet } from "../../store/data_sets"
 import { areas } from "../../common/areas";
-import { configDate, useInterval } from "../utils"
+import { configDate, useInterval } from "../utils.js"
 import { addProject, removeProject } from '../../store/projects';
 import "./AllDataSets.css"
 

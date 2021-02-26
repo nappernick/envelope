@@ -43,12 +43,11 @@ export const decimalToMinSec = (time) => {
         const timeArr = time.toString().split(".")
         const [min, secDec] = timeArr
         const sec = (parseFloat(`.${secDec}`) * 60).toString().split(".")[0]
-        // debugger
         return `${min}min ${sec}sec`
     }
 }
 
-
+// For use in polling
 export function useInterval(callback, delay) {
     const savedCB = useRef()
     useEffect(() => {

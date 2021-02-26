@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from './store/session';
 import { setAllProjects } from './store/projects'
 import { setAllDataSets } from "./store/data_sets"
-import LoginForm from "./components/LoginForm/LoginForm";
-import SignUpForm from "./components/Users/SignupForm/SignUpFormModal";
+import LoginForm from "./components/Auth/LoginForm/LoginForm";
+import SignUpForm from "./components/Auth/SignupForm/SignUpFormModal";
 import NavBar from "./components/Navbar/NavBar";
 import UsersList from "./components/Users/UsersList";
 import MapPage from "./components/Maps/MapPage";

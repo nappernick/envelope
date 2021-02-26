@@ -5,8 +5,8 @@ import MapGL, {
     ScaleControl,
     GeolocateControl
 } from 'react-map-gl';
-import Pins from "./Pins"
-import PopUp from "./Popup"
+import Pins from "./MapElements/Pins"
+import PopUp from "./MapElements/Popup"
 import AutoSizer from "react-virtualized-auto-sizer";
 
 

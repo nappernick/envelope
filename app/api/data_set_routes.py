@@ -44,6 +44,7 @@ def data_file_upload():
 
 # Helper function to make the data-set upload with the frontend asynchronous for polling
 def async_ds_post(file):
+    import sys
     from app import app, db
     with app.app_context():
         file_name = file.filename
@@ -74,6 +75,7 @@ def async_ds_post(file):
         )
         db.session.add(data_set)
         db.session.commit()
+        sys.exit()
         return
     return
 

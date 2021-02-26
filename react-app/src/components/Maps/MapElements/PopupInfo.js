@@ -1,5 +1,5 @@
 import React from 'react'
-import { shortConfigDate, decimalToMinSec, dateToLocalTime } from '../utils';
+import { shortConfigDate, decimalToMinSec, dateToLocalTime } from '../../utils';
 import "./PopupInfo.css"
 
 function PopupInfo({ popUpInfo }) {
