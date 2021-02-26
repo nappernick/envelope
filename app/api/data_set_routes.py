@@ -42,7 +42,7 @@ def data_file_upload():
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
 
-# Helper function to make the data-set upload with the fronend asynchronous for polling
+# Helper function to make the data-set upload with the frontend asynchronous for polling
 def async_ds_post(file):
     from app import app, db
     with app.app_context():
@@ -74,6 +74,8 @@ def async_ds_post(file):
         )
         db.session.add(data_set)
         db.session.commit()
+        return
+    return
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
 @login_required

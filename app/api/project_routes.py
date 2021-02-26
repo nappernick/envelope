@@ -100,6 +100,8 @@ def async_post(form):
         project.outlier_count = outlier_count
         project.avg_duration = avg_duration
         db.session.commit()
+        return
+    return
 
 # Specifically for returning values related to projects for search
 @project_routes.route("/search")

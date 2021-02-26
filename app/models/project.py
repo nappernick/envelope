@@ -105,11 +105,3 @@ class Project(db.Model):
             "outlier_count": self.outlier_count,
             "avg_duration": self.avg_duration,
         }
-
-
-# ds = contextvars.ContextVar('ds')
-# ds.set(request.files['data-set'])
-#         print(ds.get())
-#         ds_dict = { "ds": request.files['data-set'] }
-#         post_ds = threading.Thread(target = async_ds_post, args=[file])
-#         post_ds.start()
