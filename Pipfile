@@ -33,6 +33,8 @@ pyarrow = "*"
 faker = "*"
 pysurveycto = "*"
 fsspec = "*"
+redis = "==3.4.1"
+rq = "==1.2.2"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"

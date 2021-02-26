@@ -6,6 +6,7 @@ import tempfile
 import threading
 import pandas as pd
 import numpy as np
+import sys
 # For API 
 import pysurveycto
 # Redis queue
@@ -51,7 +52,6 @@ def data_file_upload():
 
 # Helper function to make the data-set upload with the frontend asynchronous for polling
 def async_ds_post(file):
-    import sys
     from app import app, db
     with app.app_context():
         file_name = file.filename
@@ -62,7 +62,6 @@ def async_ds_post(file):
             file_final = pickle.dumps(csv_file)
 
         elif file_name_list[len(file_name_list)-1] == "zip":
-            # file_like_object = file.stream._file
             file_like_object = BytesIO(file.read())
             zipfile_ob = zipfile.ZipFile(file_like_object)
             file_names = zipfile_ob.namelist()
@@ -82,7 +81,7 @@ def async_ds_post(file):
         )
         db.session.add(data_set)
         db.session.commit()
-        sys.exit()
+    sys.exit()
     return
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
