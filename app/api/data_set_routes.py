@@ -76,7 +76,6 @@ def async_ds_post(file):
         db.session.add(data_set)
         db.session.commit()
         sys.exit()
-        return
     return
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
