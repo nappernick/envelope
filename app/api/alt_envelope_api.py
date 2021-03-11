@@ -67,3 +67,4 @@ with open('/Users/nicholasmatthews/Library/Mobile Documents/com~apple~CloudDocs/
     ls = []
     for index, row in reader:
         ls.append(index)
+        print(ls)
