@@ -35,21 +35,6 @@ def data():
         data = db.session.query(DataSet).all()
         return jsonify([data_set.to_dict() for data_set in data])
     else:
-        return {'errors': ['Unauthorized']}, 401
-
-# Workaround for Heroku front-end to back-end open connections limited to 30 seconds
-@data_set_routes.route("/upload", methods=['POST'])
-@login_required
-def data_file_upload():
-    file = request.files['data-set']
-    # print("FILE CONTENT TYPE_________",list(file.read()))
-    types = ["application/zip", "text/csv", "application/octet-stream"]
-    if (file and file.content_type in types):
-        # post_ds = threading.Thread(target = async_ds_post, args=[file])
-        q.enqueue_call(func=async_ds_post, args=(file.filename, file.read()))
-        return jsonify("Successful file upload.")
-    else:
-        return {"errors": ["Files were not successfully passed to the API."]}, 500
 
 # Helper function to make the data-set upload with the frontend asynchronous for polling
 def async_ds_post(file_name, file_contents):
@@ -86,6 +71,21 @@ def async_ds_post(file_name, file_contents):
     except:
         return {"errors": "Unable to add file to database, try again."}
     # return
+        return {'errors': ['Unauthorized']}, 401
+
+# Workaround for Heroku front-end to back-end open connections limited to 30 seconds
+@data_set_routes.route("/upload", methods=['POST'])
+@login_required
+def data_file_upload():
+    file = request.files['data-set']
+    # print("FILE CONTENT TYPE_________",list(file.read()))
+    types = ["application/zip", "text/csv", "application/octet-stream"]
+    if (file and file.content_type in types):
+        # post_ds = threading.Thread(target = async_ds_post, args=[file])
+        q.enqueue_call(func=async_ds_post, args=(file.filename, file.read()))
+        return jsonify("Successful file upload.")
+    else:
+        return {"errors": ["Files were not successfully passed to the API."]}, 500
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
 @login_required
