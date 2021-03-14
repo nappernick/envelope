@@ -10,6 +10,7 @@ import sys
 import pysurveycto
 # Redis queue
 from rq import Queue
+from redis import Redis
 from rq.job import Job
 from app.redis import conn
 # File reading utility
@@ -24,7 +25,7 @@ from .data_processing import data_processing_for_survey_records, process_data_fo
 
 data_set_routes = Blueprint('data', __name__)
 # Redis job queue
-q = Queue(connection=conn)
+q = Queue(connection=Redis())
 
 @data_set_routes.route('/data-sets')
 @login_required
@@ -38,6 +39,7 @@ def data():
 
 # Helper function to make the data-set upload with the frontend asynchronous for polling
 def async_ds_post(file):
+    print("CALLED ASYNC_DS_POST")
     from app import app, db
     with app.app_context():
         file_name = file.filename
@@ -58,6 +60,7 @@ def async_ds_post(file):
 
         elif file_name_list[len(file_name_list)-1] == "csv":
             csv_file=file.read()
+            print("GOT HERE IN CSV READER")
             file_final = pickle.dumps(csv_file)
         else :
             return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
@@ -81,7 +84,7 @@ def data_file_upload():
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
         # post_ds = threading.Thread(target = async_ds_post, args=[file])
-        job = q.enqueue(async_ds_post, file)
+        q.enqueue(async_ds_post, file)
         return jsonify("Successful file upload.")
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
