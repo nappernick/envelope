@@ -54,7 +54,6 @@ def async_ds_post(file):
             file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
             files = [zipfile_ob.open(name).read() for name in file_names]
             file_final = files[0].decode("utf-8")
-            print(file_final)
             file_final = pickle.dumps(file_final)
 
         elif file_name_list[len(file_name_list)-1] == "csv":
@@ -82,9 +81,7 @@ def data_file_upload():
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
         # post_ds = threading.Thread(target = async_ds_post, args=[file])
-        job = q.enqueue_call(
-            func=async_ds_post, args=[file], result_ttl=100
-        )
+        job = q.enqueue(async_ds_post, file)
         return jsonify("Successful file upload.")
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
