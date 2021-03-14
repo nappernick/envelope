@@ -3,6 +3,7 @@ import csv
 import zipfile
 import pickle
 import tempfile
+import threading
 import pandas as pd
 import numpy as np
 import sys
@@ -42,18 +43,18 @@ def data():
 @login_required
 def data_file_upload():
     file = request.files['data-set']
-    # print("FILE CONTENT TYPE_________",list(file.read()))
+    print(file.content_type)
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
-        # post_ds = threading.Thread(target = async_ds_post, args=[file])
-        q.enqueue_call(func=async_ds_post, args=(file.filename, list(file.read())))
+        post_ds = threading.Thread(target = async_ds_post, args=[file])
+        post_ds.start()
         return jsonify("Successful file upload.")
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
 
 # Helper function to make the data-set upload with the frontend asynchronous for polling
-def async_ds_post(file_name, file_contents_list):
-    print("CALLED ASYNC_DS_POST")
+def async_ds_post(file):
+    import sys
     from app import app, db
     with app.app_context():
         file_name = file.filename
@@ -64,6 +65,7 @@ def async_ds_post(file_name, file_contents_list):
             file_final = pickle.dumps(csv_file)
 
         elif file_name_list[len(file_name_list)-1] == "zip":
+            # file_like_object = file.stream._file
             file_like_object = BytesIO(file.read())
             zipfile_ob = zipfile.ZipFile(file_like_object)
             file_names = zipfile_ob.namelist()
@@ -71,22 +73,19 @@ def async_ds_post(file_name, file_contents_list):
             files = [zipfile_ob.open(name).read() for name in file_names]
             file_final = files[0].decode("utf-8")
             file_final = pickle.dumps(file_final)
-
         elif file_name_list[len(file_name_list)-1] == "csv":
             csv_file=file.read()
-            print("GOT HERE IN CSV READER")
             file_final = pickle.dumps(csv_file)
         else :
             return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
-        try:
-            data_set = DataSet(
-                data_set_name=file_name,
-                data_set=file_final
-            )
-            db.session.add(data_set)
-            db.session.commit()
-        except:
-            return {"errors": "Unable to add file to database, try again."}
+        data_set = DataSet(
+            data_set_name=file_name,
+            data_set=file_final
+        )
+        db.session.add(data_set)
+        db.session.commit()
+        sys.exit()
+    sys.exit()
     return
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
