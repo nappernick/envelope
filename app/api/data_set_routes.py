@@ -3,7 +3,6 @@ import csv
 import zipfile
 import pickle
 import tempfile
-import threading
 import pandas as pd
 import numpy as np
 import sys
@@ -24,7 +23,8 @@ from sqlalchemy.orm import joinedload
 from .data_processing import data_processing_for_survey_records, process_data_for_reader
 
 data_set_routes = Blueprint('data', __name__)
-
+# Redis job queue
+q = Queue(connection=conn)
 
 @data_set_routes.route('/data-sets')
 @login_required
@@ -45,7 +45,9 @@ def data_file_upload():
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
         post_ds = threading.Thread(target = async_ds_post, args=[file])
-        post_ds.start()
+        job = q.enqueue_call(
+            func=async_ds_post, args=(file,), result_ttl=1
+        )
         return jsonify("Successful file upload.")
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
@@ -75,13 +77,15 @@ def async_ds_post(file):
             file_final = pickle.dumps(csv_file)
         else :
             return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
-        data_set = DataSet(
-            data_set_name=file_name,
-            data_set=file_final
-        )
-        db.session.add(data_set)
-        db.session.commit()
-    sys.exit()
+        try:
+            data_set = DataSet(
+                data_set_name=file_name,
+                data_set=file_final
+            )
+            db.session.add(data_set)
+            db.session.commit()
+        except:
+            return {"errors": "Unable to add file to database, try again."}
     return
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
