@@ -89,6 +89,43 @@ def data_processing_for_health_areas(csvf):
                 health_areas.append(row[11])
         return health_areas
 
+# Helper function to make the data-set upload with the frontend asynchronous for polling
+def async_ds_post(file):
+    from app import app, db
+    with app.app_context():
+        file_name = file.filename
+        file_name_list = file.filename.split(".")
+        if file_name_list[len(file_name_list)-1] == "dta":
+            data = pd.io.stata.read_stata(file)
+            csv_file = data.to_csv()
+            file_final = pickle.dumps(csv_file)
+
+        elif file_name_list[len(file_name_list)-1] == "zip":
+            file_like_object = BytesIO(file.read())
+            zipfile_ob = zipfile.ZipFile(file_like_object)
+            file_names = zipfile_ob.namelist()
+            file_names = [file_name for file_name in file_names if not "__MACOSX/." in file_name]
+            files = [zipfile_ob.open(name).read() for name in file_names]
+            file_final = files[0].decode("utf-8")
+            print(file_final)
+            file_final = pickle.dumps(file_final)
+
+        elif file_name_list[len(file_name_list)-1] == "csv":
+            csv_file=file.read()
+            file_final = pickle.dumps(csv_file)
+        else :
+            return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
+        try:
+            data_set = DataSet(
+                data_set_name=file_name,
+                data_set=file_final
+            )
+            db.session.add(data_set)
+            db.session.commit()
+        except:
+            return {"errors": "Unable to add file to database, try again."}
+    return
+
 # def data_processing_creating_survey_records_from_file(csvf):
 #     print(csvf)
 #     # csv_test = ("test.csv", csvf)
