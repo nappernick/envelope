@@ -45,11 +45,7 @@ def data():
 @login_required
 def data_file_upload():
     file = request.files['data-set']
-<<<<<<< HEAD
     # print(file.content_type)
-=======
-    print(file.content_type)
->>>>>>> fd99637bd23318523a6470d5b3f8d8df647883b2
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
         post_ds = threading.Thread(target = async_ds_post, args=[file])
@@ -94,21 +90,6 @@ def async_ds_post(file):
         return
     sys.exit()
     return
-
-# Workaround for Heroku front-end to back-end open connections limited to 30 seconds
-@data_set_routes.route("/upload", methods=['POST'])
-@login_required
-def data_file_upload():
-    file = request.files['data-set']
-    print(file.content_type)
-    types = ["application/zip", "text/csv", "application/octet-stream"]
-    if (file and file.content_type in types):
-        # post_ds = threading.Thread(target = async_ds_post, args=[file])
-        job = q.enqueue(async_ds_post, file)
-        return jsonify("Successful file upload.")
-    else:
-        return {"errors": ["Files were not successfully passed to the API."]}, 500
-
 
 @data_set_routes.route("/<int:dataSetId>", methods=["POST"])
 @login_required
