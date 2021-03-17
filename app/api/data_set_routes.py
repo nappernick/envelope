@@ -2,6 +2,10 @@ import os
 import csv
 import zipfile
 import pickle
+<<<<<<< HEAD
+=======
+import tempfile
+>>>>>>> fd99637bd23318523a6470d5b3f8d8df647883b2
 import threading
 import pandas as pd
 import numpy as np
@@ -41,7 +45,11 @@ def data():
 @login_required
 def data_file_upload():
     file = request.files['data-set']
+<<<<<<< HEAD
     # print(file.content_type)
+=======
+    print(file.content_type)
+>>>>>>> fd99637bd23318523a6470d5b3f8d8df647883b2
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
         post_ds = threading.Thread(target = async_ds_post, args=[file])
@@ -63,6 +71,7 @@ def async_ds_post(file):
             file_final = pickle.dumps(csv_file)
 
         elif file_name_list[len(file_name_list)-1] == "zip":
+            # file_like_object = file.stream._file
             file_like_object = BytesIO(file.read())
             zipfile_ob = zipfile.ZipFile(file_like_object)
             file_names = zipfile_ob.namelist()
@@ -70,7 +79,6 @@ def async_ds_post(file):
             files = [zipfile_ob.open(name).read() for name in file_names]
             file_final = files[0].decode("utf-8")
             file_final = pickle.dumps(file_final)
-
         elif file_name_list[len(file_name_list)-1] == "csv":
             csv_file=file.read()
             file_final = pickle.dumps(csv_file)
