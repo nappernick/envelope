@@ -2,10 +2,6 @@ import os
 import csv
 import zipfile
 import pickle
-<<<<<<< HEAD
-=======
-import tempfile
->>>>>>> fd99637bd23318523a6470d5b3f8d8df647883b2
 import threading
 import pandas as pd
 import numpy as np
