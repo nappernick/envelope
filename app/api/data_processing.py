@@ -1,5 +1,6 @@
 import csv
 import os
+import tempfile
 import pandas as pd
 
 def dta_to_pickle(dta):
@@ -52,9 +53,6 @@ def process_data_for_reader(reader):
             continue
         if row[11] not in health_areas:
             health_areas.append(row[11])
-        print("______ROW", row)
-        print("______ROW INDEX", row.index)
-        print(target_indices)
         column_data[row[0]] = {
             "date_time_administered": f'{row[target_indices[0]]} {row[target_indices[1]]}',
             "health_area": health_areas.index(row[target_indices[2]])+1, # index value of row[target_indices[2]] in health_areas

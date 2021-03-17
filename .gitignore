@@ -10,6 +10,7 @@ check_dist_data.csv
 /node_modules
 /.pnp
 .pnp.js
+dump.rdb
 
 # testing
 /coverage

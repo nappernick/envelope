@@ -2,7 +2,7 @@ import os
 import csv
 import zipfile
 import pickle
-import tempfile
+import threading
 import pandas as pd
 import numpy as np
 import sys
@@ -10,7 +10,6 @@ import sys
 import pysurveycto
 # Redis queue
 from rq import Queue
-from redis import Redis
 from rq.job import Job
 from app.redis import conn
 # File reading utility
@@ -25,7 +24,7 @@ from .data_processing import data_processing_for_survey_records, process_data_fo
 
 data_set_routes = Blueprint('data', __name__)
 # Redis job queue
-q = Queue(connection=Redis())
+q = Queue(connection=conn)
 
 @data_set_routes.route('/data-sets')
 @login_required
@@ -37,9 +36,23 @@ def data():
     else:
         return {'errors': ['Unauthorized']}, 401
 
+# Workaround for Heroku front-end to back-end open connections limited to 30 seconds
+@data_set_routes.route("/upload", methods=['POST'])
+@login_required
+def data_file_upload():
+    file = request.files['data-set']
+    # print(file.content_type)
+    types = ["application/zip", "text/csv", "application/octet-stream"]
+    if (file and file.content_type in types):
+        post_ds = threading.Thread(target = async_ds_post, args=[file])
+        post_ds.start()
+        return jsonify("Successful file upload.")
+    else:
+        return {"errors": ["Files were not successfully passed to the API."]}, 500
+
 # Helper function to make the data-set upload with the frontend asynchronous for polling
 def async_ds_post(file):
-    print("CALLED ASYNC_DS_POST")
+    import sys
     from app import app, db
     with app.app_context():
         file_name = file.filename
@@ -60,19 +73,18 @@ def async_ds_post(file):
 
         elif file_name_list[len(file_name_list)-1] == "csv":
             csv_file=file.read()
-            print("GOT HERE IN CSV READER")
             file_final = pickle.dumps(csv_file)
-        else :
+        else:
             return {"errors": "This file type is not accepted, please only upload .dta, .csv, or .csv.zip file types."}
-        try:
-            data_set = DataSet(
-                data_set_name=file_name,
-                data_set=file_final
-            )
-            db.session.add(data_set)
-            db.session.commit()
-        except:
-            return {"errors": "Unable to add file to database, try again."}
+        data_set = DataSet(
+            data_set_name=file_name,
+            data_set=file_final
+        )
+        db.session.add(data_set)
+        db.session.commit()
+        sys.exit()
+        return
+    sys.exit()
     return
 
 # Workaround for Heroku front-end to back-end open connections limited to 30 seconds
@@ -84,7 +96,7 @@ def data_file_upload():
     types = ["application/zip", "text/csv", "application/octet-stream"]
     if (file and file.content_type in types):
         # post_ds = threading.Thread(target = async_ds_post, args=[file])
-        q.enqueue(async_ds_post, file)
+        job = q.enqueue(async_ds_post, file)
         return jsonify("Successful file upload.")
     else:
         return {"errors": ["Files were not successfully passed to the API."]}, 500
