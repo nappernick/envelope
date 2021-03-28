@@ -76,7 +76,7 @@ function ByEnum({ statsField = "duration", h, w }) {
                                     // fill="rgba(0,0,0,0.3)"
                                     orientation={['horizontal']}
                                 />
-                                <Group top={40} left={20}>
+                                <Group top={40} >
                                     {dataByEnum && dataByEnum.length && dataByEnum.map((datum, i) => {
 
                                         const violinPlotData = datum.data_for_violin_plot.sort((a, b) => b.value - a.value)
