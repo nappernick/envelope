@@ -166,9 +166,7 @@ def violin_plot_all_enumerators(dataSetId, projectId, surveyField):
     # curr_user = current_user.to_dict()
     # if curr_user["type_id"] == 1:
     surveys_query = db.session.query(DataSet.id,\
-            Survey.project_id,Survey.enumerator_id, Survey.health_area_id, \
-            Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
-            # If the user is admin, query only by data set & project id's
+            getattr(Survey, surveyField),Survey.enumerator_id
             ).filter(DataSet.id==dataSetId, Project.id ==projectId)\
             .join(Project, Project.data_set_id==DataSet.id)\
             .join(Survey, Survey.project_id==Project.id)
@@ -181,8 +179,9 @@ def violin_plot_all_enumerators(dataSetId, projectId, surveyField):
     #         .join(Project, Project.data_set_id==DataSet.id)\
     #         .join(Survey, Survey.project_id==Project.id)
     surveys = db.session.execute(surveys_query)
-    # print(surveys)
-    return jsonify([dict(survey) for survey in surveys])
+    
+    surveys_list = [dict(survey) for survey in surveys]
+    return jsonify(surveys_list)
     # result_obj = {}
     # values_list = []
     # outliers = []
