@@ -15,6 +15,7 @@ import Violinplot from "./components/Stats/ViolinPlot";
 import AllDataSets from "./components/Data/AllDataSets";
 import StatsPage from "./components/Stats/StatsPage";
 import Footer from "./components/Footer/Footer";
+import ByEnum from "./components/Stats/ByEnum";
 
 function App() {
   const dispatch = useDispatch()
@@ -74,6 +75,9 @@ function App() {
         </Route>
         <Route path="/users/:userId/projects/:projectId/stats" exact={true} authenticated={user}>
           {user ? <StatsPage /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/users/:userId/projects/:projectId/stats/by-enumerator" exact={true} authenticated={user}>
+          {user ? <ByEnum /> : <Redirect to="/login" />}
         </Route>
         <Route path="/users/:userId/projects/:projectId/stats/:statsString" exact={true} authenticated={user}>
           {user ? <Violinplot /> : <Redirect to="/login" />}

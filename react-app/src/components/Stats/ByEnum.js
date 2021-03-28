@@ -9,9 +9,10 @@ import { PatternLines } from '@vx/pattern';
 import { useParams } from 'react-router-dom';
 import AutoSizer from "react-virtualized-auto-sizer";
 
-function MultiViolinplot({ statsField, h, w }) {
+function ByEnum({ statsField = "duration", h, w }) {
     let { projectId, statsString } = useParams()
     const [dataSetId, setDataSetId] = useState(0)
+    const [dataByEnum, setDataByEnum] = useState([])
     const [boxPlotData, setBoxPlotData] = useState([])
     const [violinPlotData, setViolinPlotData] = useState()
 
@@ -29,14 +30,11 @@ function MultiViolinplot({ statsField, h, w }) {
         const fetchStatsData = async () => {
             let res = await fetch(`/api/data/${dataSetId}/projects/${projectId}/violinplot/${statsString ? statsString : statsField}/by-enumerator`)
             let resJson = await res.json()
-            if (resJson.data_for_box_plot) setBoxPlotData(resJson.data_for_box_plot)
-            if (resJson.data_for_violin_plot) {
-                setViolinPlotData(sortArr)
-            }
+            setDataByEnum(resJson)
         }
         fetchStatsData()
     }, [dataSetId, projectId, statsField, statsString])
-    console.log(violinPlotData)
+    console.log(dataByEnum)
     return (
         <AutoSizer>
             {({ height, width }) => {
@@ -107,4 +105,4 @@ function MultiViolinplot({ statsField, h, w }) {
     )
 }
 
-export default MultiViolinplot
+export default ByEnum

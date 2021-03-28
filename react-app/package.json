@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
+    "@visx/group": "^1.7.0",
     "@vx/gradient": "0.0.199",
     "@vx/pattern": "0.0.199",
     "@vx/scale": "0.0.199",
