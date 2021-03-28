@@ -30,15 +30,13 @@ function MultiViolinplot({ statsField, h, w }) {
             let res = await fetch(`/api/data/${dataSetId}/projects/${projectId}/violinplot/${statsString ? statsString : statsField}/by-enumerator`)
             let resJson = await res.json()
             if (resJson.data_for_box_plot) setBoxPlotData(resJson.data_for_box_plot)
-            // array.sort(a,b => a.value - b.value)
             if (resJson.data_for_violin_plot) {
-                let sortArr = resJson.data_for_violin_plot.sort((a, b) => b.value - a.value)
                 setViolinPlotData(sortArr)
             }
         }
         fetchStatsData()
     }, [dataSetId, projectId, statsField, statsString])
-
+    console.log(violinPlotData)
     return (
         <AutoSizer>
             {({ height, width }) => {

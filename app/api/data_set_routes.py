@@ -149,7 +149,7 @@ def violin_plot(dataSetId, projectId, surveyField):
     final_obj = {}
     final_obj["data_for_box_plot"] = {}
     final_obj["data_for_box_plot"]["value_count_pairs"] = result_obj
-    final_obj["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
+    final_obj["data_for_violin_plot"] = sorted([{"value": key, "count": value} for key, value in result_obj.items()])
     final_obj["data_for_box_plot"]["min"] = min(values_list)
     final_obj["data_for_box_plot"]["max"] = max(values_list)
     final_obj["data_for_box_plot"]["median"] = np.median(values_list)
