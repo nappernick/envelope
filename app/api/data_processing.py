@@ -17,7 +17,7 @@ def zip_to_pickle(zip):
     file_final = files[0]
     file_final = pickle.dumps(file_final)
     return file_final
-
+ 
 
 def data_processing_for_survey_records(csv_file):
     if isinstance(csv_file, list):
