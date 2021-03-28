@@ -181,7 +181,18 @@ def violin_plot_all_enumerators(dataSetId, projectId, surveyField):
     surveys = db.session.execute(surveys_query)
     
     surveys_list = [dict(survey) for survey in surveys]
-    return jsonify(surveys_list)
+    by_enum = {}
+    for survey in surveys_list:
+        enumerator = survey["surveys_enumerator_id"]
+        if enumerator in by_enum:
+            by_enum[enumerator]["values"].append(survey[f"surveys_{surveyField}"])
+            by_enum[enumerator]["count"] += 1
+        else:
+            by_enum[enumerator] = {
+                "values": [survey[f"surveys_{surveyField}"]],
+                "count": 1
+            }
+    return jsonify(by_enum)
     # result_obj = {}
     # values_list = []
     # outliers = []
