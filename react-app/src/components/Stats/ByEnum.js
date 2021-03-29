@@ -34,7 +34,7 @@ function ByEnum({ statsField = "duration", h, w }) {
     }, [dataSetId, projectId, statsField, statsString])
     console.log(dataByEnum)
     return (
-        <div className="text" style={{ "height": "500px", "width": "500px" }} >
+        <div className="text" style={{ "height": "500px", "width": "95%" }} >
             <AutoSizer>
                 {({ height, width }) => {
                     const xMax = width;

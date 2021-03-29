@@ -107,25 +107,25 @@ def delete_data_set(dataSetId):
 
 
 @data_set_routes.route('/<int:dataSetId>/projects/<int:projectId>/violinplot/<surveyField>')
-# @login_required
+@login_required
 def violin_plot(dataSetId, projectId, surveyField):
-    # curr_user = current_user.to_dict()
-    # if curr_user["type_id"] == 1:
-    surveys_query = db.session.query(DataSet.id,\
-        Survey.project_id,Survey.enumerator_id, Survey.health_area_id, \
-        Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
-        # If the user is admin, query only by data set & project id's
-        ).filter(DataSet.id==dataSetId, Project.id ==projectId)\
-        .join(Project, Project.data_set_id==DataSet.id)\
-        .join(Survey, Survey.project_id==Project.id)
-    # else:
-    #     surveys_query = db.session.query(DataSet.id,\
-    #         Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, \
-    #         Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
-    #         # If the user isn't admin, query with current user id
-    #         ).filter(DataSet.id==dataSetId, Project.user_id ==current_user.id, Project.id ==projectId)\
-    #         .join(Project, Project.data_set_id==DataSet.id)\
-    #         .join(Survey, Survey.project_id==Project.id)
+    curr_user = current_user.to_dict()
+    if curr_user["type_id"] == 1:
+        surveys_query = db.session.query(DataSet.id,\
+            Survey.project_id,Survey.enumerator_id, Survey.health_area_id, \
+            Survey.duration, Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
+            # If the user is admin, query only by data set & project id's
+            ).filter(DataSet.id==dataSetId, Project.id ==projectId)\
+            .join(Project, Project.data_set_id==DataSet.id)\
+            .join(Survey, Survey.project_id==Project.id)
+    else:
+        surveys_query = db.session.query(DataSet.id,\
+            Survey.project_id,Survey.enumerator_id, Survey.health_area_id, Survey.duration, \
+            Survey.date_time_administered, Survey.num_outlier_data_points, Survey.num_dont_know_responses\
+            # If the user isn't admin, query with current user id
+            ).filter(DataSet.id==dataSetId, Project.user_id ==current_user.id, Project.id ==projectId)\
+            .join(Project, Project.data_set_id==DataSet.id)\
+            .join(Survey, Survey.project_id==Project.id)
     surveys = db.session.execute(surveys_query)
     result_obj = {}
     values_list = []
@@ -149,7 +149,7 @@ def violin_plot(dataSetId, projectId, surveyField):
     final_obj = {}
     final_obj["data_for_box_plot"] = {}
     final_obj["data_for_box_plot"]["value_count_pairs"] = result_obj
-    final_obj["data_for_violin_plot"] = sorted([{"value": key, "count": value} for key, value in result_obj.items()])
+    final_obj["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
     final_obj["data_for_box_plot"]["min"] = min(values_list)
     final_obj["data_for_box_plot"]["max"] = max(values_list)
     final_obj["data_for_box_plot"]["median"] = np.median(values_list)
@@ -191,7 +191,9 @@ def violin_plot_all_enumerators(dataSetId, projectId, surveyField):
                 "values": [survey[f"surveys_{surveyField}"]],
                 "count": 1
             }
+    final_enum_list = list()
     for enumerator, obj in by_enum.items():
+        enum_obj = {}
         result_obj = {}
         values_list = sorted(obj["values"])
         count = obj["count"]
@@ -213,18 +215,20 @@ def violin_plot_all_enumerators(dataSetId, projectId, surveyField):
                 outliers.append(int(value))
             if int(value) > upper_bound and int(value) not in outliers:
                 outliers.append(int(value))
-        by_enum[enumerator]["data_for_box_plot"] = {}
-        by_enum[enumerator]["data_for_box_plot"]["value_count_pairs"] = result_obj
-        by_enum[enumerator]["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
-        by_enum[enumerator]["data_for_box_plot"]["min"] = minVal
-        by_enum[enumerator]["data_for_box_plot"]["max"] = maxVal
-        by_enum[enumerator]["data_for_box_plot"]["median"] = np.median(values_list)
-        by_enum[enumerator]["data_for_box_plot"]["lower_bound"] = lower_bound
-        by_enum[enumerator]["data_for_box_plot"]["upper_bound"] = upper_bound
-        by_enum[enumerator]["data_for_box_plot"]["first_quartile"] = q1
-        by_enum[enumerator]["data_for_box_plot"]["third_quartile"] = q3
-        by_enum[enumerator]["data_for_box_plot"]["outliers"] = outliers
-    return jsonify(by_enum)
+        enum_obj["enumerator"] = enumerator
+        enum_obj["data_for_box_plot"] = {}
+        enum_obj["data_for_box_plot"]["value_count_pairs"] = result_obj
+        enum_obj["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
+        enum_obj["data_for_box_plot"]["min"] = minVal
+        enum_obj["data_for_box_plot"]["max"] = maxVal
+        enum_obj["data_for_box_plot"]["median"] = np.median(values_list)
+        enum_obj["data_for_box_plot"]["lower_bound"] = lower_bound
+        enum_obj["data_for_box_plot"]["upper_bound"] = upper_bound
+        enum_obj["data_for_box_plot"]["first_quartile"] = q1
+        enum_obj["data_for_box_plot"]["third_quartile"] = q3
+        enum_obj["data_for_box_plot"]["outliers"] = outliers
+        final_enum_list.append(enum_obj)
+    return jsonify(final_enum_list)
         
 
 @data_set_routes.route('/<int:dataSetId>/violinplot/<int:surveyField>/by-enumerator')
