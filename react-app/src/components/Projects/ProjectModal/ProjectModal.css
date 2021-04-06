@@ -109,6 +109,7 @@ div.update_project__modal.container > .button > button.dupe {
     perspective: 1000px;
 }
 
+
 @keyframes shake {
     10%, 90% {
         transform: translate3d(-1px, 0, 0);
