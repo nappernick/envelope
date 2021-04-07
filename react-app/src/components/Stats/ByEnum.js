@@ -76,18 +76,18 @@ function ByEnum({ statsField = "duration", h, w }) {
                                     // fill="rgba(0,0,0,0.3)"
                                     orientation={['horizontal']}
                                 />
-                                <Group left={500} >
+                                <Group left={0} top={40} >
                                     {dataByEnum && dataByEnum.length && dataByEnum.map((datum, i) => {
 
                                         const violinPlotData = datum.data_for_violin_plot.sort((a, b) => b.value - a.value)
                                         const boxPlotData = datum.data_for_box_plot
-                                        console.log(boxPlotData)
+                                        console.log(boxPlotData.enumerator)
                                         return (
                                             <g key={i}>
                                                 <ViolinPlot
                                                     data={violinPlotData}
                                                     stroke="#dee2e6"
-                                                    left={500}
+                                                    left={xScale(boxPlotData.enumerator)}
                                                     width={constrainedWidth}
                                                     valueScale={yScale}
                                                     fill="url(#hViolinLines)"
