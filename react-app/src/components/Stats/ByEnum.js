@@ -167,7 +167,7 @@ function ByEnum({ statsField = "duration", h, w }) {
                                                         onMouseOver: () => {
                                                             showTooltip({
                                                                 tooltipTop: yScale(boxPlotData.median) ?? 0 + 40,
-                                                                tooltipLeft: xScale(boxPlotData.median) + constrainedWidth + 5,
+                                                                tooltipLeft: xScale(boxPlotData.enumerator) + constrainedWidth + 5,
                                                                 tooltipData: {
                                                                     "median": boxPlotData.median,
                                                                     "name": boxPlotData.enumerator,
@@ -194,13 +194,13 @@ function ByEnum({ statsField = "duration", h, w }) {
                                         <strong>{tooltipData.name}</strong>
                                     </div>
                                     <div style={{ marginTop: '5px', fontSize: '12px' }}>
-                                        {() => {
-                                            return console.log(tooltipData)
-                                        }}
+                                        {(() => {
+                                            return console.log(defaultTooltipStyles)
+                                        })()}
                                         {tooltipData.max && <div>max: {tooltipData.max}</div>}
-                                        {tooltipData.thirdQuartile && <div>third quartile: {tooltipData.thirdQuartile}</div>}
+                                        {tooltipData.third_quartile && <div>third quartile: {tooltipData.thirdQuartile}</div>}
                                         {tooltipData.median && <div>median: {tooltipData.median}</div>}
-                                        {tooltipData.firstQuartile && <div>first quartile: {tooltipData.firstQuartile}</div>}
+                                        {tooltipData.first_quartile && <div>first quartile: {tooltipData.firstQuartile}</div>}
                                         {tooltipData.min && <div>min: {tooltipData.min}</div>}
                                     </div>
                                 </Tooltip>
