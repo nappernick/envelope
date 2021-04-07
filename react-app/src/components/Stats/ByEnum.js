@@ -32,7 +32,7 @@ function ByEnum({ statsField = "duration", h, w }) {
         }
         fetchStatsData()
     }, [dataSetId, projectId, statsField, statsString])
-    console.log(dataByEnum)
+    // console.log(dataByEnum)
     return (
         <div className="text" style={{ "height": "500px", "width": "95%" }} >
             <AutoSizer>
@@ -56,7 +56,7 @@ function ByEnum({ statsField = "duration", h, w }) {
                     const xScale = scaleBand({
                         range: [0, xMax],
                         round: true,
-                        domain: ["Test 1"],
+                        domain: dataByEnum.map(el => el.enumerator),
                         padding: 0.4,
                     });
 
@@ -76,18 +76,18 @@ function ByEnum({ statsField = "duration", h, w }) {
                                     // fill="rgba(0,0,0,0.3)"
                                     orientation={['horizontal']}
                                 />
-                                <Group top={40} >
+                                <Group left={500} >
                                     {dataByEnum && dataByEnum.length && dataByEnum.map((datum, i) => {
 
                                         const violinPlotData = datum.data_for_violin_plot.sort((a, b) => b.value - a.value)
                                         const boxPlotData = datum.data_for_box_plot
-                                        // debugger
+                                        console.log(boxPlotData)
                                         return (
                                             <g key={i}>
                                                 <ViolinPlot
                                                     data={violinPlotData}
                                                     stroke="#dee2e6"
-                                                    left={xScale("Test 1")}
+                                                    left={500}
                                                     width={constrainedWidth}
                                                     valueScale={yScale}
                                                     fill="url(#hViolinLines)"
@@ -96,7 +96,7 @@ function ByEnum({ statsField = "duration", h, w }) {
                                                 <BoxPlot
                                                     min={boxPlotData.min}
                                                     max={boxPlotData.max}
-                                                    left={xScale("Test 1") + 0.3 * constrainedWidth}
+                                                    left={xScale(boxPlotData.enumerator) + 0.3 * constrainedWidth}
                                                     firstQuartile={boxPlotData.first_quartile}
                                                     thirdQuartile={boxPlotData.third_quartile}
                                                     median={boxPlotData.median}
