@@ -34,7 +34,7 @@ function ByEnum({ statsField = "duration", h, w }) {
     }, [dataSetId, projectId, statsField, statsString])
     // console.log(dataByEnum)
     return (
-        <div className="text" style={{ "height": "500px", "width": "95%" }} >
+        <div className="text" style={{ "height": "85vh", "width": "95%" }} >
             <AutoSizer>
                 {({ height, width }) => {
                     const xMax = width;
@@ -81,7 +81,6 @@ function ByEnum({ statsField = "duration", h, w }) {
 
                                         const violinPlotData = datum.data_for_violin_plot.sort((a, b) => b.value - a.value)
                                         const boxPlotData = datum.data_for_box_plot
-                                        console.log(boxPlotData.enumerator)
                                         return (
                                             <g key={i}>
                                                 <ViolinPlot
