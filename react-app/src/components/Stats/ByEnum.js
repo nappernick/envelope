@@ -81,6 +81,7 @@ function ByEnum({ statsField = "duration", h, w }) {
 
                                         const violinPlotData = datum.data_for_violin_plot.sort((a, b) => b.value - a.value)
                                         const boxPlotData = datum.data_for_box_plot
+                                        // debugger
                                         return (
                                             <g key={i}>
                                                 <ViolinPlot
