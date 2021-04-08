@@ -219,6 +219,7 @@ def violin_plot_all_enumerators(dataSetId, projectId, surveyField):
         enum_obj["data_for_box_plot"] = {}
         enum_obj["data_for_box_plot"]["value_count_pairs"] = result_obj
         enum_obj["data_for_violin_plot"] = [{"value": key, "count": value} for key, value in result_obj.items()]
+        enum_obj["data_for_box_plot"]["enumerator"] = enumerator
         enum_obj["data_for_box_plot"]["min"] = minVal
         enum_obj["data_for_box_plot"]["max"] = maxVal
         enum_obj["data_for_box_plot"]["median"] = np.median(values_list)
