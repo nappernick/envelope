@@ -43,7 +43,7 @@ function ProjectModal({ project, closeModal }) {
         setErrors([]);
         // If there is a project, this is an update modal
         if (project) {
-            if (selectedUsers.length == 1) {
+            if (selectedUsers.length === 1) {
                 // Since project update is so quick, we don't implement polling
                 closeModal()
                 dispatch(removeProject(project.id))
@@ -59,7 +59,7 @@ function ProjectModal({ project, closeModal }) {
         }
         // If there is no project, this is a new project modal
         else {
-            if (selectedUsers.length == 1) {
+            if (selectedUsers.length === 1) {
                 closeModal()
                 // Polling approach: because new projects are so expensive to create, we don't await the post & dispatch
                 // The dispatch is on AllProjects inside of a useInterval
@@ -113,7 +113,7 @@ function ProjectModal({ project, closeModal }) {
     // For keeping the disabled state of the button accurate to current inputs
     useEffect(() => {
         if (projectName && selectedUsers.length > 0 && selectedDataSetId && targetHACount && targetSurvCount) setDisabled(false)
-        if (!projectName || selectedUsers.length == 0 || !selectedDataSetId || targetHACount == "" || !targetHACount || targetSurvCount == "" || !targetSurvCount) setDisabled(true)
+        if (!projectName || selectedUsers.length === 0 || !selectedDataSetId || targetHACount === "" || !targetHACount || targetSurvCount === "" || !targetSurvCount) setDisabled(true)
     }, [projectName, selectedUsers, selectedDataSetId, targetHACount, targetSurvCount])
 
     return (

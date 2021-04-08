@@ -3,7 +3,7 @@ import { shortConfigDate, decimalToMinSec, dateToLocalTime } from '../../utils';
 import "./PopupInfo.css"
 
 function PopupInfo({ popUpInfo }) {
-    const { latitude, longtitude, administered, duration, enumerator, dont_knows, outliers, respondent } = popUpInfo
+    const { administered, duration, enumerator, dont_knows, outliers, respondent } = popUpInfo
     return (
         <>
             <div width={240} height={240} className="popup_info__container">

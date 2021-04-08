@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from "react-redux"
 import { DropzoneArea } from 'material-ui-dropzone'
 import Modal from "react-modal"
 import axios from "axios"
-import { addDataSet } from "../../../store/data_sets"
 import FileUploadModal from './FileUploadModal'
 import { useDebounce } from 'use-debounce';
 import "./FileUpload.css"
@@ -34,14 +32,13 @@ const customStyles = {
 };
 
 function FileUpload() {
-    const dispatch = useDispatch()
     const history = useHistory()
     const [disabled, setDisabled] = useState(true)
     const [showModal, setShowModal] = useState(false);
     const [file, setFile] = useState(null)
     const [fileName, setFileName] = useState('')
     const [origFileName, setOrigFileName] = useState([])
-    const [key, setKey] = useState(0);
+    const key = 0;
     const [debounceKey] = useDebounce(key, 1000);
 
     const openModal = () => setShowModal(true)
@@ -70,7 +67,6 @@ function FileUpload() {
         "file": file,
         "fileName": fileName,
         "onFileUpload": onFileUpload,
-        "closeModal": closeModal,
         "setFileName": setFileName
     }
 

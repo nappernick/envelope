@@ -4,7 +4,7 @@ export const configDate = (date) => {
     if (!date) return
     let dateArr = date.split(" ")
     // Fri, 15 Jan 2021 13:24:45 GMT
-    const [day, numDate, month, year, time, timeZone] = dateArr
+    const [day, numDate, month, year, time,] = dateArr
     const timeArr = time.split(":")
     const [hour, minute,] = timeArr
     let correctedHour = hour
