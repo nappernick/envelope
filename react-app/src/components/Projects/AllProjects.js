@@ -19,7 +19,7 @@ const customStyles = {
     content: {
         top: '50%',
         left: 'auto',
-        right: '23%',
+        right: '30.5%',
         bottom: 'auto',
         height: "90%",
         marginRight: '-50%',

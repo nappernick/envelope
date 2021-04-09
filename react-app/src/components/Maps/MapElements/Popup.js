@@ -3,10 +3,13 @@ import { Popup } from "react-map-gl"
 import PopupInfo from './PopupInfo'
 
 function PopUp({ popUpInfo, setPopUpInfo }) {
+    const { latitude, longtitude } = popUpInfo
     return (
         <Popup
             tipSize={5}
             anchor="top"
+            longitude={longtitude}
+            latitude={latitude}
             closeOnClick={false}
             onClose={() => setPopUpInfo(null)}
         >
@@ -15,4 +18,4 @@ function PopUp({ popUpInfo, setPopUpInfo }) {
     )
 }
 
-export default PopUp
+export default React.memo(PopUp)

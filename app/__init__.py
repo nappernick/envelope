@@ -29,6 +29,7 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
+app.config.SECRET_KEY()
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(data_set_routes, url_prefix='/api/data')
@@ -44,11 +45,8 @@ CORS(app)
 def inject_csrf_token(response):
     response.set_cookie('csrf_token',
                         generate_csrf(),
-                        secure=True if os.environ.get(
-                            'FLASK_ENV') == 'production' else False,
-                        samesite='Strict' if os.environ.get(
-                            'FLASK_ENV') == 'production' else None,
-                        httponly=True)
+                        secure=False
+                        )
     return response
 
 
