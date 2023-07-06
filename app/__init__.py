@@ -29,7 +29,10 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
-app.config.SECRET_KEY()
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = True
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(data_set_routes, url_prefix='/api/data')
