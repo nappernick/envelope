@@ -26,11 +26,14 @@ login.login_view = 'auth.unauthorized'
 def load_user(id):
     return User.query.get(int(id))
 
+
 app.cli.add_command(seed_commands)
 
-app.config.from_object(Config)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['DATABASE_URL'] = os.environ.get('DATABASE_URL')
+
+app.config['SECRET_KEY'] = "s90m85SeV2DADov38J82"
+app.secret_key = "s90m85SeV2DADov38J82"
+app.config['WTF_CSRF_SECRET_KEY'] = "s90m85SeV2DADov38J82"
+app.config['DATABASE_URL'] = "s90m85SeV2DADov38J82"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.register_blueprint(user_routes, url_prefix='/api/users')

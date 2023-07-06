@@ -1,7 +1,7 @@
 # Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
 v: 0
 micros:
-  - name: react-app
+  - name: envelope
     src: ./
-    engine: react
+    engine: python3.9
     primary: true
